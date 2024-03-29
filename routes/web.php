@@ -13,6 +13,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController as FrontProductController;
 use App\Http\Controllers\Admin\FAQ\FAQController;
 use App\Http\Controllers\Admin\Media\MediaController;
+use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
@@ -298,13 +299,7 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.'], function () {
     Route::group(['prefix' => 'newsletters/', 'as' => 'newsletters.'], function () {
 
         // POSTS
-        Route::get('', [BlogController::class, 'posts'])->name('index');
-        Route::get('posts/create', [BlogController::class, 'create_posts'])->name('add_posts');
-        Route::post('store-posts', [BlogController::class, 'store_posts'])->name('save_posts');
-
-        Route::get('edit/{id}', [BlogController::class, 'edit_posts'])->name('edit_posts');
-        Route::post('update/{id}', [BlogController::class, 'update_posts'])->name('update_posts');
-        Route::get('delete/{id}', [BlogController::class, 'delete_posts'])->name('delete_posts');
+        Route::get('', [NewsLetterController::class, 'index'])->name('index');
 
     });
 

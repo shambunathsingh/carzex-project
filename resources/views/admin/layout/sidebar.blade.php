@@ -61,8 +61,8 @@
 
 
 
-                <li class="mainlink"><a href="#"><i class="far fa-newspaper"></i><span
-                            class="link-name">newslatters</span></a>
+                <li class="mainlink"><a href="{{ route('admin.newsletters.index') }}"><i
+                            class="far fa-newspaper"></i><span class="link-name">Newsletters</span></a>
                 </li>
 
 
@@ -83,32 +83,37 @@
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="far fa-chart-bar"></i></span>New1</a>
+                                            class="far fa-chart-bar"></i></span>Report</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-bolt"></i></span>
-                                    Processed</a>
+                                    Flash sales</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-shopping-bag"></i></span>
-                                    Shipped</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-shopping-bag"></i></span>
-                                    Returned</a>
+                                    Orders</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-book"></i></span>
-                                    Processed</a>
+                                    Invoices</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-book"></i></span>
-                                    Shipped</a>
+                                    Invoice template</a>
+                            </li>
+                            <li class="sublink"><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
+                                            class="fas fa-shopping-basket"></i></span>
+                                    Incomplete orders</a>
+                            </li>
+                            <li class="sublink"><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
+                                            class="fa fa-cart-arrow-down"></i></span>
+                                    Order returns</a>
                             </li>
                             <li class="sublink"><a href="{{ route('admin.ecommerce.product_features') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
@@ -158,8 +163,18 @@
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-camera"></i></span>
-                                    Shipped</a>
+                                            class="fa fa-comments"></i></span>
+                                    Reviews</a>
+                            </li>
+                            <li class="sublink"><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
+                                            class="fas fa-shipping-fast"></i></span>
+                                    Shipping</a>
+                            </li>
+                            <li class="sublink"><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
+                                            class="fas fa-people-carry"></i></span>
+                                    Shipments</a>
                             </li>
                             <li class="sublink"><a href="{{ route('admin.ecommerce.discounts') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
@@ -178,73 +193,18 @@
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-tag"></i></span>
-                                    Shipped</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fas fa-glass-martini"></i></span>
-                                    Returned</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-registered"></i></span>
-                                    Processed</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-file-excel"></i></span>
-                                    Shipped</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fas fa-tags"></i></span>
-                                    Returned</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-comments"></i></span>
-                                    Processed</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fas fa-shipping-fast"></i></span>
-                                    Shipped</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fas fa-people-carry"></i></span>
-                                    Returned</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-gift"></i></span>
-                                    Processed</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fa fa-users"></i></span>
-                                    Shipped</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
-                                            class="fas fa-money-check-alt"></i></span>
-                                    Returned</a>
-                            </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-cogs"></i></span>
-                                    Processed</a>
+                                    Basic settings</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-plus"></i></span>
-                                    Shipped</a>
+                                    Advanced settings</a>
                             </li>
                             <li class="sublink"><a href="#"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa-solid fa-chart-pie"></i></span>
-                                    Shipped</a>
+                                    Tracking settings</a>
                             </li>
 
                         </ul>
@@ -338,16 +298,25 @@
                     <div class="collapse" id="orders-collapse6" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                                    <i class="fa fa-globe"></i><span class="link-name">Countries</span>
+                                </a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-globe"></i><span
+                                    class="link-name">States</span></a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Shipped</a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-globe"></i><span
+                                    class="link-name">Cities</span></a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-cloud-upload"></i><span
+                                    class="link-name">Import locations</span></a>
+                            </li>
+                            <li class="sublink"><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-cloud-download"></i><span
+                                    class="link-name">Export location</span></a>
                             </li>
                         </ul>
                     </div>

@@ -7,5 +7,12 @@ use Illuminate\Http\Request;
 
 class NewsLetterController extends Controller
 {
-    //
+    public function index()
+    {
+        $title = "Carzex - Newsletters";
+
+
+        // Return the view with the categories data
+        return view('admin.news.index', ['title' => $title]);
+    }
 }
