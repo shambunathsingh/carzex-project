@@ -297,26 +297,28 @@
                 <li class="mb-0">
                     <div class="collapse" id="orders-collapse6" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.countries.index') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                                     <i class="fa fa-globe"></i><span class="link-name">Countries</span>
                                 </a>
                             </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-globe"></i><span
-                                    class="link-name">States</span></a>
+                            <li class="sublink"><a href="{{ route('admin.states.index') }}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
+                                        class="fa fa-globe"></i><span class="link-name">States</span></a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-globe"></i><span
-                                    class="link-name">Cities</span></a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
+                                        class="fa fa-globe"></i><span class="link-name">Cities</span></a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-cloud-upload"></i><span
-                                    class="link-name">Import locations</span></a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
+                                        class="fa fa-cloud-upload"></i><span class="link-name">Import
+                                        locations</span></a>
                             </li>
                             <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i class="fa fa-cloud-download"></i><span
-                                    class="link-name">Export location</span></a>
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
+                                        class="fa fa-cloud-download"></i><span class="link-name">Export
+                                        location</span></a>
                             </li>
                         </ul>
                     </div>

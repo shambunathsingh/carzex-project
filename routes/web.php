@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Category\CategoryController;
+use App\Http\Controllers\Admin\Country\CountryController;
 use App\Http\Controllers\Admin\Ecommerce\EcommerceController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\FAQ\FAQController;
 use App\Http\Controllers\Admin\Media\MediaController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
+use App\Http\Controllers\Admin\States\StateController;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
 use Illuminate\Support\Facades\Route;
@@ -301,6 +303,32 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.'], function () {
         // POSTS
         Route::get('', [NewsLetterController::class, 'index'])->name('index');
 
+    });
+
+    // Countries Section
+    Route::group(['prefix' => 'countries/', 'as' => 'countries.'], function () {
+
+        // POSTS
+        Route::get('', [CountryController::class, 'index'])->name('index');
+        Route::get('create', [CountryController::class, 'create'])->name('add_country');
+        Route::post('save-country', [CountryController::class, 'store'])->name('save_country');
+        
+        Route::get('edit/{id}', [CountryController::class, 'edit'])->name('edit_country');
+        Route::post('update/{id}', [CountryController::class, 'update'])->name('update_country');
+        Route::get('delete/{id}', [CountryController::class, 'delete'])->name('delete_country');
+    });
+
+    // States Section
+    Route::group(['prefix' => 'states/', 'as' => 'states.'], function () {
+
+        // POSTS
+        Route::get('', [StateController::class, 'index'])->name('index');
+        Route::get('create', [StateController::class, 'create'])->name('add_state');
+        Route::post('save-state', [StateController::class, 'store'])->name('save_state');
+        
+        Route::get('edit/{id}', [StateController::class, 'edit'])->name('edit_state');
+        Route::post('update/{id}', [StateController::class, 'update'])->name('update_state');
+        Route::get('delete/{id}', [StateController::class, 'delete'])->name('delete_state');
     });
 
 
