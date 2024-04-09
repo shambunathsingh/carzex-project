@@ -20,13 +20,16 @@
                             <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
                             </li>
                             <li>
-                                <a href="#"><img src="/images/download.png" alt=""
-                                        class="adminpic"><span>Super
-                                        Admin</span><i class="fa-solid fa-angle-down"></i></a>
+                                <a href="#"><img src="/images/download.png" alt="" class="adminpic">
+                                    <span>
+                                        {{ Auth::user()->name }}
+                                    </span>
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </a>
                                 <ul class="submenu">
                                     <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a>
                                     </li>
-                                    <li><a href="#"><i class="fa-solid fa-key"></i>Logout</a>
+                                    <li><a href="{{ route('logout') }}"><i class="fa-solid fa-key"></i>Logout</a>
                                     </li>
                                 </ul>
                             </li>

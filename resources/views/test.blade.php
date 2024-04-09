@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Excel Import Test</title>
+    <title>Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .fullscreen-preview {
@@ -45,23 +45,25 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4>Import Excel Data into Database</h4>
+                        <h4>Login Dashboard</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url('customer-import') }}" method="POST" enctype="multipart/form-data">
+                        <a href="{{ 'login' }}" class="btn btn-primary">Login</a>
+                        <a href="{{ 'register' }}" class="btn btn-dark">Register</a>
+                        {{-- <form action="{{ url('customer-import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="input-group">
                                 <input type="file" name="excel_file" class="form-control">
                                 <button type="submit" class="btn btn-primary">Import</button>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    {{-- <div class="container">
         <div class="row">
             <div class="col-md-12 mt-5">
                 <table class="table table-striped table-hover vertical-middle dataTable no-footer dtr-inline">
@@ -97,7 +99,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Fullscreen preview modal -->
     <div class="fullscreen-preview" id="fullscreen-preview">

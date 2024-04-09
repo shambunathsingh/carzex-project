@@ -306,7 +306,7 @@
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
                                         class="fa fa-globe"></i><span class="link-name">States</span></a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.cities.index') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
                                         class="fa fa-globe"></i><span class="link-name">Cities</span></a>
                             </li>
