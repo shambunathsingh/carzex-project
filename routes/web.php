@@ -14,6 +14,7 @@ use App\Http\Controllers\DataImportController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController as FrontProductController;
 use App\Http\Controllers\Admin\FAQ\FAQController;
+use App\Http\Controllers\Admin\Location\LocationController;
 use App\Http\Controllers\Admin\Media\MediaController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
@@ -605,6 +606,22 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('edit/{id}', [CitiesController::class, 'edit'])->name('edit_city');
             Route::post('update/{id}', [CitiesController::class, 'update'])->name('update_city');
             Route::get('delete/{id}', [CitiesController::class, 'delete'])->name('delete_city');
+        });
+
+        // Import Location Section
+        Route::group(['prefix' => 'import-location/', 'as' => 'importLocation.'], function () {
+
+            // POSTS
+            Route::get('', [LocationController::class, 'import'])->name('index');
+            Route::post('import-location', [LocationController::class, 'locationImportExcelData'])->name('import_location');
+        });
+
+        // Import Location Section
+        Route::group(['prefix' => 'export-location/', 'as' => 'exportLocation.'], function () {
+
+            // POSTS
+            Route::get('', [LocationController::class, 'export'])->name('index');
+            Route::get('export-location', [LocationController::class, 'locationExportExcelData'])->name('export_location');
         });
 
         // Media Section

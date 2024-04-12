@@ -310,12 +310,12 @@
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
                                         class="fa fa-globe"></i><span class="link-name">Cities</span></a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.importLocation.index') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
                                         class="fa fa-cloud-upload"></i><span class="link-name">Import
                                         locations</span></a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.exportLocation.index') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><i
                                         class="fa fa-cloud-download"></i><span class="link-name">Export
                                         location</span></a>
