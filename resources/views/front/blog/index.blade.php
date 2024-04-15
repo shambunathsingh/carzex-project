@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="content">
                             <div class="row">
                                 <div class="col-md-1">
@@ -57,47 +57,52 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12 col-12">
-                        <div class="content">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="post-date text-center">
-                                        <span class="date">21</span>
-                                        <span class="mounth">Sep</span>
-                                        <!-- <time datetime="2022-09-21">21/09/2022</time> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-11">
-                                    <div class="post-content">
-                                        <h2 class="entry-title">Car Android Screen</h2>
-                                        <p class="post-excerpt"> Getting distracted at the time of driving can be a very
-                                            dangerous thing. You not only risk yourself and others inside the car but
-                                            everyone on the road. However, many times you need to stay connected to your
-                                            family, workplace, and others. Moreover, you need to use the phone if you
-                                            have
-                                            to navigate when going to an unknown place or you want to listen to music.
-                                            However, if you use your phone while driving, it can be a...
-                                        </p>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="post-meta ">
-                                            <span class="meta-author"><i class="far fa-user"></i>By <a
-                                                    href="https://www.carzex.com/author/admin/"
-                                                    title="Posts by Kumar Rajeev" rel="author">Kumar Rajeev</a></span>
-                                            <span class="meta-cats"><i class="far fa-folder"></i><a
-                                                    href="https://www.carzex.com/category/car-comfort-safety/"
-                                                    rel="category tag">CAR COMFORT &amp; SAFETY</a></span>
-                                            <span class="meta-comments"><i class="far fa-comments"></i><span>Comments
-                                                    Off</span></span>
+                    </div> --}}
+                    @foreach ($posts as $item)
+                        @php
+                            foreach ($postCategory as $cat) {
+                                if ($item->categories == $cat->id) {
+                                    $cat_name = $cat->name;
+                                }
+                            }
+                        @endphp
+                        <div class="col-lg-12 col-12">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="post-date text-center">
+                                            <span class="date">{{ $item->created_at->format('d') }}</span>
+                                            <span class="mounth">{{ substr($item->created_at->format('F'), 0, 3) }}</span>
+                                            <!-- <time datetime="2022-09-21">21/09/2022</time> -->
                                         </div>
-                                        <button class="readmore">readmore...</button>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <div class="post-content">
+                                            <h2 class="entry-title">{{ $item->name }}</h2>
+                                            <div class="post-excerpt">
+                                                {!! $item->content !!}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="post-meta ">
+                                                <span class="meta-author"><i class="far fa-user"></i>By <a
+                                                        href="https://www.carzex.com/author/admin/"
+                                                        title="Posts by Kumar Rajeev" rel="author">Admin</a></span>
+                                                <span class="meta-cats"><i class="far fa-folder"></i><a
+                                                        href="https://www.carzex.com/category/car-comfort-safety/"
+                                                        rel="category tag">{{ $cat_name }}</a></span>
+                                                <span class="meta-comments"><i class="far fa-comments"></i><span>Comments
+                                                        Off</span></span>
+                                            </div>
+                                            <button class="readmore">readmore...</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-12 col-12">
+                    @endforeach
+
+                    {{-- <div class="col-lg-12 col-12">
                         <div class="content">
                             <div class="row">
                                 <div class="col-md-1">
@@ -438,7 +443,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                 </div>
@@ -450,22 +455,22 @@
                             </div>
                             <div class="blog-inner">
                                 <ul>
-                                    <li><a href="#">CAR COMFORT & SAFETY</a></li>
-                                    <li><a href="#">CAR LIGHTINGS</a></li>
-                                    <li><a href="#">EXTERIOR ACCESSORIES</a></li>
-                                    <li><a href="#">INTERIOR ACCESSORIES</a></li>
-                                    <li><a href="#">Uncategorized</a></li>
+                                    @foreach ($postCategory as $catitem)
+                                        <li><a href="#">{{ $catitem->name }}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="recent-post">
                                 <h4>RECENT POSTS</h4>
-                                <p>Car Rear View Screens</p>
-                                <p class="date">21/09/2022</p>
+                                {{-- <p>Car Rear View Screens</p>
+                                <p class="date">21/09/2022</p> --}}
                             </div>
-                            <div class="andrver">
-                                <p>Car Android Screen</p>
-                                <p class="date">21/09/2022</p>
-                            </div>
+                            @foreach ($latest_posts as $post)
+                                <div class="andrver">
+                                    <p>{{ $post->name }}</p>
+                                    <p class="date">{{ $post->created_at->format('d-m-Y') }}</p>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

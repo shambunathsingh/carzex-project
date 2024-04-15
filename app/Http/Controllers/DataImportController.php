@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\ProductExport;
 use App\Imports\CustomerImport;
 use App\Imports\ProductImport;
-use App\Models\Customer;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,13 +15,6 @@ use Log;
 
 class DataImportController extends Controller
 {
-
-    public function index()
-    {
-        $cust_data = Customer::all();
-
-        return view('test', ['customers' => $cust_data]);
-    }
 
     public function importExcelData(Request $request)
     {

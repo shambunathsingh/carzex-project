@@ -34,8 +34,10 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <!-- todo modernizr min js here-->
     <script src="/assets/js/vendor/modernizr-3.7.1.min.js"></script>
-    <!--  todo fontawosome cript  -->
+    <!--  todo fontawosome script  -->
     <script src="https://kit.fontawesome.com/cc09d9b712.js" crossorigin="anonymous"></script>
+    <!-- fontawosome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
 <body>

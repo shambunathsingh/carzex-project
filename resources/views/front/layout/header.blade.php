@@ -49,7 +49,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-3">
                     <div class="logo">
-                        <a href="{{route('home')}}"><img class="mlogo" src="/assets/img/logo/logo.png" alt=""></a>
+                        <a href="{{ url('/') }}"><img class="mlogo" src="/assets/img/logo/logo.png"
+                                alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
@@ -64,18 +65,32 @@
                         </div>
                         <div class="middel_right_info">
                             <div class="header_wishlist">
-                                <a href="wishlist.html"><span class="ion-android-person"></span></a>
-
+                                <a href="{{ route('myaccount') }}" class="profile-trigger"><span
+                                        class="ion-android-person"></span></a>
+                                {{-- <ul class="profilemenu">
+                                    <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a></li>
+                                    <li><a href="http://localhost:8000/logout"><i class="fa-solid fa-key"></i>Logout</a>
+                                    </li>
+                                </ul> --}}
                             </div>
                             <div class="header_wishlist">
-                                <a href="wishlist.html"><span class="lnr lnr-heart"></span></a>
+                                <a href="javascript:void(0)"><span class="lnr lnr-heart"></span></a>
                                 <span class="wishlist_quantity">3</span>
                             </div>
                             <div class="mini_cart_wrapper">
                                 <a href="javascript:void(0)"><span class="lnr lnr-cart"></span></a>
                                 <span class="cart_quantity">2</span>
                             </div>
+                            @if (Auth::guard('customer')->check())
+                                <div class="mini_cart_wrapper">
+                                    <a href="{{ route('myaccount_logout') }}">
+                                        <i class="fa-solid fa-right-from-bracket fa-2x"></i>
+                                    </a>
+                                </div>
+                            @endif
+
                         </div>
+
 
                     </div>
                 </div>
@@ -83,7 +98,12 @@
         </div>
     </div>
     <!--header middel end-->
-
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!--mini cart-->
     <div class="mini_cart">
         <div class="cart_close">
@@ -249,8 +269,19 @@
     <div class="off_canvars_overlay"></div>
     <div class="mblecrtgihgty">
         <div class="d-flex">
+            {{-- @if (Auth::guard('customer')->check())
+                <div class="header_wishlist mblehdrr">
+                    <a href="{{ route('myaccount_logout') }}"><span class="ion-android-logout"></span></a>
+
+                </div>
+            @else
+                <div class="header_wishlist mblehdrr">
+                    <a href="{{ route('myaccount_logout') }}"><span class="ion-android-person"></span></a>
+
+                </div>
+            @endif --}}
             <div class="header_wishlist mblehdrr">
-                <a href="#"><span class="ion-android-person"></span></a>
+                <a href="{{ route('myaccount') }}"><span class="ion-android-person"></span></a>
 
             </div>
             <div class="header_wishlist mblehdrr">
@@ -261,6 +292,13 @@
                 <a href="javascript:void(0)"><span class="lnr lnr-cart"></span></a>
                 <span class="cart_quantity">2</span>
             </div>
+            @if (Auth::guard('customer')->check())
+                <div class="mini_cart_wrapper mblehdrr">
+                    <a href="{{ route('myaccount_logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                </div>
+            @endif
         </div>
 
         <div class="top_right text-end">

@@ -125,8 +125,8 @@
                                                 aria-label="Nameorderby asc" style="">Image
                                             </th>
                                             <th title="Name" class="text-start column-key-name sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1"
-                                                aria-label="Nameorderby asc" style="">Name
+                                                aria-controls="botble-page-tables-page-table" rowspan="1"
+                                                colspan="1" aria-label="Nameorderby asc" style="">Name
                                             </th>
                                             <th title="Name" class="text-start column-key-name sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
@@ -159,6 +159,13 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($posts as $item)
+                                            @php
+                                                foreach ($categorys as $cat) {
+                                                    if ($item->categories == $cat->id) {
+                                                        $cat_name = $cat->name;
+                                                    }
+                                                }
+                                            @endphp
                                             <tr role="row" class="odd">
                                                 <td class="text-start no-sort dtr-control">
                                                     <div class="text-start">
@@ -178,7 +185,7 @@
                                                         {{ $item->name }}</a>
                                                 </td>
                                                 <td class=" text-start column-key-name">
-                                                    {{ $item->categories }}
+                                                    {{ $cat_name }}
                                                 </td>
                                                 <td class=" text-start column-key-name">
 

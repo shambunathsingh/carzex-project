@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category\Category;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
+use App\Models\Post\Post;
+use App\Models\PostCategory\PostCategory;
 use App\Models\ProductFeature\ProductFeatures;
 use App\Models\Video\Video;
 use Illuminate\Http\Request;
@@ -129,9 +131,16 @@ class HomeController extends Controller
 
         $allpages = Page::all();
 
+        $post_list = Post::all();
+        $cat_list = PostCategory::all();
+
+        // Retrieve the latest two posts
+        $latest_posts = Post::latest()->take(2)->get();
+
+
         $title = "Carzex - Blogs";
 
-        return view('front.blog.index', ['title' => $title, 'pages' => $allpages]);
+        return view('front.blog.index', ['title' => $title, 'pages' => $allpages, 'posts' => $post_list, 'postCategory' => $cat_list, 'latest_posts' => $latest_posts]);
     }
 
     public function terms_condition()

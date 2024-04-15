@@ -1140,6 +1140,7 @@ textarea:-ms-input-placeholder {
 
 .mini_cart_wrapper {
   position: relative;
+  margin-right: 20px;
 }
 
 .mini_cart_wrapper:hover>a {
@@ -5480,3 +5481,49 @@ p.text-decoration-line-through.mrpPrice {
   border-radius: unset !important;
   margin: 1px;
 }
+
+
+
+
+
+/* Main page profile dropdown */
+.profilemenu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 999;
+  transition: all 0.4s ease;
+}
+
+.header_wishlist {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.profile-trigger:hover+.profilemenu {
+  display: block;
+  transition: all 0.4s ease;
+
+}
+
+.profilemenu li {
+  padding: 8px 10px;
+}
+
+.profilemenu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.profilemenu li a:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+
+/* My Account page */
