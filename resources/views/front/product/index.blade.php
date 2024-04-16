@@ -424,7 +424,56 @@
 
                     <div class="ctgryarebox">
                         <div class="row flex flex-wrap">
-                            <div class="col-md-3 col-sm-4 col-6 mb-3 ">
+                            @foreach ($products as $item)
+                                <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                    <div class="ctgpdbx border rounded shadow">
+                                        <div class="card" aria-hidden="true">
+
+                                            <div class="img-wrapper">
+                                                <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                                @if ($item->images)
+                                                    <img src="{{ asset($item->images) }}" class="inner-img"
+                                                        alt="...">
+                                                @else
+                                                    <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
+                                                        class="inner-img" alt="...">
+                                                @endif
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a href="#">
+                                                        {{ $item->name }}
+                                                    </a></h5>
+                                                <p class="caxt">
+                                                <div class="str">
+                                                    <span><i class="fa-solid fa-star"></i></span>
+                                                    <span><i class="fa-solid fa-star"></i></span>
+                                                    <span><i class="fa-solid fa-star"></i></span>
+                                                    <span><i class="fa-solid fa-star"></i></span>
+                                                    <span><i class="fa-solid fa-star"></i></span>
+                                                </div>
+                                                </p>
+
+                                                <div class="productprice">
+                                                    <p><span>MRP:</span> <span class="fdsm"
+                                                            style="text-decoration-line: line-through; color: gray;">₹2135</span>
+                                                    </p>
+                                                    <p><span>Price:</span> <span class="fdsm"
+                                                            style="color:#01a9f3;">₹2136</span></p>
+                                                </div>
+
+                                                <div class="adtbynbtn">
+                                                    <button>Add To Cart</button>
+                                                    <button>Buy Now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+
+                            {{-- <div class="col-md-3 col-sm-4 col-6 mb-3">
                                 <div class="ctgpdbx border rounded shadow">
                                     <div class="card" aria-hidden="true">
 
@@ -465,6 +514,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3 col-sm-4 col-6 mb-3">
                                 <div class="ctgpdbx border rounded shadow">
                                     <div class="card" aria-hidden="true">
@@ -547,56 +597,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-
-
-                            <div class="col-md-3 col-sm-4 col-6 mb-3">
-                                <div class="ctgpdbx border rounded shadow">
-                                    <div class="card" aria-hidden="true">
-
-                                        <div class="img-wrapper">
-                                            <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                            <img src="./assets/img/s-product/product6.jpg" class="inner-img"
-                                                alt="...">
-                                        </div>
-
-
-                                        <div class="card-body ">
-                                            <h5 class="card-title"><a href="#">
-                                                    Carzex Android 10 Universal 7 inch Screen Car Stereo with
-                                                </a></h5>
-                                            <p class="caxt">
-                                            <div class="str">
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                            </div>
-                                            </p>
-
-                                            <div class="productprice">
-                                                <p><span>MRP:</span> <span class="fdsm"
-                                                        style="text-decoration-line: line-through; color: gray;">₹2135</span>
-                                                </p>
-                                                <p><span>Price:</span> <span class="fdsm"
-                                                        style="color:#01a9f3;">₹2136</span> </p>
-                                            </div>
-
-                                            <div class="adtbynbtn">
-                                                <button>Add To Cart</button>
-                                                <button>Buy Now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
+                            </div> --}}
 
                         </div>
                     </div>

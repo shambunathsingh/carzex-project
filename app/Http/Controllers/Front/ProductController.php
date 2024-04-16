@@ -13,7 +13,10 @@ class ProductController extends Controller
 
         $title = "Carzex - Product Categories";
 
-        return view('front.product.index', ['title' => $title]);
+        $allproduct = Product::all();
+
+
+        return view('front.product.index', ['title' => $title, 'products' => $allproduct]);
     }
 
     public function single_product($id)

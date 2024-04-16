@@ -251,8 +251,8 @@
                                 <li><a href="#">SPECIAL OFFER</a>
                                 </li>
 
-                                <li class="crthlo" id="crthloid"><a href="#"><span onclick="changeColor()"
-                                            class="lnr lnr-cart"
+                                <li class="crthlo" id="crthloid"><a href="{{ route('allproducts') }}"><span
+                                            onclick="changeColor()" class="lnr lnr-cart"
                                             style="font-size: 18px; font-weight: bold;"></span></a>
                                 </li>
 
