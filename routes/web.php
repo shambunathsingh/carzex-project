@@ -17,13 +17,17 @@ use App\Http\Controllers\Admin\FAQ\FAQController;
 use App\Http\Controllers\Admin\Location\LocationController;
 use App\Http\Controllers\Admin\Media\MediaController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
+use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
 use App\Http\Controllers\Admin\States\StateController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Front\Account\AccountController;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Cart\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,43 +40,64 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('test', function () {
-    return view('test');
+Route::get('test2', function () {
+    return view('test2');
 });
 
 Route::get('/customer-import', [DataImportController::class, 'index']);
 Route::post('/customer-import', [DataImportController::class, 'importExcelData']);
 
-Route::get('', [HomeController::class, 'index'])->name('home');
-Route::get('page/{id}', [HomeController::class, 'showPage'])->name('page');
-// $page = Page::all();
-// $page_info = PageInfo::all();
 
 
-
-Route::get('return-warranty', [HomeController::class, 'return_warranty'])->name('return_warranty');
-Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
-Route::get('blogs', [HomeController::class, 'blog'])->name('blog');
-Route::get('terms-conditions', [HomeController::class, 'terms_condition'])->name('terms_condition');
-Route::get('contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('teams', [HomeController::class, 'team'])->name('team');
-Route::get('shipping-policy', [HomeController::class, 'shipping_policy'])->name('shipping_policy');
-
-// Product Section
-Route::get('product-category', [FrontProductController::class, 'allproducts'])->name('allproducts');
-Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
-
-// Account Section
 
 Route::middleware(['guest:web'])->group(function () {
+    Route::get('', [HomeController::class, 'index'])->name('home');
+    Route::get('page/{id}', [HomeController::class, 'showPage'])->name('page');
+
+    Route::get('return-warranty', [HomeController::class, 'return_warranty'])->name('return_warranty');
+    Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
+    Route::get('blogs', [HomeController::class, 'blog'])->name('blog');
+    Route::get('terms-conditions', [HomeController::class, 'terms_condition'])->name('terms_condition');
+    Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('teams', [HomeController::class, 'team'])->name('team');
+    Route::get('shipping-policy', [HomeController::class, 'shipping_policy'])->name('shipping_policy');
+
+    // Product Section
+    Route::get('product-category', [FrontProductController::class, 'allproducts'])->name('allproducts');
+    Route::get('product-category/{categoryName}', [FrontProductController::class, 'show'])->name('product-category.show');
+    Route::get('product-category/{parentCategory}/{categoryName}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
+    Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
+
+    // Add to Cart
+    Route::get('add-to-cart={id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+    Route::get('cart', [CartController::class, 'cart'])->name('cart');
+    Route::post('/store-cart', function (Request $request) {
+        $allCartItems = $request->input('allCartItems');
+
+        // Store cartItems in Laravel session
+        session(['cart' => $allCartItems]);
+
+        // Alternatively, you can store it in the database or any other storage
+        // YourModel::create(['cart_items' => json_encode($cartItems)]);
+
+        return response()->json(['message' => 'Cart data stored successfully']);
+    });
+
+    // Account Section
     Route::get('my-account', [AccountController::class, 'index'])->name('myaccount');
     Route::get('register', [AccountController::class, 'register'])->name('new_register');
     Route::post('create-user', [AccountController::class, 'registerUser'])->name('register_newUser');
     Route::post('customer-login', [AccountController::class, 'login'])->name('login_newUser');
+
+    // My Order Section
+    Route::get('my-orders', [CartController::class, 'thankyou'])->name('thankyou');
 });
 
 Route::middleware(['auth:customer'])->group(function () {
     // Route::get('my-account', [AccountController::class, 'index'])->name('myaccount');
+    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('payment', [CartController::class, 'processPayment'])->name('payment');
+
     Route::get('logout-account', [AccountController::class, 'logout'])->name('myaccount_logout');
 });
 
@@ -129,6 +154,17 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Ecommerce Section
         Route::group(['prefix' => 'ecommerce/', 'as' => 'ecommerce.'], function () {
+
+
+            // Order section
+            Route::get('orders', [OrderController::class, 'index'])->name('orders');
+            Route::post('store-product-categories', [ProductController::class, 'store_pcategory'])->name('save_pcategories');
+
+            Route::get('product-categories/create', [ProductController::class, 'create_pcategory'])->name('create_pcategory');
+            Route::post('update-product-categories/{id}', [ProductController::class, 'update_pcategory'])->name('update_pcategory');
+            Route::get('delete-product/{id}', [ProductController::class, 'delete_product'])->name('delete_product');
+
+            Route::get('/fetch-category-data/{id}', [CategoryController::class, 'fetchCategoryData'])->name('fetch.category.data');
 
 
             // Product categories

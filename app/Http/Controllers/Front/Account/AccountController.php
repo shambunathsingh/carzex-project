@@ -58,7 +58,7 @@ class AccountController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('phone', 'password');
+        $credentials = $request->only('email', 'phone', 'password');
 
         // dd($credentials);
         // exit;
@@ -81,7 +81,7 @@ class AccountController extends Controller
                 return redirect()->intended('/');
             } else {
                 // Regular login attempt failed
-                return redirect()->route('/')->with('error', 'Invalid credentials. Please try again.');
+                return redirect()->route('home')->with('error', 'Invalid credentials. Please try again.');
             }
         }
     }

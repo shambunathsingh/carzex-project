@@ -90,7 +90,7 @@
                                             class="fa fa-bolt"></i></span>
                                     Flash sales</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.orders') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-shopping-bag"></i></span>
                                     Orders</a>

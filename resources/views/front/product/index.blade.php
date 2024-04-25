@@ -441,7 +441,8 @@
                                             </div>
 
                                             <div class="card-body">
-                                                <h5 class="card-title"><a href="#">
+                                                <h5 class="card-title"><a
+                                                        href="{{ route('single_product', ['id' => $item->id]) }}">
                                                         {{ $item->name }}
                                                     </a></h5>
                                                 <p class="caxt">
@@ -456,14 +457,16 @@
 
                                                 <div class="productprice">
                                                     <p><span>MRP:</span> <span class="fdsm"
-                                                            style="text-decoration-line: line-through; color: gray;">₹2135</span>
+                                                            style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
                                                     </p>
                                                     <p><span>Price:</span> <span class="fdsm"
-                                                            style="color:#01a9f3;">₹2136</span></p>
+                                                            style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
+                                                    </p>
                                                 </div>
 
                                                 <div class="adtbynbtn">
-                                                    <button>Add To Cart</button>
+                                                    <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
+                                                            To Cart</button></a>
                                                     <button>Buy Now</button>
                                                 </div>
                                             </div>

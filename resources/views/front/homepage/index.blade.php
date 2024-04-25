@@ -119,16 +119,32 @@
                     @foreach ($category as $cat_item)
                         <div class="col-md-3 col-12">
                             <div class="cateinner">
-                                <div class="cateImg">
-                                    <a href="#"><img src="{{ asset('storage/p_category/' . $cat_item->image) }}"
-                                            alt=""></a>
-                                </div>
-                                <div class="cateName text-center">
-                                    <h6>{{ $cat_item->name }}</h6>
-                                </div>
+                                @php
+                                    // Check if the category has a parent category
+                                    $parentCategory = $cat_item->parent_id
+                                        ? App\Models\Category\Category::find($cat_item->parent_id)
+                                        : null;
+
+                                    // Construct the URL based on whether the category has a parent
+                                    $url = $parentCategory
+                                        ? "product-category/{$parentCategory->name}/{$cat_item->name}"
+                                        : "product-category/{$cat_item->name}";
+                                @endphp
+
+
+
+                                <a href="{{ url($url) }}">
+                                    <div class="cateImg">
+                                        <img src="{{ asset('storage/p_category/' . $cat_item->image) }}" alt="">
+                                    </div>
+                                    <div class="cateName text-center">
+                                        <h6>{{ $cat_item->name }}</h6>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     @endforeach
+
 
                     {{-- <div class="col-md-3 col-12">
                         <div class="cateinner">

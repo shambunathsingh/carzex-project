@@ -1,8 +1,8 @@
 @extends('admin.layout.app')
 
 @section('content')
-    {{-- <form action="{{ route('admin.page.page_save') }}" method="post" enctype="multipart/form-data"> --}}
-    <form enctype="multipart/form-data">
+    <form action="{{ route('admin.banner_update', ['id' => $banner->id]) }}" method="post" enctype="multipart/form-data">
+        {{-- <form enctype="multipart/form-data"> --}}
 
         <div class="main-panel">
             <div class="pagesbodyarea">
@@ -64,9 +64,9 @@
                                         <label for="name" class="control-label required"
                                             aria-required="true">Name</label>
                                         <input class="form-control is-valid" placeholder="Name" data-counter="120"
-                                            v-pre="" name="name" type="text" value="Faq" id="name"
-                                            aria-invalid="false" aria-describedby="name-error"><span id="name-error"
-                                            class="invalid-feedback" style="display: inline;"></span><small
+                                            v-pre="" name="name" type="text" value="{{ $banner->name }}"
+                                            id="name" aria-invalid="false" aria-describedby="name-error"><span
+                                            id="name-error" class="invalid-feedback" style="display: inline;"></span><small
                                             class="charcounter">(117 character(s) remain)</small>
 
 
@@ -192,7 +192,7 @@
                                                     <td class="column-key-id sorting_1">{{ $banner->id }}</td>
                                                     <td class=" text-start column-key-template" style="">
                                                         <img src="{{ asset('storage/banners/' . $banner->banner) }}"
-                                                        width="100" height="100" alt="Banner Image">
+                                                            width="100" height="100" alt="Banner Image">
                                                     </td>
                                                     <td class=" text-start column-key-name">
                                                         Sample
@@ -206,8 +206,7 @@
                                                     <td class=" text-center">
                                                         <div class="table-actions">
 
-                                                            <a href="#"
-                                                                class="btn btn-icon btn-sm btn-primary"
+                                                            <a href="#" class="btn btn-icon btn-sm btn-primary"
                                                                 data-bs-toggle="tooltip" data-bs-original-title="Edit"><i
                                                                     class="fa fa-edit"></i></a>
 
@@ -251,22 +250,22 @@
                                 </div>
                             </div>
                             <!-- <div id="waypoint"></div>
-                                                                                    <div class="form-actions form-actions-fixed-top hidden">
-                                                                                        <ol class="breadcrumb" v-pre="">
-                                                                                            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                                                                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                                                                            <li class="breadcrumb-item active">Edit "Faq"</li>
-                                                                                        </ol>
+                                                                                            <div class="form-actions form-actions-fixed-top hidden">
+                                                                                                <ol class="breadcrumb" v-pre="">
+                                                                                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                                                                                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                                                                                                    <li class="breadcrumb-item active">Edit "Faq"</li>
+                                                                                                </ol>
 
-                                                                                        <div class="btn-set mb-1">
-                                                                                            <button type="submit" name="submit" value="save" class="btn btn-info">
-                                                                                                <i class="fa fa-save"></i> Save &amp; Exit
-                                                                                            </button> &nbsp;
-                                                                                            <button type="submit" name="submit" value="apply" class="btn btn-success">
-                                                                                                <i class="fa fa-check-circle"></i> Save
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div> -->
+                                                                                                <div class="btn-set mb-1">
+                                                                                                    <button type="submit" name="submit" value="save" class="btn btn-info">
+                                                                                                        <i class="fa fa-save"></i> Save &amp; Exit
+                                                                                                    </button> &nbsp;
+                                                                                                    <button type="submit" name="submit" value="apply" class="btn btn-success">
+                                                                                                        <i class="fa fa-check-circle"></i> Save
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div> -->
 
                         </div>
                         <div class="form-side-meta-boxes">

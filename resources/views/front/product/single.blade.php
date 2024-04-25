@@ -15,8 +15,8 @@
                                 <a data-fancybox-trigger="gallery" href="javascript:;">
                                     <!-- <span class="badge text-bg-primary">-20%</span> -->
                                     <img class="xzoom" id="xzoom-default"
-                                        src="{{ asset('storage/products/' . $product->images) }}"
-                                        xoriginal="{{ asset('storage/products/' . $product->images) }}"
+                                        src="{{ asset($product->images) }}"
+                                        xoriginal="{{ asset($product->images) }}"
                                         title="Product 1 is awesome" />
 
                                 </a>

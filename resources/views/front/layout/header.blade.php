@@ -78,11 +78,13 @@
                                 <span class="wishlist_quantity">3</span>
                             </div>
                             <div class="mini_cart_wrapper">
-                                <a href="javascript:void(0)"><span class="lnr lnr-cart"></span></a>
+                                {{-- <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a> --}}
+                                <a><span class="lnr lnr-cart"></span></a>
+                                {{-- <span class="cart_quantity">{{ $cart }}</span> --}}
                                 <span class="cart_quantity">2</span>
                             </div>
                             @if (Auth::guard('customer')->check())
-                                <div class="mini_cart_wrapper">
+                                <div class="header_wishlist">
                                     <a href="{{ route('myaccount_logout') }}">
                                         <i class="fa-solid fa-right-from-bracket fa-2x"></i>
                                     </a>
@@ -114,22 +116,26 @@
                 <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
             </div>
         </div>
-        <div class="cart_item">
-            <div class="cart_img">
-                <a href="#"><img src="/assets/img/s-product/product.jpg" alt=""></a>
+        @foreach ($cartItems as $cartItem)
+            <div class="cart_item">
+                <div class="cart_img">
+                    <a href="#"><img src="{{ asset($products[$cartItem->product_id]->images) }}"
+                            alt=""></a>
+                </div>
+                <div class="cart_info">
+                    <a href="#">{{ $products[$cartItem->product_id]->name }}</a> {{-- Access product name from $products --}}
+                    <span class="quantity">Qty: {{ $cartItem->quantity }}</span>
+                    <span class="price_cart">{{ $products[$cartItem->product_id]->sale_price }}</span>
+                    {{-- Assuming 'price' is a field in the Product model --}}
+                </div>
+                <div class="cart_remove">
+                    <a href="#"><i class="ion-android-close"></i></a>
+                </div>
             </div>
-            <div class="cart_info">
-                <a href="#">JBL Flip 3 Splasroof Portable Bluetooth 2</a>
+        @endforeach
 
-                <span class="quantity">Qty: 1</span>
-                <span class="price_cart">$60.00</span>
 
-            </div>
-            <div class="cart_remove">
-                <a href="#"><i class="ion-android-close"></i></a>
-            </div>
-        </div>
-        <div class="cart_item">
+        {{-- <div class="cart_item">
             <div class="cart_img">
                 <a href="#"><img src="/assets/img/s-product/product2.jpg" alt=""></a>
             </div>
@@ -141,15 +147,15 @@
             <div class="cart_remove">
                 <a href="#"><i class="ion-android-close"></i></a>
             </div>
-        </div>
+        </div> --}}
         <div class="mini_cart_table">
             <div class="cart_total">
                 <span>Sub total:</span>
-                <span class="price">$138.00</span>
+                <span class="price">Rs.{{ $totalAmount }}</span>
             </div>
             <div class="cart_total mt-10">
                 <span>total:</span>
-                <span class="price">$138.00</span>
+                <span class="price">Rs.{{ $totalAmount }}</span>
             </div>
         </div>
 
@@ -158,7 +164,7 @@
                 <a href="cart.html">View cart</a>
             </div>
             <div class="cart_button">
-                <a class="active" href="checkout.html">Checkout</a>
+                <a class="active" href="{{ route('cart') }}">Checkout</a>
             </div>
 
         </div>
@@ -289,11 +295,11 @@
                 <span class="wishlist_quantity">3</span>
             </div>
             <div class="mini_cart_wrapper mblehdrr">
-                <a href="javascript:void(0)"><span class="lnr lnr-cart"></span></a>
+                <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a>
                 <span class="cart_quantity">2</span>
             </div>
             @if (Auth::guard('customer')->check())
-                <div class="mini_cart_wrapper mblehdrr">
+                <div class="header_wishlist mblehdrr">
                     <a href="{{ route('myaccount_logout') }}">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>

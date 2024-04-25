@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Media;
 
+use App\Actions\File\FileUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Media\Media;
 use Illuminate\Http\Request;
@@ -29,8 +30,11 @@ class MediaController extends Controller
             foreach ($request->file('media_gallery') as $file) {
                 if ($file->isValid()) {
                     $logoName = $file->getClientOriginalName();
-                    $path = $file->storeAs('public/media', $logoName);
-                    $url = Storage::url($path);
+                    // $path = $file->storeAs('public/media', $logoName);
+                    // $url = Storage::url($path);
+
+                    $url = FileUpload::upload($file, "media");
+
 
                     $media = new Media();
                     $media->name = $logoName;

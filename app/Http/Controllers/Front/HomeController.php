@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart\Cart;
 use App\Models\Category\Category;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
@@ -12,8 +13,17 @@ use App\Models\ProductFeature\ProductFeatures;
 use App\Models\Video\Video;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
+    protected $cartService;
+
+    public function __construct(Cart $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+
     public function index()
     {
         $title = "Carzex - Car Depot";
@@ -23,8 +33,22 @@ class HomeController extends Controller
         $video_info = Video::all();
         $features_info = ProductFeatures::all();
 
+        // Fetch cart details
+        $cartService = new Cart(); // Create an instance of CartService
+        $cartDetails = $cartService->getCartDetails();
+
         $category_list = Category::all();
         $featured_categories = [];
+
+        if (Auth::guard('customer')->check() && Auth::guard('customer')->id()) {
+            $customerId = Auth::guard('customer')->id();
+
+            $count = Cart::where('customer_id', $customerId)->count();
+        } else {
+            $count = 0;
+        }
+
+        // dd($count, $cart);
 
         foreach ($category_list as $category) {
             if ($category->is_featured == "on") {
@@ -32,12 +56,17 @@ class HomeController extends Controller
             }
         }
 
+        // exit;
         return view('front.homepage.index', [
             'title' => $title,
             'pages' => $pages,
             'video' => $video_info,
             'feature' => $features_info,
             'category' => $featured_categories,
+            'cart' => $count,
+            'cartItems' => $cartDetails['items'],
+            'products' => $cartDetails['products'],
+            'totalAmount' => $cartDetails['totalAmount']
         ]);
     }
 
