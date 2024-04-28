@@ -65,24 +65,44 @@
                         </div>
                         <div class="middel_right_info">
                             <div class="header_wishlist">
-                                <a href="{{ route('myaccount') }}" class="profile-trigger"><span
-                                        class="ion-android-person"></span></a>
+                                <a href="{{ route('myaccount') }}" class="profile-trigger">
+                                    <span class="ion-android-person"></span>
+                                </a>
                                 {{-- <ul class="profilemenu">
                                     <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a></li>
                                     <li><a href="http://localhost:8000/logout"><i class="fa-solid fa-key"></i>Logout</a>
                                     </li>
                                 </ul> --}}
                             </div>
-                            <div class="header_wishlist">
-                                <a href="javascript:void(0)"><span class="lnr lnr-heart"></span></a>
-                                <span class="wishlist_quantity">3</span>
-                            </div>
-                            <div class="mini_cart_wrapper">
-                                {{-- <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a> --}}
-                                <a><span class="lnr lnr-cart"></span></a>
-                                {{-- <span class="cart_quantity">{{ $cart }}</span> --}}
-                                <span class="cart_quantity">2</span>
-                            </div>
+
+                            @if (Auth::guard('customer')->check())
+                                <div class="header_wishlist">
+                                    <a href="{{ route('show_wishlist') }}"><span class="lnr lnr-heart"></span></a>
+                                    <span class="wishlist_quantity">{{ session('wishListCount') }}</span>
+                                </div>
+                            @else
+                                <div class="header_wishlist">
+                                    <a href="{{ route('show_wishlist') }}"><span class="lnr lnr-heart"></span></a>
+                                    <span class="wishlist_quantity">0</span>
+                                </div>
+                            @endif
+
+                            @if (Auth::guard('customer')->check())
+                                <div class="mini_cart_wrapper">
+                                    {{-- <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a> --}}
+                                    <a><span class="lnr lnr-cart"></span></a>
+                                    {{-- <span class="cart_quantity">{{ $cart }}</span> --}}
+                                    <span class="cart_quantity">{{ session('cartCount') }}</span>
+                                </div>
+                            @else
+                                <div class="mini_cart_wrapper">
+                                    {{-- <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a> --}}
+                                    <a><span class="lnr lnr-cart"></span></a>
+                                    {{-- <span class="cart_quantity">{{ $cart }}</span> --}}
+                                    <span class="cart_quantity">0</span>
+                                </div>
+                            @endif
+
                             @if (Auth::guard('customer')->check())
                                 <div class="header_wishlist">
                                     <a href="{{ route('myaccount_logout') }}">
@@ -90,7 +110,6 @@
                                     </a>
                                 </div>
                             @endif
-
                         </div>
 
 
@@ -106,6 +125,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('danger') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('warning'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!--mini cart-->
     <div class="mini_cart">
         <div class="cart_close">
@@ -116,23 +147,41 @@
                 <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
             </div>
         </div>
-        @foreach ($cartItems as $cartItem)
+
+        @if (Auth::guard('customer')->check())
+            @foreach (session('cartItems', []) as $cartItem)
+                <div class="cart_item">
+                    <div class="cart_img">
+                        <a href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}"><img
+                                src="{{ asset($cartItem['product']['images']) }}" alt=""></a>
+                    </div>
+                    <div class="cart_info">
+                        <a
+                            href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}">{{ $cartItem['product']['name'] }}</a>
+                        <span class="quantity">Qty: {{ $cartItem['quantity'] }}</span>
+                        <span class="price_cart">{{ $cartItem['product']['sale_price'] }}</span>
+                    </div>
+                    <div class="cart_remove">
+                        <a href="#"><i class="ion-android-close"></i></a>
+                    </div>
+                </div>
+            @endforeach
+        @else
             <div class="cart_item">
                 <div class="cart_img">
-                    <a href="#"><img src="{{ asset($products[$cartItem->product_id]->images) }}"
-                            alt=""></a>
+                    <a href=""><img src="" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="#">{{ $products[$cartItem->product_id]->name }}</a> {{-- Access product name from $products --}}
-                    <span class="quantity">Qty: {{ $cartItem->quantity }}</span>
-                    <span class="price_cart">{{ $products[$cartItem->product_id]->sale_price }}</span>
-                    {{-- Assuming 'price' is a field in the Product model --}}
+                    <a href=""></a>
+                    <span class="quantity"></span>
+                    <span class="price_cart"></span>
                 </div>
                 <div class="cart_remove">
-                    <a href="#"><i class="ion-android-close"></i></a>
+                    {{-- <a href=""><i class="ion-android-close"></i></a> --}}
                 </div>
             </div>
-        @endforeach
+        @endif
+
 
 
         {{-- <div class="cart_item">
@@ -151,17 +200,17 @@
         <div class="mini_cart_table">
             <div class="cart_total">
                 <span>Sub total:</span>
-                <span class="price">Rs.{{ $totalAmount }}</span>
+                <span class="price">Rs.{{ session('totalAmount', 0) }}</span>
             </div>
             <div class="cart_total mt-10">
                 <span>total:</span>
-                <span class="price">Rs.{{ $totalAmount }}</span>
+                <span class="price">Rs.{{ session('totalAmount', 0) }}</span>
             </div>
         </div>
 
         <div class="mini_cart_footer">
             <div class="cart_button">
-                <a href="cart.html">View cart</a>
+                <a href="{{ route('cart') }}">View cart</a>
             </div>
             <div class="cart_button">
                 <a class="active" href="{{ route('cart') }}">Checkout</a>

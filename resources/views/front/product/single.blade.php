@@ -1,4 +1,5 @@
 @extends('front.layout.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
     <main class="snglcver">
@@ -14,10 +15,8 @@
                             <div class="xzoom-container">
                                 <a data-fancybox-trigger="gallery" href="javascript:;">
                                     <!-- <span class="badge text-bg-primary">-20%</span> -->
-                                    <img class="xzoom" id="xzoom-default"
-                                        src="{{ asset($product->images) }}"
-                                        xoriginal="{{ asset($product->images) }}"
-                                        title="Product 1 is awesome" />
+                                    <img class="xzoom" id="xzoom-default" src="{{ asset($product->images) }}"
+                                        xoriginal="{{ asset($product->images) }}" title="Product 1 is awesome" />
 
                                 </a>
                                 <div class="xzoom-thumbs">
@@ -155,7 +154,8 @@
                             <div class="btnarea ">
                                 <button class="btn btimary">Add to Cart</button>
                                 <button class="btn btimary">Buy Now</button>
-                                <button class="btn whlst">Add to wishlist</button>
+                                <button class="btn whlst" id="wishlist">Add to wishlist</button>
+                                <input type="hidden" name="productid" id="productid" value="{{ $product->id }}">
                             </div>
                             <div class="chkdvlyavbl">
                                 <div class="d-flex align-items-center">
@@ -341,51 +341,52 @@
                             <h2><span> <strong>Related</strong>Products</span></h2>
                         </div>
                         <div class="product_carousel product_column4 owl-carousel">
-                            
-                            
+
+
                             <div class="single_product22">
-                                
-                                  <div class="">
-                                <div class="card" aria-hidden="true">
 
-                                    <div class="img-wrapper">
-                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                        <img src="/assets/img/s-product/product6.jpg" class="inner-img" alt="...">
-                                    </div>
+                                <div class="">
+                                    <div class="card" aria-hidden="true">
 
-
-                                    <div class="card-body ">
-                                        <h5 class="card-title"><a href="#">
-                                                Carzex Android 10 Universal 7 inch Screen Car Stereo with
-                                            </a></h5>
-                                        <p class="caxt">
-                                        <div class="str">
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
+                                        <div class="img-wrapper">
+                                            <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                            <img src="/assets/img/s-product/product6.jpg" class="inner-img"
+                                                alt="...">
                                         </div>
-                                        </p>
 
-                                        <div class="productprice">
-                                            <p><span>MRP:</span> <span class="fdsm"
-                                                    style="text-decoration-line: line-through; color: gray;">₹2135</span>
+
+                                        <div class="card-body ">
+                                            <h5 class="card-title"><a href="#">
+                                                    Carzex Android 10 Universal 7 inch Screen Car Stereo with
+                                                </a></h5>
+                                            <p class="caxt">
+                                            <div class="str">
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                            </div>
                                             </p>
-                                            <p><span>Price:</span> <span class="fdsm"
-                                                    style="color:#01a9f3;">₹2136</span> </p>
-                                        </div>
 
-                                        <div class="adtbynbtn">
-                                            <button>Add To Cart</button>
-                                            <button>Buy Now</button>
+                                            <div class="productprice">
+                                                <p><span>MRP:</span> <span class="fdsm"
+                                                        style="text-decoration-line: line-through; color: gray;">₹2135</span>
+                                                </p>
+                                                <p><span>Price:</span> <span class="fdsm"
+                                                        style="color:#01a9f3;">₹2136</span> </p>
+                                            </div>
+
+                                            <div class="adtbynbtn">
+                                                <button>Add To Cart</button>
+                                                <button>Buy Now</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -396,12 +397,12 @@
 
 
         <!-- recently viewed prodect  -->
-       
-            
-            
-            
-            
-             <section class="product_area mb-50 mt-5 mb-3">
+
+
+
+
+
+        <section class="product_area mb-50 mt-5 mb-3">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -409,65 +410,66 @@
                             <h2><span> <strong>Recently</strong> Viewed Products</span></h2>
                         </div>
                         <div class="product_carousel product_column4 owl-carousel">
-                            
-                            
+
+
                             <div class="single_product22">
-                                
-                                  <div class="">
-                                <div class="card" aria-hidden="true">
 
-                                    <div class="img-wrapper">
-                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                        <img src="/assets/img/s-product/product6.jpg" class="inner-img" alt="...">
-                                    </div>
+                                <div class="">
+                                    <div class="card" aria-hidden="true">
 
-
-                                    <div class="card-body ">
-                                        <h5 class="card-title"><a href="#">
-                                                Carzex Android 10 Universal 7 inch Screen Car Stereo with
-                                            </a></h5>
-                                        <p class="caxt">
-                                        <div class="str">
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
-                                            <span><i class="fa-solid fa-star"></i></span>
+                                        <div class="img-wrapper">
+                                            <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                            <img src="/assets/img/s-product/product6.jpg" class="inner-img"
+                                                alt="...">
                                         </div>
-                                        </p>
 
-                                        <div class="productprice">
-                                            <p><span>MRP:</span> <span class="fdsm"
-                                                    style="text-decoration-line: line-through; color: gray;">₹2135</span>
+
+                                        <div class="card-body ">
+                                            <h5 class="card-title"><a href="#">
+                                                    Carzex Android 10 Universal 7 inch Screen Car Stereo with
+                                                </a></h5>
+                                            <p class="caxt">
+                                            <div class="str">
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                            </div>
                                             </p>
-                                            <p><span>Price:</span> <span class="fdsm"
-                                                    style="color:#01a9f3;">₹2136</span> </p>
-                                        </div>
 
-                                        <div class="adtbynbtn">
-                                            <button>Add To Cart</button>
-                                            <button>Buy Now</button>
+                                            <div class="productprice">
+                                                <p><span>MRP:</span> <span class="fdsm"
+                                                        style="text-decoration-line: line-through; color: gray;">₹2135</span>
+                                                </p>
+                                                <p><span>Price:</span> <span class="fdsm"
+                                                        style="color:#01a9f3;">₹2136</span> </p>
+                                            </div>
+
+                                            <div class="adtbynbtn">
+                                                <button>Add To Cart</button>
+                                                <button>Buy Now</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
 
             </div>
         </section>
-        
+
 
 
 
 
 
     </main>
-    
+
     <div class="mbileadcrtbubtn">
         <div class="d-flex">
             <a href="view-cart.html" type="button" class="btnrgbt adcrt">Add To Cart</a>
@@ -475,3 +477,36 @@
         </div>
     </div>
 @endsection
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#wishlist').click(function(e) {
+            e.preventDefault();
+
+            var pid = $("#productid").val();
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('add_wishlist', ['id' => ':pid']) }}".replace(':pid', pid),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    product_id: pid
+                },
+                success: function(response) {
+                    alert(response.message); // Show success message in an alert
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Error: " + errorThrown); // Show error message in an alert
+                }
+            });
+        });
+    });
+</script>

@@ -36,6 +36,7 @@ class CartController extends Controller
             $cart = new Cart();
             $cart->customer_id = $customerId;
             $cart->product_id = $id;
+            $cart->quantity = 1;
             $cart->save();
         }
 
@@ -184,5 +185,15 @@ class CartController extends Controller
         $orders = Order::with('productOrders.product')->where('customer_id', $customerId)->orderBy('created_at', 'desc')->get();
 
         return view('front.thankyou', ['title' => $title, 'orders' => $orders]);
+    }
+
+    public function removeCartItem($id)
+    {
+
+        $cartItem = Cart::findOrFail($id);
+
+        $cartItem->delete();
+
+        return redirect()->back();
     }
 }

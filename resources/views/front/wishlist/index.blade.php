@@ -9,7 +9,7 @@
                     <div class="col-md-12 col-12">
                         <div class="contact-detils">
                             <div class="loca">
-                                <h6>HOME > <span>MY ACCOUNT</span></h6>
+                                <h6>HOME > <span>WISHLIST</span></h6>
                             </div>
                         </div>
                     </div>
@@ -20,10 +20,10 @@
 
                             <article class="post-2171 page type-page status-publish hentry">
 
-                                <h2 class="entry-title" style="display: none;">My Account</h2><span class="vcard"
-                                    style="display: none;"><span class="fn"><a href="#"
-                                            title="Posts by Kumar Rajeev" rel="author">Kumar Rajeev</a></span></span><span
-                                    class="updated" style="display:none">2022-12-13T10:57:49+05:30</span>
+                                <h2 class="entry-title">My Wishlit</h2><span class="vcard" style="display: none;"><span
+                                        class="fn"><a href="#" title="Posts by Kumar Rajeev" rel="author">Kumar
+                                            Rajeev</a></span></span><span class="updated"
+                                    style="display:none">2022-12-13T10:57:49+05:30</span>
                                 <div class="page-content">
                                     <div class="woocommerce">
                                         <div class="col-lg-10 mx-auto mb-4">
@@ -32,43 +32,171 @@
                                                     <div class="woocommerce-notices-wrapper"></div>
                                                     {{-- Display user information if logged in --}}
                                                     @if (Auth::guard('customer')->check())
-                                                        <form action="" method="post" enctype="multipart/form-data">
-                                                            @csrf
-                                                            @method('post')
-                                                            <div class="account-info">
-                                                                <div class="col-md-4">
-                                                                    <label class="control-label required" for="name"
-                                                                        aria-required="true">Name:</label>
-                                                                    <input type="text" name="name"
-                                                                        class="form-control"
-                                                                        value="{{ Auth::guard('customer')->user()->name }}">
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="control-label required" for="email"
-                                                                        aria-required="true">Email:</label>
-                                                                    <input type="text" name="email"
-                                                                        class="form-control"
-                                                                        value="{{ Auth::guard('customer')->user()->email }}">
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="control-label required" for="phone"
-                                                                        aria-required="true">Phone:</label>
-                                                                    <input type="text" name="phone"
-                                                                        class="form-control"
-                                                                        value="{{ Auth::guard('customer')->user()->phone }}">
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label required" for="address"
-                                                                        aria-required="true">Address:</label>
-                                                                    <textarea name="address" class="form-control" style="width: 30vw; height:20vh;">{{ Auth::guard('customer')->user()->address }}</textarea>
-                                                                </div>
-                                                                <div class="card-footer">
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Update</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                        {{-- Display login form if not logged in --}}
+                                                        <table
+                                                            class="shop_table cart wishlist_table wishlist_view traditional responsive mobile">
+
+
+                                                            <thead class="">
+                                                                <tr>
+
+
+                                                                    <th class="product-thumbnail"></th>
+
+                                                                    <th class="product-name">
+                                                                        <span class="nobr">
+                                                                            Product </span>
+                                                                    </th>
+
+                                                                    <th class="product-price">
+                                                                        <span class="nobr">
+                                                                            Price </span>
+                                                                    </th>
+
+
+                                                                    <th class="product-stock-status">
+                                                                        <span class="nobr">
+                                                                            Stock status </span>
+                                                                    </th>
+
+                                                                    <th class="product-add-to-cart">
+                                                                        <span class="nobr">
+                                                                            Actions </span>
+                                                                    </th>
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody class="wishlist-items-wrapper">
+                                                                @foreach ($wishlistItems as $item)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <img class="img-fluid img-responsive"
+                                                                                src="{{ asset($item->images) }}"
+                                                                                alt="{{ $item->name }}" width="250"
+                                                                                height="250">
+                                                                            {{ $item->name }}
+                                                                        </td>
+                                                                        <td>
+                                                                            MRP: <span style="color: skyblue;">&#8377;
+                                                                                {{ $item->price }}</span><br>
+                                                                            <span style="color: red;">&#8377;
+                                                                                {{ $item->sale_price }}</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $item->stock_status }}
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-default">Quick
+                                                                                View</button>
+                                                                            <button class="btn btn-info">Add to
+                                                                                Cart</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                {{-- <tr id="yith-wcwl-row-5893" data-row-id="5893">
+
+
+                                                                    <td class="product-thumbnail">
+                                                                        <div class="position-relative">
+                                                                            <a
+                                                                                href="https://carzex.com/product/airpro-luxury-mic-man-black-dashboard-car-air-freshener/">
+                                                                                <img fetchpriority="high" decoding="async"
+                                                                                    width="300" height="300"
+                                                                                    src="https://carzex.com/wp-content/uploads/2021/12/CZ-MIC-MAN-BLACK-300x300.jpg"
+                                                                                    class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                                                                                    alt="Dashboard Car Air Freshener"> </a>
+                                                                            <a href="/wishlist/view/9PN16UULYHHJ/?remove_from_wishlist=5893"
+                                                                                class="remove remove_from_wishlist"
+                                                                                title="Remove this product"></a>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td class="product-name">
+
+                                                                        <a
+                                                                            href="https://carzex.com/product/airpro-luxury-mic-man-black-dashboard-car-air-freshener/">Airpro
+                                                                            Luxury Mic Man Black - Dashboard Car Air
+                                                                            Freshener</a>
+
+
+                                                                    </td>
+
+                                                                    <td class="product-price">
+
+                                                                        MRP: <del aria-hidden="true"><span
+                                                                                class="woocommerce-Price-amount amount"><bdi><span
+                                                                                        class="woocommerce-Price-currencySymbol">₹</span>499.00</bdi></span></del>
+                                                                        <span class="screen-reader-text">Original price was:
+                                                                            ₹499.00.</span><ins aria-hidden="true"><span
+                                                                                class="woocommerce-Price-amount amount"><bdi><span
+                                                                                        class="woocommerce-Price-currencySymbol">₹</span>399.00</bdi></span></ins><span
+                                                                            class="screen-reader-text">Current price is:
+                                                                            ₹399.00.</span>
+                                                                    </td>
+
+
+                                                                    <td class="product-stock-status">
+
+                                                                        <span class="wishlist-in-stock text-v-dark">In
+                                                                            Stock</span>
+                                                                    </td>
+
+                                                                    <td class="product-add-to-cart">
+
+                                                                        <!-- Date added -->
+
+
+                                                                        <!-- Add to cart button -->
+                                                                        <div class="add-links-wrap">
+                                                                            <div class="add-links clearfix">
+                                                                                <a href="?add-to-cart=5893&amp;remove_from_wishlist_after_add_to_cart=5893&amp;wishlist_id=8179&amp;wishlist_token=9PN16UULYHHJ"
+                                                                                    data-quantity="1"
+                                                                                    class="viewcart-style-2 product_type_simple add_to_cart_button ajax_add_to_cart add_to_cart alt button"
+                                                                                    data-product_id="5893"
+                                                                                    data-product_sku="CZ-MICMAN-PERFUME-BLACK"
+                                                                                    aria-label="Add to cart: “Airpro Luxury Mic Man Black - Dashboard Car Air Freshener”"
+                                                                                    aria-describedby="" rel="nofollow">Add
+                                                                                    to cart</a>
+                                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-5893 exists wishlist-fragment on-first-load"
+                                                                                    data-fragment-ref="5893"
+                                                                                    data-fragment-options="{&quot;base_url&quot;:&quot;&quot;,&quot;in_default_wishlist&quot;:true,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:5893,&quot;parent_product_id&quot;:5893,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse wishlist&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in your wishlist!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;fa-heart-o&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:&quot;after_add_to_cart&quot;,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+
+                                                                                    <!-- ADD TO WISHLIST -->
+
+                                                                                    <!-- BROWSE WISHLIST MESSAGE -->
+                                                                                    <div class="yith-wcwl-wishlistexistsbrowse"
+                                                                                        data-product-id="5893"
+                                                                                        data-original-product-id="5893">
+                                                                                        <span class="feedback">
+                                                                                            <i
+                                                                                                class="yith-wcwl-icon fa fa-heart"></i>
+                                                                                            The product is already in your
+                                                                                            wishlist! </span>
+                                                                                        <a href="https://carzex.com/wishlist/"
+                                                                                            rel="nofollow"
+                                                                                            data-title="Browse wishlist">
+                                                                                            Browse wishlist </a>
+                                                                                    </div>
+
+                                                                                    <!-- COUNT TEXT -->
+
+                                                                                </div>
+                                                                                <div class="quickview" data-id="5893"
+                                                                                    title="Quick View">Quick View</div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <!-- Change wishlist -->
+
+                                                                        <!-- Remove from wishlist -->
+
+                                                                    </td>
+
+                                                                </tr> --}}
+                                                            </tbody>
+
+                                                        </table>
                                                     @else
                                                         <div class="u-columns col2-set" id="customer_login">
 
@@ -118,9 +246,6 @@
                                                                                 <input type="text" name="twy_mobile"
                                                                                     class="twy_mobile_field twy_mobile"
                                                                                     required="" required>
-                                                                                {{-- <input type="button"
-                                                                                class="twy_send_otp_button" data-index=""
-                                                                                value="Send OTP"> --}}
                                                                             </div>
                                                                             <div class="twy_otp_message"></div>
                                                                         </div>
@@ -135,8 +260,7 @@
                                                                                 <input type="checkbox" name="rememberme"
                                                                                     id="rememberme" value=""
                                                                                     class="porto-control-input woocommerce-form__input woocommerce-form__input-checkbox">
-                                                                                <label
-                                                                                    class="porto-control-label no-radius"
+                                                                                <label class="porto-control-label no-radius"
                                                                                     for="rememberme">Remember me</label>
                                                                             </div>
                                                                             <a href="#"
@@ -144,9 +268,6 @@
                                                                                 Password?</a>
                                                                         </div>
                                                                         <p class="form-row mb-3 mb-lg-0 pb-1 pb-lg-0">
-                                                                            <!-- <input type="hidden" id="woocommerce-login-nonce"
-                                                                                                                                                                                                            name="woocommerce-login-nonce" value=""><input
-                                                                                                                                                                                                            type="" name="_wp_http_referer" value=""> -->
                                                                             <button type="submit"
                                                                                 class="woocommerce-Button button login-btn btn-v-dark py-3 text-md w-100"
                                                                                 name="login"
@@ -157,17 +278,10 @@
                                                                     </form>
                                                                     <p class="form-row mb-3 mb-lg-0 pb-1 pb-lg-0">
 
-                                                                        {{-- <button type="submit"
+                                                                        <button type="submit"
                                                                             class="woocommerce-Button button login-btn-otp btn-v-dark py-3 text-md w-100"
                                                                             name="login" value="">Login with
-                                                                            Phone</button> --}}
-
-                                                                        <button type="button"
-                                                                            class="woocommerce-Button button login-btn-otp btn-v-dark py-3 text-md w-100"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#registerModal">
-                                                                            Login with Phone
-                                                                        </button>
+                                                                            Phone</button>
                                                                     </p>
 
                                                                 </div>
@@ -183,26 +297,6 @@
                                                                             Register
                                                                         </h3>
 
-                                                                        {{-- <p class="form-row form-row-first">
-                                                                        <label for="reg_billing_first_name"
-                                                                            class="name">First
-                                                                            name<span class="required">*</span></label>
-                                                                        <input type="text" class="input-text"
-                                                                            name="billing_first_name"
-                                                                            id="reg_billing_first_name" value="">
-                                                                    </p> --}}
-                                                                        {{-- <p class="form-row form-row-last">
-                                                                        <label for="reg_billing_last_name"
-                                                                            class="name">Last
-                                                                            name<span class="required">*</span></label>
-                                                                        <input type="text" class="input-text"
-                                                                            name="billing_last_name"
-                                                                            id="reg_billing_last_name" value="">
-                                                                    </p> --}}
-                                                                        <!-- <p class="form-row form-row-wide">-->
-                                                                        <!--<label for="reg_billing_phone">Phone<span class="required">*</span></label>-->
-                                                                        <!--<input type="text" class="input-phone" name="billing_phone" id="reg_billing_phone" value="" />-->
-                                                                        <!--</p>-->
                                                                         <div class="clear"></div>
 
 
@@ -238,9 +332,7 @@
                                                                                 <input type="text" name="phone"
                                                                                     class="twy_mobile_field twy_mobile"
                                                                                     required="">
-                                                                                {{-- <input type="button"
-                                                                                class="twy_send_otp_button" data-index=""
-                                                                                value="Send OTP"> --}}
+
                                                                             </div>
                                                                             <div class="twy_otp_message"></div>
                                                                         </div>
@@ -253,9 +345,7 @@
                                                                                 <input type="password" name="password"
                                                                                     class="twy_mobile_field twy_mobile"
                                                                                     required="">
-                                                                                {{-- <input type="button"
-                                                                                class="twy_send_otp_button" data-index=""
-                                                                                value="Send OTP"> --}}
+
                                                                             </div>
                                                                             <div class="twy_otp_message"></div>
                                                                         </div>
@@ -283,12 +373,7 @@
                                                                         <p class="status" style="display: none;"></p>
 
                                                                         <p class="woocommerce-form-row form-row mb-0">
-                                                                            {{-- <input type="hidden"
-                                                                            id="woocommerce-register-nonce"
-                                                                            name="woocommerce-register-nonce"
-                                                                            value=""> --}}
-                                                                            {{-- <input type="hidden" name="_wp_http_referer"
-                                                                            value=""> --}}
+
                                                                             <button type="submit"
                                                                                 class="woocommerce-Button button register-btn btn-v-dark text-md py-3 w-100"
                                                                                 name=""
@@ -322,64 +407,4 @@
             </div>
         </section>
     </main>
-
-    <!-- Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Guest Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('guest_login') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('post')
-                    <div class="modal-body">
-                        <!-- Add your registration form fields here -->
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Mob no.</label>
-                            <input type="number" class="form-control" name="phone" placeholder="Enter phone">
-                            {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                                else.</small> --}}
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter password">
-                            {{-- <button type="button" class="btn btn-primary mt-2" onclick="generatePassword()">Generate
-                                Password</button> --}}
-                        </div>
-                        <!-- Add more form fields as needed -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
-
-
-<script>
-    function generatePassword() {
-        // Define characters to be used in the generated password
-        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+";
-
-        // Define password length
-        var passwordLength = 12;
-
-        // Initialize empty password string
-        var password = "";
-
-        // Generate password randomly
-        for (var i = 0; i < passwordLength; i++) {
-            var randomIndex = Math.floor(Math.random() * chars.length);
-            password += chars[randomIndex];
-        }
-
-        // Display generated password using innerText
-        document.getElementById("password").innerText = password;
-    }
-</script>

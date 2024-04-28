@@ -86,6 +86,39 @@ class AccountController extends Controller
         }
     }
 
+    public function guestlogin(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'phone' => 'required',
+            'password' => 'required',
+        ]);
+
+        // Create a random guest ID
+        $guestId = Str::random(10);
+
+        // Save the guest credentials in the customer table
+        Customer::create([
+            'guest_id' => $guestId,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $credentials = $request->only('phone', 'password');
+        
+        if (Auth::guard('customer')->attempt($credentials)) {
+            // if ($request->has('phone')) {
+            // You may want to store the guest ID in the session or somewhere else for further use
+            session(['guest_id' => $guestId]);
+
+            // Proceed with guest login
+            return redirect()->intended('/')->with('success', 'You are now logged in.');
+        } else {
+            // Regular login attempt failed
+            return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
+        }
+    }
+
     public function logout()
     {
         Session::flush();

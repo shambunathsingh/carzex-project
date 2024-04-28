@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\States\StateController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Front\Account\AccountController;
+use App\Http\Controllers\WishlistController;
 use App\Models\Page\Page;
 use App\Models\Page\PageInfo;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,11 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('register', [AccountController::class, 'register'])->name('new_register');
     Route::post('create-user', [AccountController::class, 'registerUser'])->name('register_newUser');
     Route::post('customer-login', [AccountController::class, 'login'])->name('login_newUser');
+    Route::post('guest-login', [AccountController::class, 'guestlogin'])->name('guest_login');
+
+    // My Wishlist Section
+    Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add_to_wishlist'])->name('add_wishlist');
+    Route::get('wishlist', [WishlistController::class, 'showAllWishList'])->name('show_wishlist');
 
     // My Order Section
     Route::get('my-orders', [CartController::class, 'thankyou'])->name('thankyou');

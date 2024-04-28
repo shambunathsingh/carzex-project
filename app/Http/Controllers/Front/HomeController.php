@@ -11,6 +11,7 @@ use App\Models\Post\Post;
 use App\Models\PostCategory\PostCategory;
 use App\Models\ProductFeature\ProductFeatures;
 use App\Models\Video\Video;
+use App\Models\WishList\WishList;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,14 @@ class HomeController extends Controller
         // Fetch cart details
         $cartService = new Cart(); // Create an instance of CartService
         $cartDetails = $cartService->getCartDetails();
+        session(['cartItems' => $cartDetails['items']]);
+        session(['totalAmount' => $cartDetails['totalAmount']]);
+
+        $sessionCartItems = session('cartItems', []);
+        $totalAmount = session('totalAmount', 0);
+
+        // dd($sessionCartItems);
+        // exit;
 
         $category_list = Category::all();
         $featured_categories = [];
@@ -44,9 +53,21 @@ class HomeController extends Controller
             $customerId = Auth::guard('customer')->id();
 
             $count = Cart::where('customer_id', $customerId)->count();
+            $wishlistCount = WishList::where('customer_id', $customerId)->count(); // Count wishlist items
+
+            // Store the counts in session
+            session(['cartCount' => $count]);
+            session(['wishListCount' => $wishlistCount]);
         } else {
+            // If no customer ID is present, set counts to 0
             $count = 0;
+            $wishlistCount = 0;
+
+            // Store the counts in session
+            session(['cartCount' => $count]);
+            session(['wishListCount' => $wishlistCount]);
         }
+
 
         // dd($count, $cart);
 
@@ -63,10 +84,10 @@ class HomeController extends Controller
             'video' => $video_info,
             'feature' => $features_info,
             'category' => $featured_categories,
-            'cart' => $count,
-            'cartItems' => $cartDetails['items'],
-            'products' => $cartDetails['products'],
-            'totalAmount' => $cartDetails['totalAmount']
+            // 'cart' => $count,
+            // 'cartItems' => $cartDetails['items'],
+            // 'products' => $cartDetails['products'],
+            // 'totalAmount' => $cartDetails['totalAmount']
         ]);
     }
 
