@@ -4,21 +4,32 @@
     <main>
 
 
-
         <div class="productcategoryarea">
             <div class="container  bannertxt">
-                <h1>CAR ANDROID TOUCH SCREEN</h1>
-                <p><strong>Carzex</strong> provide High Quality Android Touchscreen for Car with built-in
-                    multifunctional tasks. An entertainment unit used in cars to change the overlook of the dashboard
-                    giving a premium feel to the car.</p>
+                @if ($parentCategory)
+                    <h1>{{ $parentCategory->name }}</h1>
+                    <p>
+                        {{ $parentCategory->description }}
+                    </p>
+                @else
+                    <h1>{{ $category->name }}</h1>
+                    <p>
+                        {{ $category->description }}
+                    </p>
+                @endif
             </div>
         </div>
 
 
 
+
         <div class="loca">
             <!-- <h6>HOME &gt; INTERIOR ACCESSORIES</h6> -->
-            <h6>HOME > <SPAN>INTERIOR ACCESSORIES</SPAN></h6>
+            @if ($parentCategory)
+                <h6 style="text-transform: uppercase;">HOME > <SPAN>{{ $parentCategory->name }}</SPAN></h6>
+            @else
+                <h6 style="text-transform: uppercase;">HOME > <SPAN>{{ $category->name }}</SPAN></h6>
+            @endif
         </div>
 
 
@@ -37,16 +48,19 @@
                                 <div id="collapseOne" class="accordion-collapse collapse show"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="prcrange">
-                                            <!-- <label for="customRange3" class="form-label">Example range</label> -->
-                                            <input type="range" class="form-range" min="0" max="5"
-                                                step="0.5" id="customRange3">
-
-                                            <div class="d-flex justify-content-between mt-2">
-                                                <p>Price: <span>₹250</span> — <span>₹270</span></p> <button
-                                                    class="fbthl">Filter</button>
+                                        <form action="{{ route('price_filter') }}" method="post" id="priceFilterForm">
+                                            @csrf <!-- Add CSRF token for Laravel -->
+                                            <div class="prcrange">
+                                                <input type="range" class="form-range" min="0" max="100"
+                                                    step="1" id="customRange3" name="priceRange">
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <p>Price: <span id="minPrice">₹0</span> — <span
+                                                            id="maxPrice">₹100</span>
+                                                    </p>
+                                                    <button type="submit" class="fbthl">Filter</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +253,7 @@
                                                 </h2>
                                                 <div id="collapseOne" class="accordion-collapse collapse show"
                                                     data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
+                                                    {{-- <div class="accordion-body">
                                                         <div class="prcrange">
                                                             <!-- <label for="customRange3" class="form-label">Example range</label> -->
                                                             <input type="range" class="form-range" min="0"
@@ -250,7 +264,7 @@
                                                                 <button class="fbthl">Filter</button>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="accordion-item">
@@ -424,59 +438,113 @@
 
                     <div class="ctgryarebox">
                         <div class="row flex flex-wrap">
-                            @foreach ($products as $item)
-                                <div class="col-md-3 col-sm-4 col-6 mb-3">
-                                    <div class="ctgpdbx border rounded shadow">
-                                        <div class="card" aria-hidden="true">
+                            @if (session('filteredProducts'))
+                                @foreach (session('filteredProducts') as $item)
+                                        <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                            <div class="ctgpdbx border rounded shadow">
+                                                <div class="card" aria-hidden="true">
 
-                                            <div class="img-wrapper">
-                                                <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                                @if ($item->images)
-                                                    <img src="{{ asset($item->images) }}" class="inner-img"
-                                                        alt="...">
-                                                @else
-                                                    <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
-                                                        class="inner-img" alt="...">
-                                                @endif
-                                            </div>
+                                                    <div class="img-wrapper">
+                                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                                        @if ($item->images)
+                                                            <img src="{{ asset($item->images) }}" class="inner-img"
+                                                                alt="...">
+                                                        @else
+                                                            <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
+                                                                class="inner-img" alt="...">
+                                                        @endif
+                                                    </div>
 
-                                            <div class="card-body">
-                                                <h5 class="card-title"><a
-                                                        href="{{ route('single_product', ['id' => $item->id]) }}">
-                                                        {{ $item->name }}
-                                                    </a></h5>
-                                                <p class="caxt">
-                                                <div class="str">
-                                                    <span><i class="fa-solid fa-star"></i></span>
-                                                    <span><i class="fa-solid fa-star"></i></span>
-                                                    <span><i class="fa-solid fa-star"></i></span>
-                                                    <span><i class="fa-solid fa-star"></i></span>
-                                                    <span><i class="fa-solid fa-star"></i></span>
-                                                </div>
-                                                </p>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><a
+                                                                href="{{ route('single_product', ['id' => $item->id]) }}">
+                                                                {{ $item->name }}
+                                                            </a></h5>
+                                                        <p class="caxt">
+                                                        <div class="str">
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                        </div>
+                                                        </p>
 
-                                                <div class="productprice">
-                                                    <p><span>MRP:</span> <span class="fdsm"
-                                                            style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
-                                                    </p>
-                                                    <p><span>Price:</span> <span class="fdsm"
-                                                            style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
-                                                    </p>
-                                                </div>
+                                                        <div class="productprice">
+                                                            <p><span>MRP:</span> <span class="fdsm"
+                                                                    style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
+                                                            </p>
+                                                            <p><span>Price:</span> <span class="fdsm"
+                                                                    style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
+                                                            </p>
+                                                        </div>
 
-                                                <div class="adtbynbtn">
-                                                    <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
-                                                            To Cart</button></a>
-                                                    <button>Buy Now</button>
+                                                        <div class="adtbynbtn">
+                                                            <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
+                                                                    To Cart</button></a>
+                                                            <button>Buy Now</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                                    @endforeach
+                                @else
+                                    @foreach ($products as $item)
+                                        <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                            <div class="ctgpdbx border rounded shadow">
+                                                <div class="card" aria-hidden="true">
+
+                                                    <div class="img-wrapper">
+                                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                                        @if ($item->images)
+                                                            <img src="{{ asset($item->images) }}" class="inner-img"
+                                                                alt="...">
+                                                        @else
+                                                            <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
+                                                                class="inner-img" alt="...">
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><a
+                                                                href="{{ route('single_product', ['id' => $item->id]) }}">
+                                                                {{ $item->name }}
+                                                            </a></h5>
+                                                        <p class="caxt">
+                                                        <div class="str">
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                        </div>
+                                                        </p>
+
+                                                        <div class="productprice">
+                                                            <p><span>MRP:</span> <span class="fdsm"
+                                                                    style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
+                                                            </p>
+                                                            <p><span>Price:</span> <span class="fdsm"
+                                                                    style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="adtbynbtn">
+                                                            <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
+                                                                    To Cart</button></a>
+                                                            <button>Buy Now</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
 
 
-                            {{-- <div class="col-md-3 col-sm-4 col-6 mb-3">
+
+                                {{-- <div class="col-md-3 col-sm-4 col-6 mb-3">
                                 <div class="ctgpdbx border rounded shadow">
                                     <div class="card" aria-hidden="true">
 
@@ -612,3 +680,35 @@
 
     </main>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Update price range when the input changes
+    $(document).ready(function() {
+        // Get range input element
+        var rangeInput = $('#customRange3');
+
+        // Get minimum and maximum price span elements
+        var minPriceSpan = $('#minPrice');
+        var maxPriceSpan = $('#maxPrice');
+
+        // Add event listener to detect changes in range input value
+        rangeInput.on('input', function() {
+            // Get the value of the range input
+            var selectedValue = parseFloat(rangeInput.val());
+
+            // Calculate prices based on the selected value
+            var minPrice = 0;
+            var maxPrice = selectedValue;
+
+            // Update the text content of the price spans
+            minPriceSpan.text('₹' + minPrice.toFixed(0));
+            maxPriceSpan.text('₹' + maxPrice.toFixed(0));
+        });
+    });
+
+    // Submit the form when the filter button is clicked
+    $('.fbthl').click(function() {
+        $('#priceFilterForm').submit();
+    });
+</script>

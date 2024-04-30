@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category\Category;
 use App\Models\Product\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -34,12 +35,15 @@ class ProductController extends Controller
     {
         $category = Category::where('name', $categoryName)->firstOrFail();
         $products = $category->products;
+        $parentCategory = null; // Set parentCategory to null by default
 
         return view('front.product.index', [
             'category' => $category,
+            'parentCategory' => $parentCategory,
             'products' => $products,
         ]);
     }
+
 
     public function showWithParent($parentCategory, $categoryName)
     {
@@ -59,5 +63,26 @@ class ProductController extends Controller
             'parentCategory' => $parentCategory,
             'products' => $products,
         ]);
+    }
+
+
+    public function priceFilter(Request $request)
+    {
+        $minPrice = $request->input('priceRange');
+
+        // Extracting min and max prices from the string
+        $priceArray = explode('-', $minPrice);
+        // $minPrice = $priceArray[0];
+        // $maxPrice = $priceArray[1];
+
+        // Use $minPrice and $maxPrice as needed
+        // dd($minPrice, $maxPrice);
+        $filteredProducts = Product::whereBetween('sale_price', [0, $priceArray])->get();
+
+        // Store the filtered products in the session
+        Session::flash('filteredProducts', $filteredProducts);
+
+        // Redirect back to the previous page with the filtered products
+        return redirect()->back();
     }
 }

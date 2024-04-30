@@ -68,6 +68,9 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('product-category/{categoryName}', [FrontProductController::class, 'show'])->name('product-category.show');
     Route::get('product-category/{parentCategory}/{categoryName}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
     Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
+    Route::post('/price_filter', [FrontProductController::class, 'priceFilter'])->name('price_filter');
+
+
 
     // Add to Cart
     Route::get('add-to-cart={id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
