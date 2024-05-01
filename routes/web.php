@@ -40,6 +40,8 @@ use App\Models\Cart\Cart;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('search', [FrontProductController::class, 'search']);
+Route::get('search/suggestions', [FrontProductController::class, 'searchSuggestions']);
 
 Route::get('test2', function () {
     return view('test2');

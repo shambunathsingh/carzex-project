@@ -144,7 +144,9 @@
                                     <label for="Account username" class="form-label">Account
                                         username<span>*</span></label>
                                     <input type="text" name="accountUsername" id="accountUsername"
-                                        class="form-control" placeholder="" value="{{ Auth::guard('customer')->user()->name }}">
+                                        class="form-control" placeholder=""
+                                        value="{{ Auth::guard('customer')->user()->name ? Auth::guard('customer')->user()->name : Auth::guard('customer')->user()->guest_id }}">
+
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 {{-- <div class="col-12">

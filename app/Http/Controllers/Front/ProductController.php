@@ -53,11 +53,6 @@ class ProductController extends Controller
         // Fetch products related to the category
         $products = $category->products;
 
-        // Debug: Print the generated SQL query
-        // $query = $category->products()->toSql();
-        // $bindings = $category->products()->getBindings();
-        // dd($query, $bindings);
-
         return view('front.product.index', [
             'category' => $category,
             'parentCategory' => $parentCategory,
@@ -65,6 +60,47 @@ class ProductController extends Controller
         ]);
     }
 
+    public function search(Request $req)
+    {
+        $searched = $req->input('searched');
+
+        // Search for products
+        $data = Product::where('name', 'like', '%' . $searched . '%')->get();
+
+        // Retrieve categories for the found products
+        $categoryIds = $data->pluck('categories')->unique();
+        $category = Category::whereIn('id', $categoryIds)->get();
+
+        // Retrieve parent categories based on the found categories
+        $parentCategoryIds = $category->pluck('parent_id')->unique();
+
+        // Check if parent category IDs contain null or 0
+        if ($parentCategoryIds->contains(null) || $parentCategoryIds->contains(0)) {
+            $parentCategory = null;
+        } else {
+            // Retrieve parent categories if no null or 0 values found
+            $parentCategory = Category::whereIn('id', $parentCategoryIds)->get();
+        }
+
+        // Debugging
+        // dd($data, $category, $parentCategory);
+        // exit;
+
+        // Return the view with the found products
+        return view('front.product.index', [
+            'category' => $category,
+            'parentCategory' => $parentCategory,
+            'products' => $data
+        ]);
+    }
+
+
+    public function searchSuggestions(Request $request)
+    {
+        $query = $request->input('query');
+        $suggestions = Product::where('name', 'like', '%' . $query . '%')->limit(5)->get();
+        return view('front.search_suggestions.index', ['suggestions' => $suggestions]);
+    }
 
     public function priceFilter(Request $request)
     {

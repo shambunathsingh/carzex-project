@@ -1,3 +1,27 @@
+<style>
+    /* CSS for dropdown */
+    .dropdown {
+
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 400px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-item {
+        padding: 12px 15px;
+        text-decoration: none;
+        display: block;
+        color: #333;
+    }
+
+    .dropdown-item:hover {
+        background-color: #51c5d7;
+        cursor: pointer;
+
+    }
+</style>
 <header class="header_area header_padding">
     <!--header top start-->
     <div class="header_top">
@@ -56,9 +80,10 @@
                 <div class="col-lg-9 col-md-9">
                     <div class="middel_right">
                         <div class="search-container">
-                            <form action="#">
+                            <form id="searchForm" action="/search" method="GET">
                                 <div class="search_box">
-                                    <input placeholder="Search entire store here ..." type="text">
+                                    <input id="searchInput" placeholder="Search entire store here ..." name="searched"
+                                        type="search" aria-label="Search">
                                     <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                 </div>
                             </form>
@@ -123,18 +148,39 @@
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <script>
+                setTimeout(function() {
+                    var alertElement = document.querySelector('.alert');
+                    alertElement.classList.remove('show');
+                    alertElement.classList.add('hide');
+                }, 5000);
+            </script>
         </div>
     @endif
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('danger') }}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <script>
+                setTimeout(function() {
+                    var alertElement = document.querySelector('.alert');
+                    alertElement.classList.remove('show');
+                    alertElement.classList.add('hide');
+                }, 5000);
+            </script>
         </div>
     @endif
     @if (session('warning'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('warning') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <script>
+                setTimeout(function() {
+                    var alertElement = document.querySelector('.alert');
+                    alertElement.classList.remove('show');
+                    alertElement.classList.add('hide');
+                }, 5000);
+            </script>
         </div>
     @endif
     <!--mini cart-->
@@ -150,21 +196,23 @@
 
         @if (Auth::guard('customer')->check())
             @foreach (session('cartItems', []) as $cartItem)
-                <div class="cart_item">
-                    <div class="cart_img">
-                        <a href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}"><img
-                                src="{{ asset($cartItem['product']['images']) }}" alt=""></a>
+                @if ($cartItem['customer_id'] == Auth::guard('customer')->id())
+                    <div class="cart_item">
+                        <div class="cart_img">
+                            <a href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}"><img
+                                    src="{{ asset($cartItem['product']['images']) }}" alt=""></a>
+                        </div>
+                        <div class="cart_info">
+                            <a
+                                href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}">{{ $cartItem['product']['name'] }}</a>
+                            <span class="quantity">Qty: {{ $cartItem['quantity'] }}</span>
+                            <span class="price_cart">{{ $cartItem['product']['sale_price'] }}</span>
+                        </div>
+                        <div class="cart_remove">
+                            <a href="#"><i class="ion-android-close"></i></a>
+                        </div>
                     </div>
-                    <div class="cart_info">
-                        <a
-                            href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}">{{ $cartItem['product']['name'] }}</a>
-                        <span class="quantity">Qty: {{ $cartItem['quantity'] }}</span>
-                        <span class="price_cart">{{ $cartItem['product']['sale_price'] }}</span>
-                    </div>
-                    <div class="cart_remove">
-                        <a href="#"><i class="ion-android-close"></i></a>
-                    </div>
-                </div>
+                @endif
             @endforeach
         @else
             <div class="cart_item">
@@ -177,10 +225,10 @@
                     <span class="price_cart"></span>
                 </div>
                 <div class="cart_remove">
-                    {{-- <a href=""><i class="ion-android-close"></i></a> --}}
                 </div>
             </div>
         @endif
+
 
 
 
@@ -339,14 +387,28 @@
                 <a href="{{ route('myaccount') }}"><span class="ion-android-person"></span></a>
 
             </div>
-            <div class="header_wishlist mblehdrr">
-                <a href="#"><span class="lnr lnr-heart"></span></a>
-                <span class="wishlist_quantity">3</span>
-            </div>
-            <div class="mini_cart_wrapper mblehdrr">
-                <a href="{{ route('cart') }}"><span class="lnr lnr-cart"></span></a>
-                <span class="cart_quantity">2</span>
-            </div>
+            @if (Auth::guard('customer')->check())
+                <div class="header_wishlist mblehdrr">
+                    <a href="{{ route('show_wishlist') }}"><span class="lnr lnr-heart"></span></a>
+                    <span class="wishlist_quantity">{{ session('wishListCount') }}</span>
+                </div>
+            @else
+                <div class="header_wishlist mblehdrr">
+                    <a href="{{ route('show_wishlist') }}"><span class="lnr lnr-heart"></span></a>
+                    <span class="wishlist_quantity">0</span>
+                </div>
+            @endif
+            @if (Auth::guard('customer')->check())
+                <div class="mini_cart_wrapper mblehdrr">
+                    <a><span class="lnr lnr-cart"></span></a>
+                    <span class="cart_quantity">{{ session('cartCount') }}</span>
+                </div>
+            @else
+                <div class="mini_cart_wrapper mblehdrr">
+                    <a><span class="lnr lnr-cart"></span></a>
+                    <span class="cart_quantity">0</span>
+                </div>
+            @endif
             @if (Auth::guard('customer')->check())
                 <div class="header_wishlist mblehdrr">
                     <a href="{{ route('myaccount_logout') }}">
@@ -506,3 +568,115 @@
     </div>
     <!--Offcanvas menu area end-->
 </header>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Add event listener for quantity minus
+        $('.quantity__minus').on('click', function(e) {
+            e.preventDefault();
+            const productId = $(this).data('id');
+            const quantityInput = $(`#quantity_${productId}`);
+            let quantity = parseInt(quantityInput.val(), 10);
+            const price = parseFloat(quantityInput.data('price'));
+
+            if (quantity > 1) {
+                quantity--;
+                quantityInput.val(quantity);
+                updateSubtotal(productId, quantity, price);
+            }
+        });
+
+        // Add event listener for quantity plus
+        $('.quantity__plus').on('click', function(e) {
+            e.preventDefault();
+            const productId = $(this).data('id');
+            const quantityInput = $(`#quantity_${productId}`);
+            let quantity = parseInt(quantityInput.val(), 10);
+            const price = parseFloat(quantityInput.data('price'));
+
+            quantity++;
+            quantityInput.val(quantity);
+            updateSubtotal(productId, quantity, price);
+        });
+
+        // Function to update subtotal
+        function updateSubtotal(productId, quantity, price) {
+            const subtotal = quantity * price;
+            $(`#minicart_subtotal_${productId}`).text(subtotal.toFixed(2));
+        }
+
+        // Function to update total
+        function updateTotal() {
+            let subtotal = 0;
+            $('[id^="minicart_subtotal_"]').each(function() {
+                subtotal += parseFloat($(this).text());
+            });
+
+            $('#minicart_subtotalAmount, #minicart_totalAmount').text(subtotal.toFixed(2));
+        }
+
+        // Update total when page loads
+        updateTotal();
+
+        // Update total when quantity changes
+        $('.quantity__input').on('input', function() {
+            updateTotal();
+        });
+
+        // Update total when Update Cart button is clicked
+        $('.Update').on('click', function() {
+            updateTotal();
+            const cartItems = [];
+            $('[id^="minicart_subtotal_"]').each(function() {
+                const productId = this.id.split('_')[1];
+                const price = parseFloat($(`#price_${productId}`).text());
+                const quantity = parseInt($(`#quantity_${productId}`).val(), 10);
+                const subtotal = price * quantity;
+
+                cartItems.push({
+                    productId: productId,
+                    quantity: quantity,
+                    subtotal: subtotal,
+                    price: price
+                });
+            });
+
+        });
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var query = $(this).val();
+            if (query.length >= 3) {
+                $.ajax({
+                    url: '/search/suggestions',
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        $('#searchSuggestions').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                $('#searchSuggestions').html('');
+            }
+        });
+
+        // Handle click on suggestion option
+        $(document).on('click', '#searchSuggestions option', function() {
+            var suggestionText = $(this).text();
+            $('#searchInput').val(suggestionText);
+            $('#searchForm').submit(); // Submit the form
+            $('#searchSuggestions').html(''); // Clear suggestions after submission
+        });
+    });
+</script>

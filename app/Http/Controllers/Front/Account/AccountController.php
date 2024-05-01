@@ -94,6 +94,13 @@ class AccountController extends Controller
             'password' => 'required',
         ]);
 
+        // Check if the phone number already exists
+        $existingCustomer = Customer::where('phone', $request->phone)->first();
+        if ($existingCustomer) {
+            // If phone number exists, return an error
+            return redirect()->back()->with('error', 'Phone number already exists. Please log in or use a different phone number.');
+        }
+
         // Create a random guest ID
         $guestId = Str::random(10);
 
@@ -105,7 +112,7 @@ class AccountController extends Controller
         ]);
 
         $credentials = $request->only('phone', 'password');
-        
+
         if (Auth::guard('customer')->attempt($credentials)) {
             // if ($request->has('phone')) {
             // You may want to store the guest ID in the session or somewhere else for further use
@@ -118,6 +125,7 @@ class AccountController extends Controller
             return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
         }
     }
+
 
     public function logout()
     {

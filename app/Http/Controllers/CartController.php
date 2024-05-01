@@ -170,6 +170,7 @@ class CartController extends Controller
 
         // Clear cart session
         $request->session()->forget('cart');
+        session(['cartCount' => 0]);
 
         // Redirect or return response
         return redirect()->route('thankyou')->with('success', 'Payment successful');

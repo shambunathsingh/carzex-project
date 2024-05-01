@@ -20,7 +20,7 @@
 
                             <article class="post-2171 page type-page status-publish hentry">
 
-                                <h2 class="entry-title">My Wishlit</h2><span class="vcard" style="display: none;"><span
+                                <h2 class="entry-title">My Wishlist</h2><span class="vcard" style="display: none;"><span
                                         class="fn"><a href="#" title="Posts by Kumar Rajeev" rel="author">Kumar
                                             Rajeev</a></span></span><span class="updated"
                                     style="display:none">2022-12-13T10:57:49+05:30</span>
@@ -32,15 +32,12 @@
                                                     <div class="woocommerce-notices-wrapper"></div>
                                                     {{-- Display user information if logged in --}}
                                                     @if (Auth::guard('customer')->check())
-                                                        <table
-                                                            class="shop_table cart wishlist_table wishlist_view traditional responsive mobile">
+                                                        <table class="table table-striped table-hover">
 
 
-                                                            <thead class="">
-                                                                <tr>
+                                                            <thead >
+                                                                <tr >
 
-
-                                                                    <th class="product-thumbnail"></th>
 
                                                                     <th class="product-name">
                                                                         <span class="nobr">
@@ -72,8 +69,8 @@
                                                                         <td>
                                                                             <img class="img-fluid img-responsive"
                                                                                 src="{{ asset($item->images) }}"
-                                                                                alt="{{ $item->name }}" width="250"
-                                                                                height="250">
+                                                                                alt="{{ $item->name }}" width="150"
+                                                                                height="150">
                                                                             {{ $item->name }}
                                                                         </td>
                                                                         <td>
