@@ -313,10 +313,10 @@
                                                     <div class="col-md-2">
                                                         <input type="checkbox" name="selectedImages[]"
                                                             value="{{ $item->images }}">
-                                                        <a href="{{ url($item->images) }}" target="_blank">
+                                                        <a href="{{ url('uploads/' . $item->images) }}" target="_blank">
                                                             <div class="fileboxes">
                                                                 <div class="bximg">
-                                                                    <img src="{{ asset($item->images) }}" height="100"
+                                                                    <img src="{{ url('uploads/' .$item->images) }}" height="100"
                                                                         alt="">
                                                                 </div>
                                                                 <div class="bxttk" style="overflow: hidden;">
