@@ -87,6 +87,8 @@
                                     <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                 </div>
                             </form>
+                        <div id="searchSuggestions" class="dropdown"></div>
+
                         </div>
                         <div class="middel_right_info">
                             <div class="header_wishlist">
@@ -649,17 +651,15 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#searchInput').on('keyup', function() {
+    $(document).ready(function(){
+        $('#searchInput').on('keyup', function(){
             var query = $(this).val();
-            if (query.length >= 3) {
+            if(query.length >= 2){
                 $.ajax({
                     url: '/search/suggestions',
                     method: 'GET',
-                    data: {
-                        query: query
-                    },
-                    success: function(response) {
+                    data: {query: query},
+                    success: function(response){
                         $('#searchSuggestions').html(response);
                     },
                     error: function(xhr, status, error) {

@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
 
+use App\Http\Controllers\CashfreePaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -108,12 +109,13 @@ Route::middleware(['auth:customer'])->group(function () {
     // Route::get('my-account', [AccountController::class, 'index'])->name('myaccount');
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('payment', [CartController::class, 'processPayment'])->name('payment');
-
     Route::get('logout-account', [AccountController::class, 'logout'])->name('myaccount_logout');
 });
 
 
-
+Route::get('cashfree/payments/create', [CashfreePaymentController::class, 'create'])->name('callback');
+Route::post('cashfree/payments/store', [CashfreePaymentController::class, 'store'])->name('store');
+Route::any('cashfree/payments/success', [CashfreePaymentController::class, 'success'])->name('success');
 
 /*
 |--------------------------------------------------------------------------
