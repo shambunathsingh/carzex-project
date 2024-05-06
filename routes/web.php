@@ -31,6 +31,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
 
 use App\Http\Controllers\CashfreePaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,10 @@ use App\Http\Controllers\CashfreePaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::get('/order_mail', [CartController::class, 'store']);
+
 Route::get('search', [FrontProductController::class, 'search']);
 Route::get('search/suggestions', [FrontProductController::class, 'searchSuggestions']);
 

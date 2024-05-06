@@ -193,37 +193,18 @@ class CartController extends Controller
 
         return view('front.thankyou', ['title' => $title, 'orders' => $orders]);
     }
-
-
     public function store(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            // Define your validation rules here...
-        ]);
+        // Validate and create the order...
+        $order = Order::create($request->all());
 
-        $order = Order::create($validatedData);
+        // Send the confirmation email to the user and the owner
+        $ownerEmail = 'mddanish2320@gmail.com'; // Replace with the owner's email
+        Mail::to($request->user())
+            ->cc($ownerEmail)
+            ->send(new OrderShipped($order));
 
-        // Check if the order was created successfully
-        if ($order) {
-            // Send the confirmation email to the user and the owner
-            $ownerEmail = 'mddanish2320@gmail.com'; // Replace with the owner's email
-            Mail::to($request->user())
-                ->cc($ownerEmail)
-                ->send(new OrderShipped($order));
-
-            // Check if the email was sent successfully
-            if (Mail::failures()) {
-                // Handle email sending failure
-                return response()->json(['message' => 'Failed to send confirmation email'], 500);
-            }
-
-            // Redirect or return success response...
-            return response()->json(['message' => 'Order placed successfully and confirmation email sent']);
-        } else {
-            // Handle order creation failure
-            return response()->json(['message' => 'Failed to create order'], 500);
-        }
+        // Redirect or return response...
     }
     public function removeCartItem($id)
     {
