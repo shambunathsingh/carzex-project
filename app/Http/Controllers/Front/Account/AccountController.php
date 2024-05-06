@@ -81,7 +81,7 @@ class AccountController extends Controller
                 return redirect()->intended('/');
             } else {
                 // Regular login attempt failed
-                return redirect()->route('home')->with('error', 'Invalid credentials. Please try again.');
+                return redirect()->route('myaccount')->with('error', 'Invalid credentials. Please try again.');
             }
         }
     }

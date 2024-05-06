@@ -12,40 +12,46 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+
 class CartController extends Controller
 {
     public function add_to_cart($id)
     {
-        $title = "Carzex - Cart";
+        // Check if the customer is authenticated
+        if (Auth::guard('customer')->check()) {
+            $customerId = Auth::guard('customer')->user()->id;
 
-        $productDetail = Product::findOrFail($id);
-        $customerId = Auth::guard('customer')->user()->id;
+            // Check if the product already exists in the cart for the customer
+            $existingCartItem = Cart::where('customer_id', $customerId)
+                ->where('product_id', $id)
+                ->first();
 
-        // Check if the product already exists in the cart for the customer
-        $existingCartItem = Cart::where('customer_id', $customerId)
-            ->where('product_id', $id)
-            ->first();
+            // If the product exists, update its quantity or any other fields you need
+            if ($existingCartItem) {
+                // For example, you can update quantity here
+                // $existingCartItem->quantity += 1;
+                // $existingCartItem->save();
+            } else {
+                // If the product doesn't exist, create a new cart item
+                $cart = new Cart();
+                $cart->customer_id = $customerId;
+                $cart->product_id = $id;
+                $cart->save();
+            }
 
-        // If the product exists, update its quantity or any other fields you need
-        if ($existingCartItem) {
-            // For example, you can update quantity here
-            // $existingCartItem->quantity += 1;
-            // $existingCartItem->save();
+            // Fetch all cart items for the customer
+            $cartList = Cart::where('customer_id', $customerId)->get();
+
+            // Assuming $title is defined somewhere
+            $title = "Your Cart";
+
+            return view('front.cart.index', ['title' => $title, 'products' => $cartList]);
         } else {
-            // If the product doesn't exist, create a new cart item
-            $cart = new Cart();
-            $cart->customer_id = $customerId;
-            $cart->product_id = $id;
-            $cart->quantity = 1;
-            $cart->save();
+            return redirect()->route('myaccount');
         }
-
-        // Fetch all cart items for the customer
-        $cartList = Cart::where('customer_id', $customerId)->get();
-
-        return view('front.cart.index', ['title' => $title, 'products' => $cartList]);
     }
-
     public function cart()
     {
         $title = "Carzex - Cart";
@@ -188,6 +194,37 @@ class CartController extends Controller
         return view('front.thankyou', ['title' => $title, 'orders' => $orders]);
     }
 
+
+    public function store(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            // Define your validation rules here...
+        ]);
+
+        $order = Order::create($validatedData);
+
+        // Check if the order was created successfully
+        if ($order) {
+            // Send the confirmation email to the user and the owner
+            $ownerEmail = 'mddanish2320@gmail.com'; // Replace with the owner's email
+            Mail::to($request->user())
+                ->cc($ownerEmail)
+                ->send(new OrderShipped($order));
+
+            // Check if the email was sent successfully
+            if (Mail::failures()) {
+                // Handle email sending failure
+                return response()->json(['message' => 'Failed to send confirmation email'], 500);
+            }
+
+            // Redirect or return success response...
+            return response()->json(['message' => 'Order placed successfully and confirmation email sent']);
+        } else {
+            // Handle order creation failure
+            return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
     public function removeCartItem($id)
     {
 
