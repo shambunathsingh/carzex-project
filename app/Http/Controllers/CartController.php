@@ -134,21 +134,29 @@ class CartController extends Controller
             'orderNotes' => 'nullable|string',
             'is_paid' => 'nullable|string',
         ]);
-
+        
+        
+        
         $cartItems = session('cart');
         $customerId = Auth::guard('customer')->user()->id;
 
+        
+        
         // Calculate total amount
         $totalAmount = 0;
         foreach ($cartItems as $item) {
             $totalAmount += $item['subtotal'];
         }
+        
+      
 
         $fullname = $validatedData['firstName'] . ' ' . $validatedData['laststName']; // Corrected concatenation
         $email = $validatedData['emailAdress']; // Corrected field name
         $phone = $validatedData['phone'];
 
         $url = "https://sandbox.cashfree.com/pg/orders";
+        
+        
 
         $headers = array(
             "Content-Type: application/json",
@@ -156,23 +164,28 @@ class CartController extends Controller
             "x-client-id: " . env('CASHFREE_API_KEY'),
             "x-client-secret: " . env('CASHFREE_API_SECRET')
         );
+        
+        
 
         $data = json_encode([
             'order_id' =>  'order_' . rand(1111111111, 9999999999),
-            'order_amount' => number_format($totalAmount, 2), // Convert to appropriate format
+            'order_amount' => $totalAmount,
             "order_currency" => "INR",
             "customer_details" => [
-                "customer_id" => $customerId,
+                "customer_id" => 'customer_' . rand(111111111, 999999999),
                 "customer_name" => $fullname,
                 "customer_email" => $email,
                 "customer_phone" => $phone,
             ],
             "order_meta" => [
-                "return_url" => 'http://127.0.0.1:8000/cashfree/payments/success/?order_id={order_id}&order_token={order_token}'
+                "return_url" => 'https://luxxport.com/cashfree/payments/success/?order_id={order_id}&order_token={order_token}'
             ]
         ]);
-
+        
+       
         $curl = curl_init($url);
+        
+        
 
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_POST, true);
@@ -181,6 +194,9 @@ class CartController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
         $resp = curl_exec($curl);
+        
+        // dd($validatedData,$cartItems,$totalAmount,$customerId,$fullname,$email,$phone,$resp);
+        // exit;
 
         if ($resp === false) {
             // cURL error occurred
@@ -209,45 +225,45 @@ class CartController extends Controller
 
         return redirect()->to($responseData->payment_link);
 
-        exit;
+        
 
         // Create an order
-        $order = new Order();
-        $order->customer_id = $customerId;
-        $order->first_name = $validatedData['firstName'];
-        $order->last_name = $validatedData['laststName'];
-        $order->company_name = $validatedData['companyName'];
-        $order->country = $validatedData['billing_country'];
-        $order->street_address = $validatedData['streetAdress'];
-        $order->street_address2 = $validatedData['streetAdress2'];
-        $order->town_city = $validatedData['townCity'];
-        $order->state = $validatedData['state'];
-        $order->pin_code = $validatedData['pinCode'];
-        $order->phone = $validatedData['phone'];
-        $order->email = $validatedData['emailAdress'];
-        $order->account_username = $validatedData['accountUsername'];
-        $order->order_notes = $validatedData['orderNotes'];
-        $order->is_paid = $validatedData['is_paid'];  // Assuming payment is processed successfully
+        // $order = new Order();
+        // $order->customer_id = $customerId;
+        // $order->first_name = $validatedData['firstName'];
+        // $order->last_name = $validatedData['laststName'];
+        // $order->company_name = $validatedData['companyName'];
+        // $order->country = $validatedData['billing_country'];
+        // $order->street_address = $validatedData['streetAdress'];
+        // $order->street_address2 = $validatedData['streetAdress2'];
+        // $order->town_city = $validatedData['townCity'];
+        // $order->state = $validatedData['state'];
+        // $order->pin_code = $validatedData['pinCode'];
+        // $order->phone = $validatedData['phone'];
+        // $order->email = $validatedData['emailAdress'];
+        // $order->account_username = $validatedData['accountUsername'];
+        // $order->order_notes = $validatedData['orderNotes'];
+        // $order->is_paid = $validatedData['is_paid'];  // Assuming payment is processed successfully
         // $order->save();
 
         // Save product order details
-        foreach ($cartItems as $item) {
-            $productOrder = new ProductOrder();
-            $productOrder->order_id = $order->id;
-            $productOrder->product_id = $item['productId'];
-            $productOrder->quantity = $item['quantity'];
-            $productOrder->subtotal = $item['subtotal'];
-            $productOrder->save();
+        // foreach ($cartItems as $item) {
+        //     $productOrder = new ProductOrder();
+        //     $productOrder->order_id = $order->id;
+        //     $productOrder->product_id = $item['productId'];
+        //     $productOrder->quantity = $item['quantity'];
+        //     $productOrder->subtotal = $item['subtotal'];
+        //     $productOrder->save();
 
-            // Remove product from cart database
-            Cart::where('customer_id', $customerId)
-                ->where('product_id', $item['productId'])
-                ->delete();
-        }
+        //     // Remove product from cart database
+        //     Cart::where('customer_id', $customerId)
+        //         ->where('product_id', $item['productId'])
+        //         ->delete();
+        // }
 
-        // Clear cart session
-        $request->session()->forget('cart');
-        session(['cartCount' => 0]);
+        // // Clear cart session
+        // $request->session()->forget('cart');
+        // session(['cartCount' => 0]);
 
         // Redirect or return response
         // return redirect()->route('thankyou')->with('success', 'Payment successful');
@@ -270,7 +286,7 @@ class CartController extends Controller
         $order = Order::create($request->all());
 
         // Send the confirmation email to the user and the owner
-        $ownerEmail = 'mddanish2320@gmail.com'; // Replace with the owner's email
+        $ownerEmail = 'shambu.singh096@gmail.com'; // Replace with the owner's email
         Mail::to($request->user())
             ->cc($ownerEmail)
             ->send(new OrderShipped($order));
