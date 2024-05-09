@@ -115,7 +115,6 @@ class CartController extends Controller
 
 
 
-
     public function processPayment(Request $request)
     {
         // Validate the request data
@@ -139,6 +138,79 @@ class CartController extends Controller
         $cartItems = session('cart');
         $customerId = Auth::guard('customer')->user()->id;
 
+        // Calculate total amount
+        $totalAmount = 0;
+        foreach ($cartItems as $item) {
+            $totalAmount += $item['subtotal'];
+        }
+
+        $fullname = $validatedData['firstName'] . ' ' . $validatedData['laststName']; // Corrected concatenation
+        $email = $validatedData['emailAdress']; // Corrected field name
+        $phone = $validatedData['phone'];
+
+        $url = "https://sandbox.cashfree.com/pg/orders";
+
+        $headers = array(
+            "Content-Type: application/json",
+            "x-api-version: 2022-01-01",
+            "x-client-id: " . env('CASHFREE_API_KEY'),
+            "x-client-secret: " . env('CASHFREE_API_SECRET')
+        );
+
+        $data = json_encode([
+            'order_id' =>  'order_' . rand(1111111111, 9999999999),
+            'order_amount' => number_format($totalAmount, 2), // Convert to appropriate format
+            "order_currency" => "INR",
+            "customer_details" => [
+                "customer_id" => $customerId,
+                "customer_name" => $fullname,
+                "customer_email" => $email,
+                "customer_phone" => $phone,
+            ],
+            "order_meta" => [
+                "return_url" => 'http://127.0.0.1:8000/cashfree/payments/success/?order_id={order_id}&order_token={order_token}'
+            ]
+        ]);
+
+        $curl = curl_init($url);
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+        $resp = curl_exec($curl);
+
+        if ($resp === false) {
+            // cURL error occurred
+            $error = curl_error($curl);
+            curl_close($curl);
+            return back()->withInput()->withErrors(["cURL Error: $error"]);
+        }
+
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($httpCode !== 200) {
+            // Request failed
+            curl_close($curl);
+            return back()->withInput()->withErrors(["Request failed with HTTP code $httpCode"]);
+        }
+
+        curl_close($curl);
+
+        // Parse response
+        $responseData = json_decode($resp);
+
+        if (!$responseData || !isset($responseData->payment_link)) {
+            // Response data or payment link not found
+            return back()->withInput()->withErrors("Failed to retrieve payment link");
+        }
+
+        return redirect()->to($responseData->payment_link);
+
+        exit;
+
         // Create an order
         $order = new Order();
         $order->customer_id = $customerId;
@@ -156,8 +228,7 @@ class CartController extends Controller
         $order->account_username = $validatedData['accountUsername'];
         $order->order_notes = $validatedData['orderNotes'];
         $order->is_paid = $validatedData['is_paid'];  // Assuming payment is processed successfully
-        // $order->is_paid = true;
-        $order->save();
+        // $order->save();
 
         // Save product order details
         foreach ($cartItems as $item) {
@@ -179,7 +250,7 @@ class CartController extends Controller
         session(['cartCount' => 0]);
 
         // Redirect or return response
-        return redirect()->route('thankyou')->with('success', 'Payment successful');
+        // return redirect()->route('thankyou')->with('success', 'Payment successful');
     }
 
 

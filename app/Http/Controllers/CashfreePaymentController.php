@@ -54,10 +54,34 @@ class CashfreePaymentController extends Controller
 
         $resp = curl_exec($curl);
 
+        if ($resp === false) {
+            // cURL error occurred
+            $error = curl_error($curl);
+            curl_close($curl);
+            return back()->withInput()->withErrors(["cURL Error: $error"]);
+        }
+
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($httpCode !== 200) {
+            // Request failed
+            curl_close($curl);
+            return back()->withInput()->withErrors(["Request failed with HTTP code $httpCode"]);
+        }
+
         curl_close($curl);
 
-        return redirect()->to(json_decode($resp)->payment_link);
+        // Parse response
+        $responseData = json_decode($resp);
+
+        if (!$responseData || !isset($responseData->payment_link)) {
+            // Response data or payment link not found
+            return back()->withInput()->withErrors("Failed to retrieve payment link");
+        }
+
+        return redirect()->to($responseData->payment_link);
     }
+
 
     public function success(Request $request)
     {
