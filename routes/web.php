@@ -31,6 +31,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
 
 use App\Http\Controllers\CashfreePaymentController;
+use App\Http\Controllers\SmsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,9 @@ use App\Http\Controllers\CashfreePaymentController;
 
 
 Route::get('/order_mail', [CartController::class, 'store']);
+
+Route::get('/sms', [SmsController::class, 'index']);
+Route::post('/sms-send', [SmsController::class, 'sendSMS'])->name('send_sms');
 
 Route::get('search', [FrontProductController::class, 'search']);
 Route::get('search/suggestions', [FrontProductController::class, 'searchSuggestions']);
