@@ -14,7 +14,7 @@ use App\Models\ProductTags\ProductTags;
 use App\Models\Taxes\Taxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index()
@@ -71,6 +71,7 @@ class ProductController extends Controller
         $pcategory->order = $request->order;
         $pcategory->status = $request->status;
         $pcategory->is_featured = $request->is_featured;
+        $pcategory->slug = Category::generateSlug($request->name);
 
         // Additional information
         // $pcategory->icon_image = $request->icon_image;
@@ -116,6 +117,7 @@ class ProductController extends Controller
         $pcategory->order = $request->order;
         $pcategory->status = $request->status;
         $pcategory->is_featured = $request->is_featured;
+        $pcategory->slug = Category::generateSlug($request->name);
 
         // Additional information
         // $pcategory->icon_image = $request->icon_image;
@@ -187,8 +189,10 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request->name;
+        $product->name = $request->name;
         $product->description = $request->description;
         $product->content = $request->content;
+        $product->slug = Product::generateSlug($request->name);
         // $product->images = $request->images;
 
         // Check if image file is present
@@ -284,6 +288,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->content = $request->content;
+        $product->slug = Product::generateSlug($request->name);
         // $product->images = $request->images;
 
         // Check if image file is present

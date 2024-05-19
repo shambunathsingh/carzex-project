@@ -17,6 +17,18 @@
                             </ul>
                         </div>
                     </div>
+                    
+                    @if ($errors->any())
+                     <div class="alert alert-danger text-start" role="alert">
+                          <strong>Opps!</strong> Something went wrong<br>
+                          <ul>
+                          @foreach ($errors->all() as $error)
+                               <li>{{ $error }}</li>
+                          @endforeach
+                          </ul>
+                     </div>
+                     @endif
+                     
                     <form action="{{ route('payment') }}" class="needs-validation" method="post"
                         enctype="multipart/form-data">
                         @csrf

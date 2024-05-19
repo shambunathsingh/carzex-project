@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Location\LocationController;
 use App\Http\Controllers\Admin\Media\MediaController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\Order\OrderController;
+use App\Http\Controllers\Admin\FlashSales\FlashSalesController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
 use App\Http\Controllers\Admin\States\StateController;
 use App\Http\Controllers\AuthController;
@@ -31,6 +32,8 @@ use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
 
 use App\Http\Controllers\CashfreePaymentController;
+use App\Http\Controllers\SmsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,9 +45,21 @@ use App\Http\Controllers\CashfreePaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//     Route::get('/sendmessage', [SmsController::class, 'sendmessage']);
+// Route::get('/send-otp', [SmsController::class, 'sendOTP']);
+// // Route::post('/send-otp', [SmsController::class, 'sendOTP'])->name('send-otp');
+// Route::get('/sms', [SmsController::class, 'index'])->name('sms.index');
+// Route::get('/otp', [SmsController::class, 'showForm'])->name('otp.showForm');
 
+// // Route::get('/send-otp', [SmsController::class, 'showForm'])->name('send-otp-form');
+
+// Route::post('/sms', [SmsController::class, 'sms'])->name('sms.send');
+// Route::post('/generate-otp', [SmsController::class, 'generateOtp'])->name('generateOtp');
 
 Route::get('/order_mail', [CartController::class, 'store']);
+
+// Route::get('/sms', [CartController::class, 'smsView']);
+// Route::post('/sms-send', [CartController::class, 'sms'])->name('send_sms');
 
 Route::get('search', [FrontProductController::class, 'search']);
 Route::get('search/suggestions', [FrontProductController::class, 'searchSuggestions']);
@@ -55,9 +70,6 @@ Route::get('test2', function () {
 
 Route::get('/customer-import', [DataImportController::class, 'index']);
 Route::post('/customer-import', [DataImportController::class, 'importExcelData']);
-
-
-
 
 Route::middleware(['guest:web'])->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('home');
@@ -77,8 +89,6 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('product-category/{parentCategory}/{categoryName}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
     Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
     Route::post('/price_filter', [FrontProductController::class, 'priceFilter'])->name('price_filter');
-
-
 
     // Add to Cart
     Route::get('add-to-cart={id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
@@ -108,6 +118,8 @@ Route::middleware(['guest:web'])->group(function () {
 
     // My Order Section
     Route::get('my-orders', [CartController::class, 'thankyou'])->name('thankyou');
+    
+
 });
 
 Route::middleware(['auth:customer'])->group(function () {
@@ -173,9 +185,9 @@ Route::group(['middleware' => 'auth'], function () {
         // Ecommerce Section
         Route::group(['prefix' => 'ecommerce/', 'as' => 'ecommerce.'], function () {
 
-
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
+            // Route::get('flash-sales', [FlashSalesController::class, 'flashSales'])->name('flashSales');
             Route::post('store-product-categories', [ProductController::class, 'store_pcategory'])->name('save_pcategories');
 
             Route::get('product-categories/create', [ProductController::class, 'create_pcategory'])->name('create_pcategory');
@@ -249,6 +261,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('brands/edit-brand/{id}', [EcommerceController::class, 'edit_product_brands'])->name('edit_product_brands');
             Route::post('update-brand/{id}', [ProductController::class, 'update_brand'])->name('update_brand');
             Route::get('delete-brand/{id}', [ProductController::class, 'delete_brand'])->name('delete_brand');
+            
+            // flash-sales
+
+            
+                Route::get('flash-sales', [FlashSalesController::class, 'flash_sales'])->name('flash_sales');
+                Route::get('flash-sales/create', [FlashSalesController::class, 'create_product_flash_sales'])->name('create_flash_sales');
+                Route::post('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
+                Route::get('flash-sales/edit/{id}', [FlashSalesController::class, 'edit_product_flash_sales'])->name('edit_product_flash_sales');
+                Route::post('flash-sales/update/{id}', [FlashSalesController::class, 'update_flash_sales'])->name('update_flash_sales');
+                Route::get('flash-sales/delete/{id}', [FlashSalesController::class, 'delete_flash_sales'])->name('delete_flash_sales');
+         
 
 
             // prdouct brands

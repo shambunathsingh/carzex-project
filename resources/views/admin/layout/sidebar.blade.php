@@ -85,7 +85,7 @@
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="far fa-chart-bar"></i></span>Report</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.flash_sales') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-bolt"></i></span>
                                     Flash sales</a>

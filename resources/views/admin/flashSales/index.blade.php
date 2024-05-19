@@ -197,11 +197,11 @@
                                             <!--    rowspan="1" colspan="1" aria-label="Templateorderby asc"-->
                                             <!--    style="">Total Amount-->
                                             <!--</th>-->
-                                            <th title="Created At" width="100px"
-                                                class="text-center column-key-created_at sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1"
-                                                colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">
-                                                Created At</th>
+                                            <!--<th title="Created At" width="100px"-->
+                                            <!--    class="text-center column-key-created_at sorting" tabindex="0"-->
+                                            <!--    aria-controls="botble-page-tables-page-table" rowspan="1"-->
+                                            <!--    colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">-->
+                                            <!--    Created At</th>-->
                                             {{-- <th title="Status" width="100px"
                                                 class="text-center column-key-status sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
@@ -262,22 +262,18 @@
                                                     @if ($order->is_paid == 1)
                                                      <span class="label-success status-label">Completed</span>
                                                     @else
-                                                     <span class="label-warning bg-warning status-label">Pending</span>
+                                                     <span class="label-primary status-label">Pending</span>
                                                     @endif
                                                 </td>
                                                   <td class=" text-center column-key-payment_status">
                                                     <span class="label-success status-label">Completed</span>
-                                                </td>
-                                                 <!--Created At column -->
-                                                <td class="text-center column-key-created_at">
-                                                    {{ $order->created_at->format('d-m-Y') }}
                                                 </td>
                                                 <td class="text-start column-key-template">
                                                 <div class="table-actions">
                                                     <a href="#" class="btn btn-icon btn-sm btn-primary">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog" data-bs-toggle="tooltip" >
+                                                    <a href="#" class="btn btn-icon btn-sm btn-danger deleteDialog" data-bs-toggle="tooltip" >
                                                         <i class="fa fa-trash btn-danger"></i>
                                                     </a>
                                                 </div>
@@ -297,7 +293,10 @@
                                                 <!--    {{ $order->totalAmount }}-->
                                                 <!--</td>-->
 
-                                                
+                                                <!-- Created At column -->
+                                                <!--<td class="text-center column-key-created_at">-->
+                                                <!--    {{ $order->created_at->format('d-m-Y') }}-->
+                                                <!--</td>-->
 
                                                 <!-- Operations column -->
                                                 {{-- <td class="text-center">

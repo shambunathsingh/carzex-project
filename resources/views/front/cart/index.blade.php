@@ -30,12 +30,15 @@
                                         <h4 class="text-center">Product</h4>
                                         <div class="d-flex justify-content-between">
                                             <div class="col-md-4">
-                                                <a href="#"><img class="img-fluid img-responsive"
+                                                <a href="{{ route('single_product', ['id' => $cartItem->product->id]) }}"><img
+                                                        class="img-fluid img-responsive"
                                                         src="{{ asset($cartItem->product->images) }}"
                                                         alt="{{ $cartItem->product->name }}"></a>
                                             </div>
                                             <div class="col-md-8 p-3">
-                                                <p class="product-details">{{ $cartItem->product->name }}</p>
+                                                <a href="{{ route('single_product', ['id' => $cartItem->product->id]) }}">
+                                                    <p class="product-details">{{ $cartItem->product->name }}</p>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +162,7 @@
             let quantity = parseInt(quantityInput.val(), 10);
             const price = parseFloat(quantityInput.data('price'));
 
-            quantity++;
+            quantity+1;
             quantityInput.val(quantity);
             updateSubtotal(productId, quantity, price);
         });

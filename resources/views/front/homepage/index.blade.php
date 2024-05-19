@@ -127,8 +127,8 @@
 
                                     // Construct the URL based on whether the category has a parent
                                     $url = $parentCategory
-                                        ? "product-category/{$parentCategory->name}/{$cat_item->name}"
-                                        : "product-category/{$cat_item->name}";
+                                        ? "product-category/{$parentCategory->slug}/{$cat_item->slug}"
+                                        : "product-category/{$cat_item->slug}";
                                 @endphp
 
 

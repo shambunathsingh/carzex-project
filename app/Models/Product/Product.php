@@ -5,7 +5,7 @@ namespace App\Models\Product;
 use App\Models\Category\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class Product extends Model
 {
     use HasFactory;
@@ -48,5 +48,18 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'categories', 'id');
+    }
+     public static function generateSlug($title)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (static::whereSlug($slug)->exists()) {
+            $slug = "{$originalSlug}-{$count}";
+            $count++;
+        }
+
+        return $slug;
     }
 }

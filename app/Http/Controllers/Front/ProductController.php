@@ -33,7 +33,7 @@ class ProductController extends Controller
 
     public function show($categoryName)
     {
-        $category = Category::where('name', $categoryName)->firstOrFail();
+        $category = Category::where('slug', $categoryName)->firstOrFail();
         $products = $category->products;
         $parentCategory = null; // Set parentCategory to null by default
 
@@ -47,8 +47,8 @@ class ProductController extends Controller
 
     public function showWithParent($parentCategory, $categoryName)
     {
-        $category = Category::where('name', $categoryName)->firstOrFail();
-        $parentCategory = Category::where('name', $parentCategory)->firstOrFail();
+        $category = Category::where('slug', $categoryName)->firstOrFail();
+        $parentCategory = Category::where('slug', $parentCategory)->firstOrFail();
 
         // Fetch products related to the category
         $products = $category->products;
