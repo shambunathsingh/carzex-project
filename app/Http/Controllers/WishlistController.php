@@ -47,4 +47,20 @@ class WishlistController extends Controller
             return redirect()->route('home')->with('warning', 'Login First !');
         }
     }
+
+
+    public function delete_wishlist($id)
+    {
+        // Retrieve the first wishlist item with the specified product_id
+        $wishlistItem = WishList::where('product_id', $id)->first();
+
+        // Check if the wishlist item exists
+        if ($wishlistItem) {
+            // Delete the wishlist item
+            $wishlistItem->delete();
+        }
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Removed from wishlist!');
+    }
 }

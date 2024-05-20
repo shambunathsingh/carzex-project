@@ -115,6 +115,7 @@ Route::middleware(['guest:web'])->group(function () {
 
     // My Wishlist Section
     Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add_to_wishlist'])->name('add_wishlist');
+    Route::get('delete-wishlist/{id}', [WishlistController::class, 'delete_wishlist'])->name('delete_wishlist');
     Route::get('wishlist', [WishlistController::class, 'showAllWishList'])->name('show_wishlist');
 
     // My Order Section

@@ -14,6 +14,7 @@ class Order extends Model
 
     protected $fillabe = [
         'customer_id',
+        'order_id',
         'first_name',
         'last_name',
         'company_name',

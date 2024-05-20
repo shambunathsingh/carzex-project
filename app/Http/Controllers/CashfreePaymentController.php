@@ -1,15 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Order\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+
 use App\Models\ProductOrder\ProductOrder;
 use App\Models\Cart\Cart;
 use App\Models\Product\Product;
+use Craftsys\Msg91\Facade\Msg91;
+
 class CashfreePaymentController extends Controller
 {
+
+    private function generateOrderNumber()
+    {
+        return strtoupper(Str::random(10)); // Generate a 10-character random string
+    }
+
     public function create(Request $request)
     {
         return view('front.payment.payment-create');
@@ -88,46 +99,92 @@ class CashfreePaymentController extends Controller
 
 
     public function success(Request $request)
-{
-    // Retrieve cart items from session
-    $cartItems = session('cart');
-    $requestData = $request->all();
-if(isset($requestData)){
-    // Retrieve authenticated customer's ID
-    $customerId = Auth::guard('customer')->user()->id;
+    {
+        // Retrieve cart items from session
+        $cartItems = session('cart');
+        $requestData = $request->all();
+        if (isset($requestData)) {
+            // Retrieve authenticated customer's ID
+            $customerId = Auth::guard('customer')->user()->id;
+            $customerPhone = Auth::guard('customer')->user()->phone;
 
-    // Calculate total amount
-    $totalAmount = 0;
-    foreach ($cartItems as $item) {
-        $totalAmount += $item['subtotal'];
+            // Calculate total amount
+            $totalAmount = 0;
+            foreach ($cartItems as $item) {
+                $totalAmount += $item['subtotal'];
+            }
+            // $latestOrder = Order::latest()->first();
+            $latestOrderId = $this->generateOrderNumber();
+
+            // $latestOrderId = $latestOrder->id;
+
+            // Save product order details
+            foreach ($cartItems as $item) {
+                $productOrder = new ProductOrder();
+                $productOrder->order_id = $latestOrderId; // Use the latest order ID
+                $productOrder->product_id = $item['productId'];
+                $productOrder->quantity = $item['quantity'];
+                $productOrder->subtotal = $item['subtotal'];
+                $productOrder->payment_id = substr($requestData['order_id'], 6);
+                $productOrder->order_token = $requestData['order_token']; // This line seems unnecessary
+                $productOrder->save();
+
+                // Remove product from cart database
+                Cart::where('customer_id', $customerId)
+                    ->where('product_id', $item['productId'])
+                    ->delete();
+            }
+
+            // Send SMS
+
+            // Prepare the payload
+            $payload = [
+                'template_id' => '651d0de9d6fc051c78783042',
+                'short_url' => 1, // Change to 1 for On or 0 for Off
+                'recipients' => [
+                    [
+                        'mobiles' => '91' . $customerPhone,
+                        'var1' => $latestOrderId
+                        // 'var1' => "testing111222"
+                    ]
+                ]
+            ];
+
+            // dd($validatedData, $payload);
+            // exit;
+            // Initialize Curl
+            $curl = curl_init();
+
+            // Set Curl options
+            curl_setopt_array($curl, [
+                CURLOPT_URL => "https://control.msg91.com/api/v5/flow/",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => json_encode($payload), // Encode payload as JSON
+                CURLOPT_HTTPHEADER => [
+                    "accept: application/json",
+                    "authkey: 106071AD1N8jXrZ45f78cafcP1",
+                    "content-type: application/json"
+                ],
+            ]);
+
+            // Execute Curl request
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            // Close Curl
+            curl_close($curl);
+
+            // Clear cart session
+            $request->session()->forget('cart');
+            session(['cartCount' => 0]);
+
+            // Redirect to the "thank you" page with success message
+            return redirect()->route('thankyou')->with('success', 'Payment successful');
+        }
     }
-    $latestOrder = Order::latest()->first();
-    $latestOrderId = $latestOrder->id;
-    
-    // Save product order details
-    foreach ($cartItems as $item) {
-        $productOrder = new ProductOrder();
-        $productOrder->order_id = $latestOrderId; // Use the latest order ID
-        $productOrder->product_id = $item['productId'];
-        $productOrder->quantity = $item['quantity'];
-        $productOrder->subtotal = $item['subtotal'];
-        $productOrder->payment_id = substr($requestData['order_id'], 6);
-        $productOrder->order_token = $requestData['order_token']; // This line seems unnecessary
-        $productOrder->save();
-
-        // Remove product from cart database
-        Cart::where('customer_id', $customerId)
-            ->where('product_id', $item['productId'])
-            ->delete();
-    }
-
-    // Clear cart session
-    $request->session()->forget('cart');
-    session(['cartCount' => 0]);
-
-    // Redirect to the "thank you" page with success message
-    return redirect()->route('thankyou')->with('success', 'Payment successful');
-}
-
-}
 }

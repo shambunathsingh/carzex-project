@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Craftsys\Msg91\Msg91LaravelServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
     ])->toArray(),
 
@@ -186,6 +187,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 
+        'Msg91' => Craftsys\Msg91\Facade\Msg91::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 

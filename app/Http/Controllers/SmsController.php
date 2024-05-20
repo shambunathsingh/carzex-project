@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Services\MSG91Service;
-
+// use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Http\Request;
 
 class SmsController extends Controller
@@ -43,8 +43,7 @@ class SmsController extends Controller
                 'recipients' => [
                     [
                         'mobiles' => $validatedData['phone'],
-                        'VAR1' => $validatedData['mssg'],
-                        'VAR2' => 'It is working.'
+                        'var1' => $validatedData['mssg'],
                     ]
                 ]
             ];
