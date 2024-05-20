@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
-<form action="{{ route('admin.ecommerce.save_flash_sales') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('admin.ecommerce.save_flash_sales') }}" method="Post" enctype="multipart/form-data">
     @csrf
 
     <div class="main-panel">
@@ -171,25 +171,31 @@
     </div>
 </form>
 @endsection
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @section('scripts')
-<script>
-    ClassicEditor
-        .create(document.querySelector('#description'))
-        .catch(error => {
-            console.error(error);
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // When "Choose image" is clicked, trigger the file input click event
+            document.getElementById("choose_image_btn").addEventListener("click", function(e) {
+                e.preventDefault(); // Prevent the default action of the link
+                document.getElementById("logo_input").click(); // Simulate a click on the file input
+            });
         });
-    document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('end_date');
-        var today = new Date().toISOString().split('T')[0];
-        dateInput.value = today;
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        // When "Choose image" is clicked, trigger the file input click event
-        document.getElementById("choose_image_btn").addEventListener("click", function (e) {
-            e.preventDefault(); // Prevent the default action of the link
-            document.getElementById("logo_input").click(); // Simulate a click on the file input
+    </script>
+    <script>
+        // Initialize Flatpickr
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            defaultDate: "{{ $flashSales->end_date }}"
         });
-    });
-</script>
+    </script>
 @endsection

@@ -1,30 +1,19 @@
 @extends('admin.layout.app')
 
 @section('content')
-    <form action="{{ route('admin.ecommerce.update_brand', ['id' => $brand->id]) }}" method="post"
-        enctype="multipart/form-data">
+    <form action="{{ route('admin.ecommerce.update_flash_sales', ['id' => $flashSales->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="main-panel">
             <div class="pagesbodyarea">
                 <div class="pageinfo">
                     <ul class="d-flex">
-                        <li><a href="{{ route('admin.dashboard') }}" class="breadcrumb-item"><i class="fa-solid fa-house"> </i>
-                                Dashboard
-                                /</a>
-                        </li>
-                        <li><a class="breadcrumb-item">Ecommerce
-                                /</a>
-                        </li>
-                        <li><a href="{{ route('admin.ecommerce.brands') }}" class="breadcrumb-item">Brands
-                                /</a>
-                        </li>
-                        <li><a class="breadcrumb-item">Edit Brand</a>
-                        </li>
+                        <li><a href="{{ route('admin.dashboard') }}" class="breadcrumb-item"><i class="fa-solid fa-house"> </i> Dashboard /</a></li>
+                        <li><a class="breadcrumb-item">Ecommerce /</a></li>
+                        <li><a href="{{ route('admin.ecommerce.flash_sales') }}" class="breadcrumb-item">Flash sales /</a></li>
+                        <li><a class="breadcrumb-item">Edit Flash sales</a></li>
                     </ul>
                 </div>
-
-
 
                 @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -44,69 +33,45 @@
                     </div>
                 @endif
 
-
-                <!-- todo edit main body ara -->
-
                 <div class="row">
-
                     <div class="col-md-9">
                         <div class="tabbable-custom">
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_detail">
                                     <div class="form-group mb-3">
-
-                                        <label for="name" class="control-label required"
-                                            aria-required="true">Name</label>
-                                        <input class="form-control" placeholder="Name" data-counter="120" v-pre=""
-                                            name="name" type="text" id="name" aria-invalid="false"
-                                            aria-describedby="name-error" value="{{ $brand->name }}">
-
+                                        <label for="name" class="control-label required" aria-required="true">Name</label>
+                                        <input class="form-control" placeholder="Name" data-counter="120" v-pre="" name="name" type="text" id="name" aria-invalid="false" aria-describedby="name-error" value="{{ $flashSales->name }}">
                                     </div>
-
                                     <div class="form-group mb-3">
-                                        <grammarly-extension data-grammarly-shadow-root="true"
-                                            style="position: absolute; top: 0px; left: 0px; pointer-events: none;"
-                                            class="dnXmp"></grammarly-extension>
-                                        <grammarly-extension data-grammarly-shadow-root="true"
-                                            style="position: absolute; top: 0px; left: 0px; pointer-events: none;"
-                                            class="dnXmp"></grammarly-extension>
-
-                                        <label for="description" class="control-label">Description</label>
-                                        <textarea class="form-control" rows="10" placeholder="Short description" data-counter="400" v-pre=""
-                                            name="description" id="description" cols="50" spellcheck="false">{{ $brand->description }}</textarea>
-                                        <small class="charcounter">
-                                            (400 character(s) remain)
-                                        </small>
+                                        <label for="subtitle" class="control-label">Subtitle</label>
+                                        <input class="form-control" placeholder="Text to highlight" v-pre="" name="subtitle" type="text" value="{{ $flashSales->subtitle }}" id="subtitle" spellcheck="false" data-ms-editor="true" autocomplete="off">
                                     </div>
-
-                                    <div class="form-group mb-3">
-
-                                        <label for="description" class="control-label">Website</label>
-                                        <input type="text" class="form-control" name="website"
-                                            placeholder="Ex: https://example.com" value="{{ $brand->website }}">
-                                    </div>
-
-                                    <div class="form-group mb-3">
-
-                                        <label for="description" class="control-label">Order</label>
-                                        <input type="text" class="form-control" name="order"
-                                            value="{{ $brand->order }}">
-                                    </div>
-
                                 </div>
-
                             </div>
                         </div>
-
-
+                        <div class="widget meta-boxes">
+                            <div class="widget-title">
+                                <h4>Products</h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="form-group mb-3">
+                                    <input type="hidden" name="products" value="">
+                                    <div class="box-search-advance product">
+                                        <form method="GET" action="{{ route('admin.ecommerce.update_flash_sales') }}">
+                                            <input type="text" name="query" class="next-input textbox-advancesearch" id="product-search" placeholder="Search products" autocomplete="off" value="{{ request('query') }}">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                            <ul id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></ul>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
                     </div>
                     <div class="col-md-3 right-sidebar d-flex flex-column-reverse flex-md-column">
                         <div class="form-actions-wrapper">
                             <div class="widget meta-boxes form-actions form-actions-default action-horizontal">
                                 <div class="widget-title">
-                                    <h4>
-                                        <span>Publish</span>
-                                    </h4>
+                                    <h4><span>Publish</span></h4>
                                 </div>
                                 <div class="widget-body">
                                     <div class="btn-set">
@@ -116,30 +81,22 @@
                                         <button type="submit" name="submit" value="apply" class="btn btn-success">
                                             <i class="fa fa-check-circle"></i> Save
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="form-side-meta-boxes">
                             <div class="widget meta-boxes">
                                 <div class="widget-title">
-                                    <h4><label for="status" class="control-label required"
-                                            aria-required="true">Status</label></h4>
+                                    <h4><label for="status" class="control-label required" aria-required="true">Status</label></h4>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="ui-select-wrapper form-group ">
-                                        <select class="form-control ui-select" v-pre="" id="status"
-                                            name="status">
-                                            <option value="published"
-                                                {{ $brand->status == 'published' ? 'selected' : '' }}>
-                                                Published</option>
-                                            <option value="draft" {{ $brand->status == 'draft' ? 'selected' : '' }}>Draft
-                                            </option>
-                                            <option value="pending" {{ $brand->status == 'pending' ? 'selected' : '' }}>
-                                                Pending
-                                            </option>
+                                    <div class="ui-select-wrapper form-group">
+                                        <select class="form-control ui-select" v-pre="" id="status" name="status">
+                                            <option value="published" {{ $flashSales->status == 'published' ? 'selected' : '' }}>Published</option>
+                                            <option value="draft" {{ $flashSales->status == 'draft' ? 'selected' : '' }}>Draft</option>
+                                            <option value="pending" {{ $flashSales->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                         </select>
                                         <svg class="svg-next-icon svg-next-icon-size-16">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -149,7 +106,18 @@
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="widget meta-boxes">
+                            <div class="widget-title">
+                                <h4><label for="end_date" class="control-label required" aria-required="true">End date</label></h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="input-group datepicker">
+                                    <input class="form-control flatpickr-input" data-date-format="Y-m-d" placeholder="Y-m-d" value="{{ $flashSales->end_date }}" name="end_date" type="text" id="end_date">
+                                    <i class="icon-calendar"></i>                        
+                                    <a class="input-button" title="toggle" data-toggle=""><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 17 17"><g></g><path d="M14 2V1h-3v1H6V1H3v1H0v15h17V2h-3zM12 2h1v2h-1V2zM4 2h1v2H4V2zM16 16H1v-8.921h15V16zM1 6.079v-3.079h2v2h3V3h5v2h3V3h2v3.079H1z"></path></svg></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-side-meta-boxes">
                             <div class="widget meta-boxes">
@@ -159,71 +127,66 @@
                                 <div class="widget-body">
                                     <div class="image-box">
                                         <div class="preview-image-wrapper">
-                                            <img src="{{ asset('storage/logos/' . $brand->logo) }}"
-                                                data-default="{{ asset('storage/logos/' . $brand->logo) }}"
-                                                alt="Preview image" width="150" class="preview_image">
-                                            <a title="Remove image" class="btn_remove_image"><i
-                                                    class="fa fa-times"></i></a>
+                                            <img src="{{ asset('storage/logos/' . $flashSales->logo) }}" data-default="{{ asset('storage/logos/' . $flashSales->logo) }}" alt="Preview image" width="150" class="preview_image">
+                                            <a title="Remove image" class="btn_remove_image"><i class="fa fa-times"></i></a>
                                         </div>
                                         <div class="image-box-actions">
-                                            <a href="#" id="choose_image_btn" data-result="image"
-                                                data-action="select-image" data-allow-thumb="1" class="btn_gallery">
-                                                Choose image
-                                            </a>
+                                            <a href="#" id="choose_image_btn" data-result="image" data-action="select-image" data-allow-thumb="1" class="btn_gallery">Choose image</a>
                                         </div>
                                     </div>
-                                    <!-- Hidden file input -->
-                                    <input type="file" name="logo" class="image-data" id="logo_input"
-                                        style="display:none;">
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="form-side-meta-boxes">
-                            <div class="widget meta-boxes">
-                                <div class="widget-title">
-                                    <h4><label for="is_featured" class="control-label">Is
-                                            featured?</label></h4>
-                                </div>
-                                <div class="m-1 form-check form-switch">
-                                    <input type="hidden" name="featured" value="0">
-                                    <input type="checkbox" class="form-check-input" name="featured" value="1"
-                                        {{ $brand->featured == '1' ? 'checked' : '' }}>
+                                    <input type="file" name="logo" class="image-data" id="logo_input" style="display:none;">
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
-
-
-
-
-
-
             </div>
         </div>
     </form>
 @endsection
 
-@section('scripts')
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+@section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // When "Choose image" is clicked, trigger the file input click event
             document.getElementById("choose_image_btn").addEventListener("click", function(e) {
-                e.preventDefault(); // Prevent the default action of the link
-                document.getElementById("logo_input").click(); // Simulate a click on the file input
+                e.preventDefault();
+                document.getElementById("logo_input").click();
             });
         });
+
+        // Initialize Flatpickr
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            defaultDate: "{{ $flashSales->end_date }}"
+        });
     </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#product-search').on('keyup', function(){
+                let query = $(this).val();
+                if (query.length > 1) {
+                    $.ajax({
+                        url: "{{ route('admin.ecommerce.update_flash_sales') }}",
+                        type: "GET",
+                        data: {'query': query},
+                        success: function(data){
+                            let suggestions = $('#suggestions');
+                            suggestions.empty();
+                            data.forEach(product => {
+                                suggestions.append('<li class="list-group-item"><a href="/products/' + product.slug + '">' + product.name + '</a></li>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#suggestions').empty();
+                }
+            });
+        });
+    </script> 
 @endsection

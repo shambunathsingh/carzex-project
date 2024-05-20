@@ -13,6 +13,7 @@ class Flash_sales extends Model
 
     protected $fillable = [
         'name',
+        'subtitle',
         'end_date',
         'status',
         'created_at',
@@ -25,3 +26,4 @@ class Flash_sales extends Model
         'updated_at'
     ];
 }
+

@@ -330,77 +330,77 @@ public function thankyou()
 
         return redirect()->back();
     }
-    public function sms(Request $request)
-    {
-        // Validate request data
-        $validatedData = $request->validate([
-            'mssg' => 'required|string',
-            'phone' => 'required|string',
-        ]);
+    // public function sms(Request $request)
+    // {
+    //     // Validate request data
+    //     $validatedData = $request->validate([
+    //         'mssg' => 'required|string',
+    //         'phone' => 'required|string',
+    //     ]);
 
 
-        // Prepare the payload
-        $payload = [
-            'template_id' => 'EntertemplateID',
-            'short_url' => 1, // Change to 1 for On or 0 for Off
-            'recipients' => [
-                [
-                    'mobiles' => $validatedData['phone'],
-                    'VAR1' => $validatedData['mssg'],
-                    'VAR2' => 'It is working.'
-                ]
-            ]
-        ];
+    //     // Prepare the payload
+    //     $payload = [
+    //         'template_id' => 'EntertemplateID',
+    //         'short_url' => 1, // Change to 1 for On or 0 for Off
+    //         'recipients' => [
+    //             [
+    //                 'mobiles' => $validatedData['phone'],
+    //                 'VAR1' => $validatedData['mssg'],
+    //                 'VAR2' => 'It is working.'
+    //             ]
+    //         ]
+    //     ];
 
-        // dd($validatedData, $payload);
-        // exit;
-        // Initialize Curl
-        $curl = curl_init();
+    //     // dd($validatedData, $payload);
+    //     // exit;
+    //     // Initialize Curl
+    //     $curl = curl_init();
 
-        // Set Curl options
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://control.msg91.com/api/v5/flow/",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode($payload), // Encode payload as JSON
-            CURLOPT_HTTPHEADER => [
-                "accept: application/json",
-                "authkey: 421777AiWNLclyJYd663ccdf9P1",
-                "content-type: application/json"
-            ],
-        ]);
+    //     // Set Curl options
+    //     curl_setopt_array($curl, [
+    //         CURLOPT_URL => "https://control.msg91.com/api/v5/flow/",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => "",
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 30,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_CUSTOMREQUEST => "POST",
+    //         CURLOPT_POSTFIELDS => json_encode($payload), // Encode payload as JSON
+    //         CURLOPT_HTTPHEADER => [
+    //             "accept: application/json",
+    //             "authkey: 421777AiWNLclyJYd663ccdf9P1",
+    //             "content-type: application/json"
+    //         ],
+    //     ]);
 
-        // Execute Curl request
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+    //     // Execute Curl request
+    //     $response = curl_exec($curl);
+    //     $err = curl_error($curl);
 
-        // Close Curl
-        curl_close($curl);
+    //     // Close Curl
+    //     curl_close($curl);
 
-        // Check for Curl errors
-        if ($err) {
-            // Handle Curl errors
-            return response()->json(['error' => "cURL Error: $err"], 500);
-        } else {
-            // Handle successful response
-            return response()->json(['response' => $response], 200);
-        }
-    }
+    //     // Check for Curl errors
+    //     if ($err) {
+    //         // Handle Curl errors
+    //         return response()->json(['error' => "cURL Error: $err"], 500);
+    //     } else {
+    //         // Handle successful response
+    //         return response()->json(['response' => $response], 200);
+    //     }
+    // }
 
 
-    public function sendMsg()
-    {
-        $data = Msg91::sms()
-            ->to(9163567970) // set the mobile with country code
-            ->flow("663d0f67d6fc05223f610c82") // set the flow id
-            ->send(); // send
+    // public function sendMsg()
+    // {
+    //     $data = Msg91::sms()
+    //         ->to(9163567970) // set the mobile with country code
+    //         ->flow("663d0f67d6fc05223f610c82") // set the flow id
+    //         ->send(); // send
 
-        dd($data);
+    //     dd($data);
         
         
-    }
+    // }
 }

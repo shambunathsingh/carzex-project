@@ -2,19 +2,14 @@
 
 @section('content')
     <div class="page-content " style="min-height: 758px;">
-
         <div id="main">
-
-
             <div class="breadcambarea">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><span style="color: black; margin-right: 3px;"><i
                                 class="fa fa-home"></i></span>Dashboard</li>
 
                     <li class="breadcrumb-item ">Ecommerce</li>
-                    <li class="breadcrumb-item ">Brands</li>
-
-
+                    <li class="breadcrumb-item ">Flash Sales</li>
                 </ol>
                 <div class="table-wrapper">
                 </div>
@@ -29,20 +24,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
-
                 <div class="portlet light bordered portlet-no-padding">
-
-
-
-
                     <div class="portlet-body">
                         <div class="table-responsive  table-has-actions   table-has-filter ">
                             <div id="botble-page-tables-page-table_wrapper"
