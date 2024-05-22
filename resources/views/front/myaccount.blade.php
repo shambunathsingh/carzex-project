@@ -1,5 +1,9 @@
 @extends('front.layout.app')
-
+<style>
+    #loginButton {
+        display: none;
+    }
+</style>
 @section('content')
     <main>
 
@@ -145,8 +149,8 @@
                                                                         </div>
                                                                         <p class="form-row mb-3 mb-lg-0 pb-1 pb-lg-0">
                                                                             <!-- <input type="hidden" id="woocommerce-login-nonce"
-                                                                                                                                                                                                            name="woocommerce-login-nonce" value=""><input
-                                                                                                                                                                                                            type="" name="_wp_http_referer" value=""> -->
+                                                                                                                                                                                                                                        name="woocommerce-login-nonce" value=""><input
+                                                                                                                                                                                                                                        type="" name="_wp_http_referer" value=""> -->
                                                                             <button type="submit"
                                                                                 class="woocommerce-Button button login-btn btn-v-dark py-3 text-md w-100"
                                                                                 name="login"
@@ -338,22 +342,21 @@
                     <div class="modal-body">
                         <!-- Add your registration form fields here -->
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Mob no.</label>
-                            <input type="number" class="form-control" name="phone" placeholder="Enter phone">
-                            {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                                else.</small> --}}
+                            <label for="phone">Mob no.</label>
+                            <input type="number" class="form-control" name="phone" id="phone"
+                                placeholder="Enter phone">
+                            <button type="button" id="otpButton" class="btn btn-primary">OTP</button>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter password">
-                            {{-- <button type="button" class="btn btn-primary mt-2" onclick="generatePassword()">Generate
-                                Password</button> --}}
+                            <label for="otp">OTP</label>
+                            <input type="number" class="form-control" id="otp" name="otp"
+                                placeholder="Enter OTP">
                         </div>
                         <!-- Add more form fields as needed -->
+                        <p id="otpMessage" style="color: green; font-weight: 500; display: none;">OTP sent!</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" id="loginButton" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>
@@ -361,25 +364,60 @@
     </div>
 @endsection
 
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    function generatePassword() {
-        // Define characters to be used in the generated password
-        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+";
+    {{-- Password generate script --}}
+    <script>
+        function generatePassword() {
+            // Define characters to be used in the generated password
+            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+";
 
-        // Define password length
-        var passwordLength = 12;
+            // Define password length
+            var passwordLength = 12;
 
-        // Initialize empty password string
-        var password = "";
+            // Initialize empty password string
+            var password = "";
 
-        // Generate password randomly
-        for (var i = 0; i < passwordLength; i++) {
-            var randomIndex = Math.floor(Math.random() * chars.length);
-            password += chars[randomIndex];
+            // Generate password randomly
+            for (var i = 0; i < passwordLength; i++) {
+                var randomIndex = Math.floor(Math.random() * chars.length);
+                password += chars[randomIndex];
+            }
+
+            // Display generated password using innerText
+            document.getElementById("password").innerText = password;
         }
+    </script>
 
-        // Display generated password using innerText
-        document.getElementById("password").innerText = password;
-    }
-</script>
+    {{-- Otp sent script --}}
+    <script>
+        $(document).ready(function() {
+            $("#otpButton").click(function(e) {
+                // Prevent the form from submitting
+                // e.preventDefault();
+
+                // Get the phone number from the input field
+                var phoneNumber = $("#phone").val();
+
+                // Check if the phone number is entered
+                if (phoneNumber === '') {
+                    alert('Please enter your phone number.');
+                    return;
+                }
+
+                // Simulate sending OTP (you can replace this with an actual OTP sending code)
+                alert('OTP sent to ' + phoneNumber);
+
+                // Hide the OTP button
+                $("#otpButton").hide();
+
+                // Show the login button
+                $("#loginButton").show();
+
+                // Show the "OTP sent" message
+                $("#otpMessage").show();
+            });
+        });
+    </script>
+@endsection
