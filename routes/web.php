@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\Media\MediaController;
 use App\Http\Controllers\Admin\NewsLetter\NewsLetterController;
 use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\FlashSales\FlashSalesController;
+use App\Http\Controllers\Admin\Invoice\InvoiceController;
 use App\Http\Controllers\Admin\ProductOptions\ProductOptionController;
 use App\Http\Controllers\Admin\States\StateController;
 use App\Http\Controllers\AuthController;
@@ -139,6 +140,9 @@ Route::any('cashfree/payments/success', [CashfreePaymentController::class, 'succ
 | Dashboard Routes
 |--------------------------------------------------------------------------
 */
+
+
+Route::get('generate-pdf', [InvoiceController::class, 'generatePdf']);
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('admin/login', [AuthController::class, 'index'])->name('login');
