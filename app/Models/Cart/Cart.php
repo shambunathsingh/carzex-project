@@ -23,7 +23,6 @@ class Cart extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-
     public function getCartDetails()
     {
         // Fetch cart details from the database or session
@@ -35,14 +34,27 @@ class Cart extends Model
         // Fetch product details based on product_id
         foreach ($cartItems as $cartItem) {
             $product = Product::find($cartItem->product_id); // Fetch product based on product_id
-            $products[$cartItem->product_id] = $product; // Store product details in the array with product_id as key
+            if ($product) {
+                $products[$cartItem->product_id] = $product; // Store product details in the array with product_id as key
+            } else {
+                // Handle the case where the product is not found
+                // For example, log an error, skip the item, or provide a default product
+                // Here, we'll skip the item
+                continue;
+            }
         }
 
         // Calculate total amount
         $totalAmount = 0;
 
         foreach ($cartItems as $cartItem) {
-            $totalAmount += $cartItem->quantity * $products[$cartItem->product_id]->price; // Calculate total amount
+            if (isset($products[$cartItem->product_id])) {
+                $totalAmount += $cartItem->quantity * $products[$cartItem->product_id]->price; // Calculate total amount
+            } else {
+                // Handle the case where the product details are not available
+                // For example, skip the item
+                continue;
+            }
         }
 
         return [

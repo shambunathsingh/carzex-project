@@ -30,4 +30,11 @@ class OrderController extends Controller
             'orders' => $orders
         ]);
     }
+    public function delete_order($id)
+    {
+        $Order = Order::findOrFail($id);
+        $Order->delete();
+
+        return redirect()->back()->with('success', 'Order deleted successfully.');
+    }
 }

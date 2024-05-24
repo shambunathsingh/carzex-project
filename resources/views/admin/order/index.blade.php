@@ -247,16 +247,16 @@
                                                 </td>
                                                   <!-- Total Amount column -->
                                                 <td class="text-start column-key-template">
-                                                    {{ $order->totalAmount }}
+                                                    ₹ {{ $order->totalAmount }}
                                                 </td>
                                                 <td class="text-start column-key-template">
-                                                    00.00
+                                                    ₹ 00.00
                                                 </td>
                                                 <td class="text-start column-key-template">
-                                                    00.00
+                                                    ₹ 00.00
                                                 </td>
                                                  <td class="text-start column-key-template">
-                                                    cod
+                                                        COD
                                                 </td>
                                                <td class="text-center column-key-payment_status">
                                                     @if ($order->is_paid == 1)
@@ -277,9 +277,15 @@
                                                     <a href="#" class="btn btn-icon btn-sm btn-primary">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog" data-bs-toggle="tooltip" >
+                                                   
+                                                    <a href="{{ route('admin.ecommerce.delete_order', ['id' => $order->id]) }}"
+                                                        class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog"
+                                                        data-bs-toggle="tooltip" data-section="" role="button"
+                                                        data-bs-original-title="Delete"
+                                                        onclick="return confirm('Are you sure you want to delete this order?');">
                                                         <i class="fa fa-trash btn-danger"></i>
                                                     </a>
+                                                    
                                                 </div>
                                                 </td>
                                                 <!-- No. of Product column -->
