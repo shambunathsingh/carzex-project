@@ -37,4 +37,11 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order deleted successfully.');
     }
+    public function edit_order($id)
+    {
+        $title = "Carzex - Edit Order";
+        $editOrder = Order::find($id);
+
+        return view('admin.order.edit_order', compact('editOrder', 'title'));
+    }
 }

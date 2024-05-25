@@ -274,7 +274,8 @@
                                                 </td>
                                                 <td class="text-start column-key-template">
                                                 <div class="table-actions">
-                                                    <a href="#" class="btn btn-icon btn-sm btn-primary">
+                                                    <a href="{{ route('admin.ecommerce.edit_order', ['id' => $order->id]) }}"
+                                                        class="btn btn-icon btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                    

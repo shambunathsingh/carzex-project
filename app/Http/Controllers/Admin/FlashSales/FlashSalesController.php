@@ -15,6 +15,7 @@ class FlashSalesController extends Controller
 {
     public function store_flash_sales(Request $request)
     {
+        //    dd($request->all());
         // Validate request data
         $request->validate([
             'flash_sale_id' => 'required|integer',
@@ -77,7 +78,93 @@ class FlashSalesController extends Controller
         return response()->json($product);
     }
 
-    public function update_flash_sales(Request $request, $id)
+    // public function update_flash_sales(Request $request, $id)
+    // {
+    //     // Validate request data
+    //     $request->validate([
+    //         'name' => 'required|string',
+    //         'subtitle' => 'required|string',
+    //         'end_date' => 'required|date',
+    //         'status' => 'required|string',
+    //         'flash_sale_id' => 'required|integer',
+    //         'product_id' => 'required|integer',
+    //         'price' => 'required|numeric',
+    //         'quantity' => 'required|integer'
+    //     ]);
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         // Find the existing FlashSale record
+    //         $flashSale = Flash_sales::findOrFail($id);
+    //         // Update the FlashSale model with the validated request data
+    //         $flashSale->name = $request->name;
+    //         $flashSale->subtitle = $request->subtitle;
+    //         $flashSale->end_date = $request->end_date;
+    //         $flashSale->status = $request->status;
+    //         // Save the updated FlashSale model to the database
+    //         $flashSale->save();
+
+    //         // Find the related FlashSaleProduct record
+    //         $flashSaleProduct = flash_sale_products::where('flash_sale_id', $id)->firstOrFail();
+    //         // Update the FlashSaleProduct model with the validated request data
+    //         $flashSaleProduct->product_id = $request->input('product_id');
+    //         $flashSaleProduct->price = $request->input('price');
+    //         $flashSaleProduct->quantity = $request->input('quantity');
+    //         // Save the updated FlashSaleProduct model to the database
+    //         $flashSaleProduct->save();
+
+    //         DB::commit();
+
+    //         // Redirect back with success message
+    //         return redirect()->back()->with('success', 'Flash sale updated successfully.');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         // Return an error response in case of any exceptions
+    //         return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
+    //     }
+    // }
+    public function delete_flash_sales($id)
+    {
+        $Flash_sales = Flash_sales::findOrFail($id);
+        $Flash_sales->delete();
+
+        return redirect()->back()->with('success', 'Flash sale deleted successfully.');
+    }
+
+    // Flash sales listing
+    public function flash_sales()
+    {
+        $title = "Carzex - Flash Sales";
+
+        $flash_sales_list = Flash_sales::all();
+
+        return view('admin.ecommerce.flash_sales', compact('title', 'flash_sales_list'));
+    }
+
+    public function create_product_flash_sales()
+    {
+        $title = "Carzex - New Flash Sale";
+
+        return view('admin.ecommerce.add_flash_sales', ['title' => $title]);
+    }
+
+    public function edit_product_flash_sales($id)
+    {
+        $title = "Carzex - Edit Flash Sale";
+        $Flash_sales = Flash_sales::find($id);
+
+        return view('admin.ecommerce.edit_flash_sales', compact('Flash_sales', 'title'));
+    }
+    // public function edit_product_flash_sales($id)
+    // {
+    //     $title = "Carzex - Edit Flash Sale";
+    //     $flashSale = Flash_sales::with('products')->findOrFail($id); // Fetch flash sale with its products
+
+    //     return view('admin.ecommerce.edit_flash_sales', compact('flash_sales', 'title'));
+    // }
+
+    public function update_product_flash_sales(Request $request, $id)
     {
         // Validate request data
         $request->validate([
@@ -122,81 +209,5 @@ class FlashSalesController extends Controller
             // Return an error response in case of any exceptions
             return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
         }
-    }
-    public function delete_flash_sales($id)
-    {
-        $Flash_sales = Flash_sales::findOrFail($id);
-        $Flash_sales->delete();
-
-        return redirect()->back()->with('success', 'Flash sale deleted successfully.');
-    }
-
-    // Flash sales listing
-    public function flash_sales()
-    {
-        $title = "Carzex - Flash Sales";
-
-        $flash_sales_list = Flash_sales::all();
-
-        return view('admin.ecommerce.flash_sales', compact('title', 'flash_sales_list'));
-    }
-
-    public function create_product_flash_sales()
-    {
-        $title = "Carzex - New Flash Sale";
-
-        return view('admin.ecommerce.add_flash_sales', ['title' => $title]);
-    }
-
-    // public function edit_product_flash_sales($id)
-    // {
-    //     $title = "Carzex - Edit Flash Sale";
-    //     $Flash_sales = Flash_sales::find($id);
-
-    //     return view('admin.ecommerce.edit_flash_sales', compact('Flash_sales', 'title'));
-    // }
-    // public function edit_product_flash_sales($id)
-    // {
-    //     $title = "Carzex - Edit Flash Sale";
-    //     $flashSale = Flash_sales::with('products')->findOrFail($id); // Fetch flash sale with its products
-
-    //     return view('admin.ecommerce.edit_flash_sales', compact('flashSale', 'title'));
-    // }
-
-    public function edit_product_flash_sales($id)
-    {
-        $title = "Carzex - Edit Flash Sale";
-        $Flash_sales = Flash_sales::with('products')->findOrFail($id); // Fetch flash sale with its products
-
-        return view('admin.ecommerce.edit_flash_sales', compact('Flash_sales', 'title'));
-    }
-
-    public function update_product_flash_sales(Request $request, $id)
-    {
-        // Validate request data
-        $request->validate([
-            'name' => 'required|string',
-            'subtitle' => 'required|string',
-            'end_date' => 'required|date',
-            'status' => 'required|string',
-            'products' => 'array'
-        ]);
-
-        // Find the flash sale and update its details
-        $flashSale = Flash_sales::findOrFail($id);
-        $flashSale->update($request->only(['name', 'subtitle', 'end_date', 'status']));
-
-        // Update the flash sale products
-        if ($request->has('products')) {
-            foreach ($request->products as $product) {
-                $flashSaleProduct = flash_sale_products::findOrFail($product['id']);
-                $flashSaleProduct->update([
-                    'price' => $product['price'],
-                    'quantity' => $product['quantity']
-                ]);
-            }
-        }
-
-        return redirect()->back()->with('success', 'Flash sale updated successfully.');
     }
 }

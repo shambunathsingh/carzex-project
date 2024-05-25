@@ -102,58 +102,35 @@
                             <div class="widget-title">
                                 <h4>Products</h4>
                             </div>
+                            @if ($Flash_sales->products->isNotEmpty()) <!-- Check if there are any products associated with the Flash_sales -->
                             <div class="widget-body">
                                 <div class="form-group mb-3">
-                                    <input type="hidden" name="products" value="">
+                                    {{-- <input type="hidden" name="products" value=""> --}}
                                     <div class="box-search-advance product">
                                         <input type="text" name="query" class="next-input textbox-advancesearch" id="product-search" placeholder="Search products" autocomplete="off" value="{{ request('query') }}">
                                         <ul id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></ul>
                                     </div>
                                 </div>
-            
                                 <div id="flash-sale-form">
-                                    <input type="hidden" name="flash_sale_id" value="34"> <!-- Assuming you have a flash sale id -->
-                                    <input type="hidden" name="product_id" id="product_id">
+                                    <input type="hidden" name="flash_sale_id" value="{{ $Flash_sales->id }}"> <!-- Assuming you have a flash sale id -->
+                                    <input type="hidden" name="product_id"  value="{{ $Flash_sales->product_id }}" id="product_id">
                                     <div class="form-group mb-3">
                                         <label for="product_price" class="control-label required" aria-required="true">Product Price</label>
-                                        <input type="number" name="price" class="next-input" id="product_price" placeholder="Enter Price">
+                                        <input type="number" name="price" class="next-input" id="product_price" placeholder="Enter Price" value="{{ $Flash_sales->products[0]->price }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="product_quantity" class="control-label required" aria-required="true">Product Quantity</label>
-                                        <input type="number" name="quantity" class="next-input" id="product_quantity" placeholder="Enter Quantity">
+                                        <input type="number" name="quantity" class="next-input" id="product_quantity" placeholder="Enter Quantity" value="{{ $Flash_sales->products[0]->quantity }}">
                                     </div>
                                     {{-- <button type="submit" class="btn btn-primary">Add to Flash Sale</button> --}}
                                 </div>
-            
-                                <h3>Products</h3>
-                                <div id="products-container">
-                                    @foreach ($Flash_sales->products as $product)
-                                        <div class="product-item">
-                                            <input type="hidden" name="products[{{ $loop->index }}][id]" value="{{ $product->id }}">
-                                            <div class="form-group">
-                                                <label for="product_name_{{ $product->id }}">Product Name</label>
-                                                <input type="text" class="form-control" id="product_name_{{ $product->id }}" value="{{ $product->name }}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="product_price_{{ $product->id }}">Price</label>
-                                                <input type="number" class="form-control" name="products[{{ $loop->index }}][price]" id="product_price_{{ $product->id }}" value="{{ $product->price }}" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="product_quantity_{{ $product->id }}">Quantity</label>
-                                                <input type="number" class="form-control" name="products[{{ $loop->index }}][quantity]" id="product_quantity_{{ $product->id }}" value="{{ $product->quantity }}" required>
-                                            </div>
-                                        </div>
-                                    @endforeach
+                                @else
+                                    No products associated with this Flash sale.
+                                @endif
+                               
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-                </form>
-            </div>
-                    
-                    
                     <div class="col-md-3 right-sidebar d-flex flex-column-reverse flex-md-column">
                         <div class="form-actions-wrapper">
                             <div class="widget meta-boxes form-actions form-actions-default action-horizontal">
@@ -230,23 +207,23 @@
             </div>
         </div>
     </form>
-@endsection
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    @endsection
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Include Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @section('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        // When "Choose image" is clicked, trigger the file input click event
-        document.getElementById("choose_image_btn").addEventListener("click", function(e) {
-            e.preventDefault(); // Prevent the default action of the link
-            document.getElementById("logo_input").click(); // Simulate a click on the file input
-        });
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // When "Choose image" is clicked, trigger the file input click event
+    document.getElementById("choose_image_btn").addEventListener("click", function(e) {
+        e.preventDefault(); // Prevent the default action of the link
+        document.getElementById("logo_input").click(); // Simulate a click on the file input
     });
+});
 
-    $(document).ready(function() {
+$(document).ready(function() {
     const today = new Date().toISOString().split('T')[0];
     $('#end_date').val(today);
 
@@ -266,19 +243,13 @@
                                 <a href="#" class="suggestion-item" data-id="${product.id}">
                                     <img src="${product.images}" alt="${product.name}" class="suggestion-item-image">
                                     <div class="suggestion-item-details">
-                                        <p class="suggestion-item-name">${product.name}</p>
-                                        <p class="suggestion-item-price">${product.price}</p>
+                                        <span class="suggestion-item-name">${product.name}</span>
+                                        <span class="suggestion-item-description">${product.description}</span>
+                                        <span class="suggestion-item-price">${product.sale_price}</span>
                                     </div>
                                 </a>
                             </div>
                         `);
-                    });
-
-                    suggestions.on('click', '.suggestion-item', function(e) {
-                        e.preventDefault();
-                        let productId = $(this).data('id');
-                        $('#product_id').val(productId);
-                        $('#flash-sale-form').show();
                     });
                 }
             });
@@ -286,7 +257,43 @@
             $('#suggestions').empty();
         }
     });
+
+    $(document).on('click', '.suggestion-item', function(e) {
+        e.preventDefault();
+        let productId = $(this).data('id');
+        
+        // Fetch product details
+        $.ajax({
+            url: '/admin/ecommerce/product/' + productId,
+            type: 'GET',
+            success: function(product) {
+                $('#product_id').val(product.id);
+                $('#product_price').val(product.sale_price);
+                $('#product_quantity').val(product.quantity);
+                $('#product-search').val(product.name);
+                $('#suggestions').empty();
+                $('#flash-sale-form').show();
+            }
+        });
+    });
+
+    $('#flash-sale-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: "{{ route('admin.ecommerce.search_flash_sales_products') }}",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success) {
+                    alert('Product added to flash sale successfully!');
+                    $('#flash-sale-form')[0].reset();
+                    $('#flash-sale-form').hide();
+                }
+            }
+        });
+    });
 });
 
-    </script> 
+</script>
 @endsection
