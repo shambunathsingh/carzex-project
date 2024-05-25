@@ -30,6 +30,27 @@ class OrderController extends Controller
             'orders' => $orders
         ]);
     }
+    public function invoices()
+    {
+        $title = "Carzex - invoices";
+
+        // Fetch all orders with related product orders
+        $orders = Order::with('productOrders')->get();
+
+        // Calculate total amount for each order
+        foreach ($orders as $order) {
+            $totalAmount = $order->productOrders->sum(function ($productOrder) {
+                return $productOrder->subtotal;
+            });
+            $order->totalAmount = $totalAmount;
+        }
+
+        // Return the view with the homepage data
+        return view('admin.invoices.index', [
+            'title' => $title,
+            'orders' => $orders
+        ]);
+    }
     public function delete_order($id)
     {
         $Order = Order::findOrFail($id);
@@ -37,6 +58,18 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order deleted successfully.');
     }
+    public function edit_invoices($id)
+    {
+        $title = "Carzex - Edit Order";
+        $editOrder = Order::with('productOrders')->find($id);
+
+        if (!$editOrder) {
+            return redirect()->back()->with('error', 'Order not found.');
+        }
+
+        return view('admin.invoices.edit_invoices', compact('editOrder', 'title'));
+    }
+
     public function edit_order($id)
     {
         $title = "Carzex - Edit Order";
