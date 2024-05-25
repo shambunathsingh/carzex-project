@@ -95,7 +95,7 @@
                                             class="fa fa-shopping-bag"></i></span>
                                     Orders</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.invoices') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-book"></i></span>
                                     Invoices</a>

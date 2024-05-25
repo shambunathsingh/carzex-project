@@ -191,7 +191,9 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
+            Route::get('invoices', [OrderController::class, 'invoices'])->name('invoices');
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
+            Route::get('edit-invoices/edit/{id}', [OrderController::class, 'edit_invoices'])->name('edit_invoices');
             Route::get('edit-order/edit/{id}', [OrderController::class, 'edit_order'])->name('edit_order');
 
 
