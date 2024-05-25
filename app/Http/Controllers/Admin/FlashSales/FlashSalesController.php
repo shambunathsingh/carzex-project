@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Models\ProductOrder\ProductOrder;
 use App\Models\Flash_sales\Flash_sales;
+use App\Models\flash_sale_products\flash_sale_products;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Product\Product;
 
@@ -13,97 +15,119 @@ class FlashSalesController extends Controller
 {
     public function store_flash_sales(Request $request)
     {
+        //    dd($request->all());
+        // Validate request data
         $request->validate([
+            'flash_sale_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
             'name' => 'required|string',
             'subtitle' => 'required|string',
             'end_date' => 'required|date',
             'status' => 'required|string'
         ]);
-        // print_r($request);
 
-        $flashSales = new Flash_sales();
-        $flashSales->name = $request->name;
-        $flashSales->subtitle = $request->subtitle;
-        $flashSales->end_date = $request->end_date;
-        $flashSales->status = $request->status;
+        try {
+            // Create a new instance of FlashSaleProduct model
+            $flashSaleProduct = new flash_sale_products();
+            // Fill the model with the validated request data
+            $flashSaleProduct->flash_sale_id = $request->input('flash_sale_id');
+            $flashSaleProduct->product_id = $request->input('product_id');
+            $flashSaleProduct->price = $request->input('price');
+            $flashSaleProduct->quantity = $request->input('quantity');
+            $flashSaleProduct->sold = 0; // Assuming default value for sold
+            // Save the FlashSaleProduct model to the database
+            $flashSaleProduct->save();
 
-        $flashSales->save();
+            // Create a new instance of FlashSale model
+            $flashSale = new Flash_sales();
+            // Fill the model with the validated request data
+            $flashSale->name = $request->name;
+            $flashSale->subtitle = $request->subtitle;
+            $flashSale->end_date = $request->end_date;
+            $flashSale->status = $request->status;
+            // Save the FlashSale model to the database
+            $flashSale->save();
 
-        return redirect()->back()->with('success', 'Flash sale created successfully.');
+            // Redirect back with success message
+            return redirect()->back()->with('success', 'Flash sale created successfully.');
+        } catch (\Exception $e) {
+            // Return an error response in case of any exceptions
+            return redirect()->back()->with('error', 'Failed to create flash sale: ' . $e->getMessage());
+        }
     }
 
 
-    public function update_flash_sales(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'subtitle' => 'required|string',
-            'end_date' => 'required|date',
-            'status' => 'required|string'
-
-        ]);
-
-        $flashSales = Flash_sales::findOrFail($id);
-
-        $flashSales->name = $request->name;
-        $flashSales->subtitle = $request->subtitle;
-        $flashSales->end_date = $request->end_date;
-        $flashSales->status = $request->status;
-
-        $flashSales->save();
-
-        return redirect()->back()->with('success', 'Flash sale updated successfully.');
-    }
     public function search_flash_sales_products(Request $request)
     {
         $query = $request->input('query');
 
-        // Search products by multiple fields
         $products = Product::where('name', 'LIKE', "%{$query}%")
             ->orWhere('slug', 'LIKE', "%{$query}%")
             ->orWhere('description', 'LIKE', "%{$query}%")
-            ->orWhere('content', 'LIKE', "%{$query}%")
-            ->orWhere('images', 'LIKE', "%{$query}%")
-            ->orWhere('sku', 'LIKE', "%{$query}%")
-            ->orWhere('price', 'LIKE', "%{$query}%")
-            ->orWhere('sale_price', 'LIKE', "%{$query}%")
-            ->orWhere('cost_per_item', 'LIKE', "%{$query}%")
-            ->orWhere('barcode', 'LIKE', "%{$query}%")
-            ->orWhere('start_date', 'LIKE', "%{$query}%")
-            ->orWhere('end_date', 'LIKE', "%{$query}%")
-            ->orWhere('quantity', 'LIKE', "%{$query}%")
-            ->orWhere('stock_status', 'LIKE', "%{$query}%")
-            ->orWhere('weight', 'LIKE', "%{$query}%")
-            ->orWhere('length', 'LIKE', "%{$query}%")
-            ->orWhere('wide', 'LIKE', "%{$query}%")
-            ->orWhere('height', 'LIKE', "%{$query}%")
-            ->orWhere('has_product_options', 'LIKE', "%{$query}%")
-            ->orWhere('related_products', 'LIKE', "%{$query}%")
-            ->orWhere('cross_sale_products', 'LIKE', "%{$query}%")
             ->get();
 
         return response()->json($products);
     }
 
-    public function suggestions_flash_sales(Request $request)
+    public function get_product_details($id)
     {
-        $query = $request->input('query');
-        $suggestions = Product::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('slug', 'LIKE', "%{$query}%")
-            ->orWhere('description', 'LIKE', "%{$query}%")
-            ->orWhere('content', 'LIKE', "%{$query}%")
-            ->orWhere('sku', 'LIKE', "%{$query}%")
-            ->orWhere('barcode', 'LIKE', "%{$query}%")
-            ->limit(10)
-            ->get(['name', 'slug']);
+        $product = Product::findOrFail($id);
 
-        return response()->json($suggestions);
+        return response()->json($product);
     }
 
+    // public function update_flash_sales(Request $request, $id)
+    // {
+    //     // Validate request data
+    //     $request->validate([
+    //         'name' => 'required|string',
+    //         'subtitle' => 'required|string',
+    //         'end_date' => 'required|date',
+    //         'status' => 'required|string',
+    //         'flash_sale_id' => 'required|integer',
+    //         'product_id' => 'required|integer',
+    //         'price' => 'required|numeric',
+    //         'quantity' => 'required|integer'
+    //     ]);
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         // Find the existing FlashSale record
+    //         $flashSale = Flash_sales::findOrFail($id);
+    //         // Update the FlashSale model with the validated request data
+    //         $flashSale->name = $request->name;
+    //         $flashSale->subtitle = $request->subtitle;
+    //         $flashSale->end_date = $request->end_date;
+    //         $flashSale->status = $request->status;
+    //         // Save the updated FlashSale model to the database
+    //         $flashSale->save();
+
+    //         // Find the related FlashSaleProduct record
+    //         $flashSaleProduct = flash_sale_products::where('flash_sale_id', $id)->firstOrFail();
+    //         // Update the FlashSaleProduct model with the validated request data
+    //         $flashSaleProduct->product_id = $request->input('product_id');
+    //         $flashSaleProduct->price = $request->input('price');
+    //         $flashSaleProduct->quantity = $request->input('quantity');
+    //         // Save the updated FlashSaleProduct model to the database
+    //         $flashSaleProduct->save();
+
+    //         DB::commit();
+
+    //         // Redirect back with success message
+    //         return redirect()->back()->with('success', 'Flash sale updated successfully.');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         // Return an error response in case of any exceptions
+    //         return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
+    //     }
+    // }
     public function delete_flash_sales($id)
     {
-        $flashSales = Flash_sales::findOrFail($id);
-        $flashSales->delete();
+        $Flash_sales = Flash_sales::findOrFail($id);
+        $Flash_sales->delete();
 
         return redirect()->back()->with('success', 'Flash sale deleted successfully.');
     }
@@ -128,8 +152,62 @@ class FlashSalesController extends Controller
     public function edit_product_flash_sales($id)
     {
         $title = "Carzex - Edit Flash Sale";
-        $flashSales = Flash_sales::find($id);
+        $Flash_sales = Flash_sales::find($id);
 
-        return view('admin.ecommerce.edit_flash_sales', compact('flashSales', 'title'));
+        return view('admin.ecommerce.edit_flash_sales', compact('Flash_sales', 'title'));
+    }
+    // public function edit_product_flash_sales($id)
+    // {
+    //     $title = "Carzex - Edit Flash Sale";
+    //     $flashSale = Flash_sales::with('products')->findOrFail($id); // Fetch flash sale with its products
+
+    //     return view('admin.ecommerce.edit_flash_sales', compact('flash_sales', 'title'));
+    // }
+
+    public function update_product_flash_sales(Request $request, $id)
+    {
+        // Validate request data
+        $request->validate([
+            'name' => 'required|string',
+            'subtitle' => 'required|string',
+            'end_date' => 'required|date',
+            'status' => 'required|string',
+            'flash_sale_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            // Find the existing FlashSale record
+            $flashSale = Flash_sales::findOrFail($id);
+            // Update the FlashSale model with the validated request data
+            $flashSale->name = $request->name;
+            $flashSale->subtitle = $request->subtitle;
+            $flashSale->end_date = $request->end_date;
+            $flashSale->status = $request->status;
+            // Save the updated FlashSale model to the database
+            $flashSale->save();
+
+            // Find the related FlashSaleProduct record
+            $flashSaleProduct = flash_sale_products::where('flash_sale_id', $id)->firstOrFail();
+            // Update the FlashSaleProduct model with the validated request data
+            $flashSaleProduct->product_id = $request->input('product_id');
+            $flashSaleProduct->price = $request->input('price');
+            $flashSaleProduct->quantity = $request->input('quantity');
+            // Save the updated FlashSaleProduct model to the database
+            $flashSaleProduct->save();
+
+            DB::commit();
+
+            // Redirect back with success message
+            return redirect()->back()->with('success', 'Flash sale updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Return an error response in case of any exceptions
+            return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
+        }
     }
 }

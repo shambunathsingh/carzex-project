@@ -30,4 +30,18 @@ class OrderController extends Controller
             'orders' => $orders
         ]);
     }
+    public function delete_order($id)
+    {
+        $Order = Order::findOrFail($id);
+        $Order->delete();
+
+        return redirect()->back()->with('success', 'Order deleted successfully.');
+    }
+    public function edit_order($id)
+    {
+        $title = "Carzex - Edit Order";
+        $editOrder = Order::find($id);
+
+        return view('admin.order.edit_order', compact('editOrder', 'title'));
+    }
 }
