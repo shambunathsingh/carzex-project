@@ -72,6 +72,11 @@ Route::get('test2', function () {
 
 Route::get('/customer-import', [DataImportController::class, 'index']);
 Route::post('/customer-import', [DataImportController::class, 'importExcelData']);
+Route::get('admin/customers', [AccountController::class, 'adminCustomer'])->name('admincustomer');
+Route::get('admin/deleteCustomer/{id}', [AccountController::class, 'deleteCustomer'])->name('admin.deleteCustomer');
+Route::get('admin/edit_customer/{id}', [AccountController::class, 'editCustomer'])->name('admin.editCustomer');
+Route::post('admin/update_customer/{id}', [AccountController::class, 'updateCustomer'])->name('updateCustomer');
+
 
 Route::middleware(['guest:web'])->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('home');

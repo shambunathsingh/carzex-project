@@ -181,7 +181,7 @@
                                             class="fa fa-gift"></i></span>
                                     Discounts</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admincustomer') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-users"></i></span>
                                     Customers</a>

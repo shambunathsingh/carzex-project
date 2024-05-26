@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Models\ProductOrder\ProductOrder;
 use Illuminate\Http\Request;
+use App\Models\Product\Product;
 
 class OrderController extends Controller
 {
@@ -61,20 +62,20 @@ class OrderController extends Controller
     public function edit_invoices($id)
     {
         $title = "Carzex - Edit Order";
-        $editOrder = Order::with('productOrders')->find($id);
+        $edit_invoices = Order::with('productOrders')->find($id);
 
-        if (!$editOrder) {
+        if (!$edit_invoices) {
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        return view('admin.invoices.edit_invoices', compact('editOrder', 'title'));
+        return view('admin.invoices.edit_invoices', compact('edit_invoices', 'title'));
     }
 
     public function edit_order($id)
     {
         $title = "Carzex - Edit Order";
-        $editOrder = Order::find($id);
-
-        return view('admin.order.edit_order', compact('editOrder', 'title'));
+        $edit_order = Order::with('productOrders.product')->find($id);
+        // $products = Product::all();  // Fetch all products or specific ones based on your requirements
+        return view('admin.order.edit_order', compact('edit_order', 'title'));
     }
 }

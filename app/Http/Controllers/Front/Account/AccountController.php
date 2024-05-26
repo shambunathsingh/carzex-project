@@ -28,6 +28,64 @@ class AccountController extends Controller
 
         return view('front.register', ['title' => $title]);
     }
+    public function adminCustomer()
+    {
+        $title = 'Carzex - customer';
+        $customers = Customer::all();  // Fetch all customers or specific ones based on your requirements
+
+        return view('admin.customer.customer', ['title' => $title, 'customers' => $customers]);
+    }
+    public function editCustomer($id)
+    {
+        $title = "Carzex - Edit customer";
+        $editCustomer = Customer::find($id);
+
+        return view('admin.customer.edit_customer', compact('editCustomer', 'title'));
+    }
+    public function updateCustomer(Request $request, $id)
+    {
+        $customer = Customer::find($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:customers,email,' . $customer->id,
+            'phone' => 'required|string|max:15',
+            'password' => 'nullable|string|min:6|confirmed',
+            'address' => 'nullable|string|max:255',
+            'dob' => 'nullable|date',
+        ]);
+
+        $customer->name = $request->input('name');
+        $customer->email = $request->input('email');
+        $customer->phone = $request->input('phone');
+        $customer->address = $request->input('address');
+        $customer->dob = $request->input('dob');
+
+        if ($request->filled('password')) {
+            $customer->password = Hash::make($request->input('password'));
+        }
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $customer->image = $path;
+        }
+
+        $customer->save();
+
+        return redirect()->route('admincustomer')->with('success', 'Customer updated successfully');
+    }
+    public function deleteCustomer($id)
+    {
+        $customer = Customer::find($id);
+
+        if ($customer) {
+            $customer->delete();
+            return redirect()->route('admincustomer')->with('success', 'Customer deleted successfully.');
+        } else {
+            return redirect()->route('admincustomer')->with('error', 'Customer not found.');
+        }
+    }
+
 
     public function registerUser(Request $request)
     {

@@ -1,298 +1,266 @@
 @extends('admin.layout.app')
 
 @section('content')
-    
+{{-- {{$edit_order}}
+@php
+    echo '<pre>';
+    print_r($edit_order);
+    echo '</pre>';
+@endphp --}}
 <div class="ui-layout">
     <div class="flexbox-layout-sections">
          <div class="flexbox-layout-section-primary mt20">
               <div class="ui-layout__item">
-                   <div class="wrapper-content">
+
+                    <div class="wrapper-content">
                         <div class="pd-all-20">
-                             <div class="flexbox-grid-default">
-                                  <div class="flexbox-auto-right mr5">
-                                       <label class="title-product-main text-no-bold">Order information
-                                            #10000037</label>
-                                  </div>
-                             </div>
-                             <div class="mt20">
-                                  <svg class="svg-next-icon svg-next-icon-size-16 text-warning"
-                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
-                                       enable-background="new 0 0 16 16">
-                                       <g>
-                                            <path
-                                                 d="M13.9130435,0 L2.08695652,0 C0.936347826,0 0,0.936347826 0,2.08695652 L0,14.2608696 C0,15.2194783 0.780521739,16 1.73913043,16 L14.2608696,16 C15.2194783,16 16,15.2194783 16,14.2608696 L16,2.08695652 C16,0.936347826 15.0636522,0 13.9130435,0 L13.9130435,0 Z M13.9130435,2.08695652 L13.9130435,10.4347826 L12.173913,10.4347826 C11.2153043,10.4347826 10.4347826,11.2153043 10.4347826,12.173913 L10.4347826,12.8695652 C10.4347826,13.0615652 10.2789565,13.2173913 10.0869565,13.2173913 L5.2173913,13.2173913 C5.0253913,13.2173913 4.86956522,13.0615652 4.86956522,12.8695652 L4.86956522,12.173913 C4.86956522,11.2153043 4.08904348,10.4347826 3.13043478,10.4347826 L2.08695652,10.4347826 L2.08695652,2.08695652 L13.9130435,2.08695652 L13.9130435,2.08695652 Z">
-                                            </path>
-                                       </g>
-                                  </svg>
-                                  <strong class="ml5 text-warning">Uncompleted</strong>
-                             </div>
+                            <div class="flexbox-grid-default">
+                                <div class="flexbox-auto-right mr5">
+                                    <label class="title-product-main text-no-bold">Order information: #
+                                    @foreach($edit_order->productOrders as $productOrder) 
+                                            {{ $productOrder->product->sku }}
+                                    @endforeach
+                                </label>
+                                </div>
+                            </div>
+                            <div class="mt20">
+                                <svg class="svg-next-icon svg-next-icon-size-16 text-warning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" enable-background="new 0 0 16 16">
+                                    <g>
+                                        <path d="M13.9130435,0 L2.08695652,0 C0.936347826,0 0,0.936347826 0,2.08695652 L0,14.2608696 C0,15.2194783 0.780521739,16 1.73913043,16 L14.2608696,16 C15.2194783,16 16,15.2194783 16,14.2608696 L16,2.08695652 C16,0.936347826 15.0636522,0 13.9130435,0 L13.9130435,0 Z M13.9130435,2.08695652 L13.9130435,10.4347826 L12.173913,10.4347826 C11.2153043,10.4347826 10.4347826,11.2153043 10.4347826,12.173913 L10.4347826,12.8695652 C10.4347826,13.0615652 10.2789565,13.2173913 10.0869565,13.2173913 L5.2173913,13.2173913 C5.0253913,13.2173913 4.86956522,13.0615652 4.86956522,12.8695652 L4.86956522,12.173913 C4.86956522,11.2153043 4.08904348,10.4347826 3.13043478,10.4347826 L2.08695652,10.4347826 L2.08695652,2.08695652 L13.9130435,2.08695652 L13.9130435,2.08695652 Z">
+                                        </path>
+                                    </g>
+                                </svg>
+                                <strong class="ml5 text-warning">{{ $edit_order->is_paid ? 'Completed' : 'Uncompleted' }}</strong>
+                            </div>
                         </div>
+                
                         <div class="pd-all-20 p-none-t border-top-title-main">
-                             <div class="table-wrap">
-                                  <table class="table-order table-divided">
-                                       <tbody>
-
-                                            <tr>
-                                                 <td class="width-60-px min-width-60-px vertical-align-t">
-                                                      <div class="wrap-img">
-                                                           <img class="thumb-image thumb-image-cartorderlist"
-                                                                src="http://localhost/storage/products/8-1-150x150.jpg"
-                                                                alt="Encore Seafoods Stuffed Alaskan">
-                                                      </div>
-                                                 </td>
-                                                 <td class="pl5 p-r5 min-width-200-px">
-                                                      <a class="text-underline hover-underline pre-line"
-                                                           target="_blank" href="#"
-                                                           title="Encore Seafoods Stuffed Alaskan">
-                                                           Encore Seafoods Stuffed Alaskan
-                                                      </a>
-                                                      &nbsp;
-
-
-
-
-
-                                                      <ul class="unstyled">
-                                                           <li class="simple-note">
-                                                                <a>
-                                                                     <span>2</span>
-                                                                     <span class="text-lowercase"> Completed</span>
-                                                                </a>
-                                                                <ul
-                                                                     class="dom-switch-target line-item-properties small">
-                                                                     <li class="ws-nm">
-                                                                          <span class="bull">↳</span>
-                                                                          <span class="black">Shipping </span>
-                                                                          <a class="text-underline bold-light"
-                                                                               target="_blank" title="Free delivery"
-                                                                               href="http://127.0.0.1:8080/admin/shipments/edit/37">Free
-                                                                               delivery</a>
-                                                                     </li>
-
-                                                                     <li class="ws-nm">
-                                                                          <span class="bull">↳</span>
-                                                                          <span class="black">Store</span>
-                                                                          <a href="http://127.0.0.1:8080/stores/roberts-store"
-                                                                               class="bold-light"
-                                                                               target="_blank">Robert’s Store</a>
-                                                                     </li>
-                                                                </ul>
-                                                           </li>
-                                                      </ul>
-                                                 </td>
-                                                 <td class="pl5 p-r5 text-end">
-                                                      <div class="inline_block">
-                                                           <span>₹113.00</span>
-                                                      </div>
-                                                 </td>
-                                                 <td class="pl5 p-r5 text-center">x</td>
-                                                 <td class="pl5 p-r5">
-                                                      <span>2</span>
-                                                 </td>
-                                                 <td class="pl5 text-end">₹226.00</td>
-                                            </tr>
-                                       </tbody>
-                                  </table>
-                             </div>
+                            <div class="table-wrap">
+                                <table class="table-order table-divided">
+                                    <tbody>
+                                        @foreach ($edit_order->productOrders as $productOrder)
+                                        <tr>
+                                            <td class="width-60-px min-width-60-px vertical-align-t">
+                                                <div class="wrap-img">
+                                                    <img class="thumb-image thumb-image-cartorderlist" src="{{ asset($productOrder->product->images) }}" alt="{{ $productOrder->product->name }}">
+                                                </div>
+                                            </td>
+                                            <td class="pl5 p-r5 min-width-200-px">
+                                                <a class="text-underline hover-underline pre-line" target="_blank" href="#" title="{{ $productOrder->product->name }}">
+                                                    {{ $productOrder->product->name }}
+                                                </a>
+                                                <ul class="unstyled">
+                                                    <li class="simple-note">
+                                                        <a>
+                                                            <span>{{ $productOrder->quantity }}</span>
+                                                            <span class="text-lowercase"> Completed</span>
+                                                        </a>
+                                                        <ul class="dom-switch-target line-item-properties small">
+                                                            <li class="ws-nm">
+                                                                <span class="bull">↳</span>
+                                                                <span class="black">Shipping </span>
+                                                                <a class="text-underline bold-light" target="_blank" title="Free delivery" href="#">Free delivery</a>
+                                                            </li>
+                                                            <li class="ws-nm">
+                                                                <span class="bull">↳</span>
+                                                                <span class="black">Store</span>
+                                                                <a href="#" class="bold-light" target="_blank">Robert’s Store</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                            <td class="pl5 p-r5 text-end">
+                                                <div class="inline_block">
+                                                    <span>₹{{ number_format($productOrder->product->sale_price, 2) }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="pl5 p-r5 text-center">x</td>
+                                            <td class="pl5 p-r5">
+                                                <span>{{ $productOrder->quantity }}</span>
+                                            </td>
+                                            <td class="pl5 text-end">₹{{ number_format($productOrder->quantity * $productOrder->product->sale_price, 2) }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                
                         <div class="pd-all-20 p-none-t">
-                             <div class="flexbox-grid-default block-rps-768">
-                                  <div class="flexbox-auto-right p-r5">
-
-                                  </div>
-                                  <div class="flexbox-auto-right pl5">
-                                       <div class="table-wrap">
-                                            <table class="table-normal table-none-border table-color-gray-text">
-                                                 <tbody>
-                                                      <tr>
-                                                           <td class="text-end color-subtext">Sub amount</td>
-                                                           <td class="text-end pl10">
-                                                                <span>₹226.00</span>
-                                                           </td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="text-end color-subtext mt10">
-                                                                <p class="mb0">Discount</p>
-                                                           </td>
-                                                           <td class="text-end p-none-b pl10">
-                                                                <p class="mb0">₹0.00</p>
-                                                           </td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="text-end color-subtext mt10">
-                                                                <p class="mb0">Shipping fee</p>
-                                                                <p class="mb0 font-size-12px">Free delivery</p>
-                                                                <p class="mb0 font-size-12px">2288 grams</p>
-                                                           </td>
-                                                           <td class="text-end p-none-t pl10">
-                                                                <p class="mb0">₹0.00</p>
-                                                           </td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="text-end color-subtext mt10">
-                                                                <p class="mb0">Tax</p>
-                                                           </td>
-                                                           <td class="text-end p-none-t pl10">
-                                                                <p class="mb0">₹0.00</p>
-                                                           </td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="text-end mt10">
-                                                                <p class="mb0 color-subtext">Total amount</p>
-                                                                <p class="mb0  font-size-12px"><a
-                                                                          href="http://127.0.0.1:8080/admin/payments/transactions/37"
-                                                                          target="_blank">Razorpay</a>
-                                                                </p>
-                                                           </td>
-                                                           <td class="text-end text-no-bold p-none-t pl10">
-                                                                <a href="http://127.0.0.1:8080/admin/payments/transactions/37"
-                                                                     target="_blank">
-                                                                     <span>₹226.00</span>
-                                                                </a>
-                                                           </td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="border-bottom"></td>
-                                                           <td class="border-bottom"></td>
-                                                      </tr>
-                                                      <tr>
-                                                           <td class="text-end color-subtext">Paid amount</td>
-                                                           <td class="text-end color-subtext pl10">
-                                                                <a href="http://127.0.0.1:8080/admin/payments/transactions/37"
-                                                                     target="_blank">
-                                                                     <span>₹226.00</span>
-                                                                </a>
-                                                           </td>
-                                                      </tr>
-                                                      <tr class="hidden">
-                                                           <td class="text-end color-subtext">The amount actually
-                                                                received</td>
-                                                           <td class="text-end pl10">
-                                                                <span>₹226.00</span>
-                                                           </td>
-                                                      </tr>
-                                                 </tbody>
-                                            </table>
-                                       </div>
-                                       <br>
-                                       <div class="text-end">
-                                            <a href="http://127.0.0.1:8080/admin/orders/generate-invoice/37?type=print"
-                                                 class="btn btn-primary me-2" target="_blank">
-                                                 <i class="fa fa-print"></i> Print invoice
-                                            </a>
-                                            <a href="http://127.0.0.1:8080/admin/orders/generate-invoice/37"
-                                                 class="btn btn-info">
-                                                 <i class="fa fa-download"></i> Download invoice
-                                            </a>
-                                       </div>
-                                       <div class="py-3">
-                                            <form action="http://127.0.0.1:8080/admin/orders/edit/37">
-                                                 <label class="text-title-field">Note</label>
-                                                 <textarea class="ui-text-area textarea-auto-height" name="description"
-                                                      rows="3" placeholder="Add note..." spellcheck="false"
-                                                      data-ms-editor="true"></textarea>
-                                                 <div class="mt10">
-                                                      <button type="button"
-                                                           class="btn btn-primary btn-update-order">Save</button>
-                                                 </div>
-                                            </form>
-                                       </div>
-                                  </div>
-                             </div>
+                            <div class="flexbox-grid-default block-rps-768">
+                                <div class="flexbox-auto-right p-r5"></div>
+                                <div class="flexbox-auto-right pl5">
+                                    <div class="table-wrap">
+                                        <table class="table-normal table-none-border table-color-gray-text">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-end color-subtext">Sub amount</td>
+                                                    <td class="text-end pl10">
+                                                        <span>₹{{ number_format($edit_order->productOrders->sum(fn($order) => $order->quantity * $order->product->sale_price), 2) }}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end color-subtext mt10">
+                                                        <p class="mb0">Discount</p>
+                                                    </td>
+                                                    <td class="text-end p-none-b pl10">
+                                                        <p class="mb0">₹0.00</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end color-subtext mt10">
+                                                        <p class="mb0">Shipping fee</p>
+                                                        <p class="mb0 font-size-12px">Free delivery</p>
+                                                        <p class="mb0 font-size-12px">2288 grams</p>
+                                                    </td>
+                                                    <td class="text-end p-none-t pl10">
+                                                        <p class="mb0">₹0.00</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end color-subtext mt10">
+                                                        <p class="mb0">Tax</p>
+                                                    </td>
+                                                    <td class="text-end p-none-t pl10">
+                                                        <p class="mb0">₹0.00</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end mt10">
+                                                        <p class="mb0 color-subtext">Total amount</p>
+                                                        <p class="mb0  font-size-12px"><a href="#" target="_blank">Razorpay</a></p>
+                                                    </td>
+                                                    <td class="text-end text-no-bold p-none-t pl10">
+                                                        <a href="#" target="_blank">
+                                                            <span>₹{{ number_format($edit_order->productOrders->sum(fn($order) => $order->quantity * $order->product->sale_price), 2) }}</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border-bottom"></td>
+                                                    <td class="border-bottom"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end color-subtext">Paid amount</td>
+                                                    <td class="text-end color-subtext pl10">
+                                                        <a href="#" target="_blank">
+                                                            <span>₹{{ number_format($edit_order->productOrders->sum(fn($order) => $order->quantity * $order->product->sale_price), 2) }}</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="hidden">
+                                                    <td class="text-end color-subtext">The amount actually received</td>
+                                                    <td class="text-end pl10">
+                                                        <span>₹{{ number_format($edit_order->productOrders->sum(fn($order) => $order->quantity * $order->product->sale_price), 2) }}</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <div class="text-end">
+                                        <a href="#" class="btn btn-primary me-2" target="_blank">
+                                            <i class="fa fa-print"></i> Print invoice
+                                        </a>
+                                        <a href="#" class="btn btn-info">
+                                            <i class="fa fa-download"></i> Download invoice
+                                        </a>
+                                    </div>
+                                    <div class="py-3">
+                                        <form action="#">
+                                            <label class="text-title-field">Note</label>
+                                            <textarea class="ui-text-area textarea-auto-height" name="description" rows="3" placeholder="Add note..." spellcheck="false"></textarea>
+                                            <div class="mt10">
+                                                <button type="button" class="btn btn-primary btn-update-order">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                
                         <div class="pd-all-20 border-top-title-main">
-                             <div class="flexbox-grid-default flexbox-align-items-center">
-                                  <div class="flexbox-auto-left">
-                                       <svg class="svg-next-icon svg-next-icon-size-20  svg-next-icon-green "
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                 d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
-                                            </path>
-                                       </svg>
-                                  </div>
-                                  <div class="flexbox-auto-right ml15 mr15 text-upper">
-                                       <span>Order was confirmed</span>
-                                  </div>
-                             </div>
+                            <div class="flexbox-grid-default flexbox-align-items-center">
+                                <div class="flexbox-auto-left">
+                                    <svg class="svg-next-icon svg-next-icon-size-20  svg-next-icon-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="flexbox-auto-right ml15 mr15 text-upper">
+                                    <span>Order was confirmed</span>
+                                </div>
+                            </div>
                         </div>
+                
                         <div class="pd-all-20 border-top-title-main">
-                             <div class="flexbox-grid-default flexbox-flex-wrap flexbox-align-items-center">
-                                  <div class="flexbox-auto-left">
-                                       <svg class="svg-next-icon svg-next-icon-size-20 svg-next-icon-green"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                 d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
-                                            </path>
-                                       </svg>
-                                  </div>
-                                  <div class="flexbox-auto-content ml15 mr15 text-upper">
-                                       <span>Payment ₹226.00 was accepted</span>
-                                  </div>
-                                  <div class="flexbox-auto-left">
-                                       <button class="btn btn-secondary ml10 btn-trigger-refund">Refund</button>
-                                  </div>
-                             </div>
+                            <div class="flexbox-grid-default flexbox-flex-wrap flexbox-align-items-center">
+                                <div class="flexbox-auto-left">
+                                    <svg class="svg-next-icon svg-next-icon-size-20 svg-next-icon-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="flexbox-auto-content ml15 mr15 text-upper">
+                                    <span>Payment ₹{{ number_format($edit_order->productOrders->sum(fn($order) => $order->quantity * $order->product->sale_price), 2) }} was accepted</span>
+                                </div>
+                                <div class="flexbox-auto-left">
+                                    <button class="btn btn-secondary ml10 btn-trigger-refund">Refund</button>
+                                </div>
+                            </div>
                         </div>
+                
                         <div class="pd-all-20 border-top-title-main">
-                             <div class="flexbox-grid-default flexbox-flex-wrap flexbox-align-items-center">
-                                  <div class="flexbox-auto-left">
-                                       <svg class="svg-next-icon svg-next-icon-size-20 svg-next-icon-green"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path
-                                                 d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
-                                            </path>
-                                       </svg>
-                                  </div>
-                                  <div class="flexbox-auto-content ml15 mr15 text-upper">
-                                       <span>Delivery</span>
-                                  </div>
-                             </div>
+                            <div class="flexbox-grid-default flexbox-flex-wrap flexbox-align-items-center">
+                                <div class="flexbox-auto-left">
+                                    <svg class="svg-next-icon svg-next-icon-size-20 svg-next-icon-green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M7 18c-.265 0-.52-.105-.707-.293l-6-6c-.39-.39-.39-1.023 0-1.414s1.023-.39 1.414 0l5.236 5.236L18.24 2.35c.36-.42.992-.468 1.41-.11.42.36.47.99.11 1.41l-12 14c-.182.212-.444.338-.722.35H7z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="flexbox-auto-content ml15 mr15 text-upper">
+                                    <span>Delivery</span>
+                                </div>
+                            </div>
                         </div>
+                
                         <div class="shipment-info-panel hide-print">
-                             <div class="shipment-info-header">
-                                  <a target="_blank" href="http://127.0.0.1:8080/admin/shipments/edit/37">
-                                       <h4>#10000037</h4>
-                                  </a>
-                                  <span class="label carrier-status carrier-status-approved">Approved</span>
-                             </div>
-
-                             <div class="pd-all-20 pt10">
-                                  <div
-                                       class="flexbox-grid-form flexbox-grid-form-no-outside-padding rps-form-767 pt10">
-                                       <div class="flexbox-grid-form-item ws-nm">
-                                            <span>Shipping method: <span><i>Free delivery</i></span></span>
-                                       </div>
-                                       <div class="flexbox-grid-form-item rps-no-pd-none-r ws-nm">
-                                            <span>Weight (g):</span> <span><i>1144 g</i></span>
-                                       </div>
-                                  </div>
-                                  <div
-                                       class="flexbox-grid-form flexbox-grid-form-no-outside-padding rps-form-767 pt10">
-                                       <div class="flexbox-grid-form-item ws-nm">
-                                            <span>Last Update:</span> <span><i>2023-05-03 02:38:18</i></span>
-                                       </div>
-                                  </div>
-
-                             </div>
-
-                             <div class="panel-heading order-bottom shipment-actions-wrapper">
-                                  <div class="flexbox-grid-default">
-                                       <div class="flexbox-content">
-                                            <button type="button"
-                                                 class="btn btn-secondary btn-destroy btn-cancel-shipment"
-                                                 data-action="http://127.0.0.1:8080/admin/orders/cancel-shipment/37">Cancel
-                                                 shipping</button>
-
-                                            <button class="btn btn-info ml10 btn-trigger-update-shipping-status"><i
-                                                      class="fas fa-shipping-fast"></i> Update shipping status</button>
-
-
-
-                                       </div>
-                                  </div>
-                             </div>
+                            <div class="shipment-info-header">
+                                <a target="_blank" href="#">
+                                    <h4>#{{ $edit_order->order_id }}</h4>
+                                </a>
+                                <span class="label carrier-status carrier-status-approved">Approved</span>
+                            </div>
+                
+                            <div class="pd-all-20 pt10">
+                                <div class="flexbox-grid-form flexbox-grid-form-no-outside-padding rps-form-767 pt10">
+                                    <div class="flexbox-grid-form-item ws-nm">
+                                        <span>Shipping method: <span><i>Free delivery</i></span></span>
+                                    </div>
+                                    <div class="flexbox-grid-form-item rps-no-pd-none-r ws-nm">
+                                        <span>Weight (g):</span> <span><i>{{ $edit_order->weight }} g</i></span>
+                                    </div>
+                                </div>
+                                <div class="flexbox-grid-form flexbox-grid-form-no-outside-padding rps-form-767 pt10">
+                                    <div class="flexbox-grid-form-item ws-nm">
+                                        <span>Last Update:</span> <span><i>{{ $edit_order->updated_at }}</i></span>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="panel-heading order-bottom shipment-actions-wrapper">
+                                <div class="flexbox-grid-default">
+                                    <div class="flexbox-content">
+                                        <button type="button" class="btn btn-secondary btn-destroy btn-cancel-shipment" data-action="#">Cancel shipping</button>
+                                        <button class="btn btn-info ml10 btn-trigger-update-shipping-status"><i class="fas fa-shipping-fast"></i> Update shipping status</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                   </div>
+                    </div>
+             
+                
                    <div class="mt20 mb20">
                     <div>
                         <div class="comment-log ws-nm">
@@ -344,7 +312,7 @@
                                                             <tr>
                                                                 <th>Order number</th>
                                                                 <td>
-                                                                    <a href="http://127.0.0.1:8080/admin/orders/edit/37" title="#10000037">#10000037</a>
+                                                                    <a href="#" title="#10000037">#10000037</a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -427,108 +395,92 @@
               </div>
          </div>
          <div class="flexbox-layout-section-secondary mt20">
-              <div class="ui-layout__item">
-                   <div class="wrapper-content mb20">
-                        <div class="next-card-section p-none-b">
-                             <div class="flexbox-grid-default flexbox-align-items-center">
-                                  <div class="flexbox-auto-content-left">
-                                       <label class="title-product-main text-no-bold">Customer</label>
-                                  </div>
-                                  <div class="flexbox-auto-left">
-                                       <img class="width-30-px radius-cycle" width="40"
-                                            src="http://localhost/storage/customers/2-150x150.jpg"
-                                            alt="Granville Johnston">
-                                  </div>
+             <div class="ui-layout__item">
+                 <div class="wrapper-content mb20">
+                     <div class="next-card-section p-none-b">
+                         <div class="flexbox-grid-default flexbox-align-items-center">
+                             <div class="flexbox-auto-content-left">
+                                 <label class="title-product-main text-no-bold">Customer</label>
                              </div>
-                        </div>
-                        <div class="next-card-section border-none-t">
-                             <div class="mb5">
-                                  <strong class="text-capitalize">Granville Johnston</strong>
+                             <div class="flexbox-auto-left">
+                                 <img class="width-30-px radius-cycle" width="40" src="{{ asset('storage/customers/' . $edit_order->id . '-150x150.jpg') }}" alt="{{ $edit_order->name }}">
                              </div>
-                             <div>
-                                  <i class="fas fa-inbox mr5"></i><span>20</span> order(s)
+                         </div>
+                     </div>
+                     <div class="next-card-section border-none-t">
+                         <div class="mb5">
+                             <strong class="text-capitalize">{{ $edit_order->name }}</strong>
+                         </div>
+                         <div>
+                             <i class="fas fa-inbox mr5"></i><span>{{ $edit_order->orders_count }}</span> order(s)
+                         </div>
+                         <ul class="ws-nm text-infor-subdued">
+                             <li class="overflow-ellipsis">
+                                 <a class="hover-underline" href="mailto:{{ $edit_order->email }}">{{ $edit_order->email }}</a>
+                             </li>
+                             <li>
+                                 <div>Have an account already</div>
+                             </li>
+                         </ul>
+                     </div>
+                     <div class="next-card-section">
+                         <div class="flexbox-grid-default flexbox-align-items-center">
+                             <div class="flexbox-auto-content-left">
+                                 <label class="title-text-second"><strong>Shipping Address</strong></label>
                              </div>
-                             <ul class="ws-nm text-infor-subdued">
-                                  <li class="overflow-ellipsis">
-                                       <a class="hover-underline"
-                                            href="mailto:pietro.hintz@example.org">pietro.hintz@example.org</a>
-                                  </li>
-                                  <li>
-                                       <div>Have an account already</div>
-                                  </li>
+                             <div class="flexbox-auto-content-right text-end">
+                                 <a href="#" class="btn-trigger-update-shipping-address">
+                                     <span data-placement="top" data-bs-toggle="tooltip" data-bs-original-title="Update address">
+                                         <svg class="svg-next-icon svg-next-icon-size-12">
+                                             <!-- SVG Path -->
+                                         </svg>
+                                     </span>
+                                 </a>
+                             </div>
+                         </div>
+                         <div>
+                             <ul class="ws-nm text-infor-subdued shipping-address-info">
+                                 <li>{{ $edit_order->name }}</li>
+                                 <li>
+                                     <a href="tel:+{{ $edit_order->phone }}">
+                                         <span><i class="fa fa-phone-square cursor-pointer mr5"></i></span>
+                                         <span dir="ltr">+{{ $edit_order->phone }}</span>
+                                     </a>
+                                 </li>
+                                 <li>
+                                     <div><a href="mailto:{{ $edit_order->email }}">{{ $edit_order->email }}</a></div>
+                                     <div>{{ $edit_order->address }}</div>
+                                     <div>{{ $edit_order->city }}</div>
+                                     <div>{{ $edit_order->state }}</div>
+                                     <div>{{ $edit_order->postal_code }}</div>
+                                     <div>
+                                         <a target="_blank" class="hover-underline" href="https://maps.google.com/?q={{ urlencode($edit_order->address . ', ' . $edit_order->city . ', ' . $edit_order->state . ', ' . $edit_order->postal_code) }}">See on maps</a>
+                                     </div>
+                                 </li>
                              </ul>
-                        </div>
-                        <div class="next-card-section">
-                             <div class="flexbox-grid-default flexbox-align-items-center">
-                                  <div class="flexbox-auto-content-left">
-                                       <label class="title-text-second"><strong>Shipping Address</strong></label>
-                                  </div>
-                                  <div class="flexbox-auto-content-right text-end">
-                                       <a href="#" class="btn-trigger-update-shipping-address">
-                                            <span data-placement="top" data-bs-toggle="tooltip"
-                                                 data-bs-original-title="Update address">
-                                                 <svg class="svg-next-icon svg-next-icon-size-12">
-                                                      <svg xmlns="http://www.w3.org/2000/svg"
-                                                           viewBox="0 0 55.25 55.25">
-                                                           <path
-                                                                d="M52.618,2.631c-3.51-3.508-9.219-3.508-12.729,0L3.827,38.693C3.81,38.71,3.8,38.731,3.785,38.749  c-0.021,0.024-0.039,0.05-0.058,0.076c-0.053,0.074-0.094,0.153-0.125,0.239c-0.009,0.026-0.022,0.049-0.029,0.075  c-0.003,0.01-0.009,0.02-0.012,0.03l-3.535,14.85c-0.016,0.067-0.02,0.135-0.022,0.202C0.004,54.234,0,54.246,0,54.259  c0.001,0.114,0.026,0.225,0.065,0.332c0.009,0.025,0.019,0.047,0.03,0.071c0.049,0.107,0.11,0.21,0.196,0.296  c0.095,0.095,0.207,0.168,0.328,0.218c0.121,0.05,0.25,0.075,0.379,0.075c0.077,0,0.155-0.009,0.231-0.027l14.85-3.535  c0.027-0.006,0.051-0.021,0.077-0.03c0.034-0.011,0.066-0.024,0.099-0.039c0.072-0.033,0.139-0.074,0.201-0.123  c0.024-0.019,0.049-0.033,0.072-0.054c0.008-0.008,0.018-0.012,0.026-0.02l36.063-36.063C56.127,11.85,56.127,6.14,52.618,2.631z   M51.204,4.045c2.488,2.489,2.7,6.397,0.65,9.137l-9.787-9.787C44.808,1.345,48.716,1.557,51.204,4.045z M46.254,18.895l-9.9-9.9  l1.414-1.414l9.9,9.9L46.254,18.895z M4.961,50.288c-0.391-0.391-1.023-0.391-1.414,0L2.79,51.045l2.554-10.728l4.422-0.491  l-0.569,5.122c-0.004,0.038,0.01,0.073,0.01,0.11c0,0.038-0.014,0.072-0.01,0.11c0.004,0.033,0.021,0.06,0.028,0.092  c0.012,0.058,0.029,0.111,0.05,0.165c0.026,0.065,0.057,0.124,0.095,0.181c0.031,0.046,0.062,0.087,0.1,0.127  c0.048,0.051,0.1,0.094,0.157,0.134c0.045,0.031,0.088,0.06,0.138,0.084C9.831,45.982,9.9,46,9.972,46.017  c0.038,0.009,0.069,0.03,0.108,0.035c0.036,0.004,0.072,0.006,0.109,0.006c0,0,0.001,0,0.001,0c0,0,0.001,0,0.001,0h0.001  c0,0,0.001,0,0.001,0c0.036,0,0.073-0.002,0.109-0.006l5.122-0.569l-0.491,4.422L4.204,52.459l0.757-0.757  C5.351,51.312,5.351,50.679,4.961,50.288z M17.511,44.809L39.889,22.43c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0  L16.097,43.395l-4.773,0.53l0.53-4.773l22.38-22.378c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L10.44,37.738  l-3.183,0.354L34.94,10.409l9.9,9.9L17.157,47.992L17.511,44.809z M49.082,16.067l-9.9-9.9l1.415-1.415l9.9,9.9L49.082,16.067z">
-                                                           </path>
-                                                      </svg>
-                                                 </svg>
-                                            </span>
-                                       </a>
-                                  </div>
-                             </div>
-                             <div>
-                                  <ul class="ws-nm text-infor-subdued shipping-address-info">
-                                       <li>Granville Johnston</li>
-                                       <li>
-                                            <a href="tel:+15803749849">
-                                                 <span><i class="fa fa-phone-square cursor-pointer mr5"></i></span>
-                                                 <span dir="ltr">+15803749849</span>
-                                            </a>
-                                       </li>
-                                       <li>
-                                            <div><a href="mailto:pietro.hintz@example.org">pietro.hintz@example.org</a>
-                                            </div>
-                                            <div>1009 Rutherford Run</div>
-                                            <div>Trevorhaven</div>
-                                            <div>New Hampshire</div>
-                                            <div>MW</div>
-                                            <div>
-                                                 <a target="_blank" class="hover-underline"
-                                                      href="https://maps.google.com/?q=1009 Rutherford Run, Trevorhaven, New Hampshire, MW">See
-                                                      on maps</a>
-                                            </div>
-                                       </li>
-                                  </ul>
-                             </div>
-
-                        </div>
-                   </div>
-                   <div class="wrapper-content bg-gray-white mb20">
-                        <div class="pd-all-20">
-                             <div class="p-b10">
-                                  <strong>Store</strong>
-                                  <ul class="p-sm-r mb-0">
-                                       <li class="ws-nm">
-                                            <a href="http://127.0.0.1:8080/stores/roberts-store"
-                                                 class="ww-bw text-no-bold" target="_blank">Robert’s Store</a>
-                                       </li>
-                                  </ul>
-                             </div>
-                        </div>
-                   </div>
-
-                   <div class="wrapper-content bg-gray-white mb20">
-                        <div class="pd-all-20">
-                             <a href="http://127.0.0.1:8080/admin/orders/reorder?order_id=37"
-                                  class="btn btn-info">Reorder</a>&nbsp;
-                             <a href="#" class="btn btn-secondary btn-trigger-cancel-order"
-                                  data-target="http://127.0.0.1:8080/admin/orders/cancel-order/37">Cancel</a>
-                        </div>
-                   </div>
-              </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="wrapper-content bg-gray-white mb20">
+                     <div class="pd-all-20">
+                         <div class="p-b10">
+                             <strong>Store</strong>
+                             <ul class="p-sm-r mb-0">
+                                 <li class="ws-nm">
+                                     <a href="" class="ww-bw text-no-bold" target="_blank"></a>
+                                 </li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+         
+                 <div class="wrapper-content bg-gray-white mb20">
+                     <div class="pd-all-20">
+                         <a href="{{ url('/admin/orders/reorder?order_id=' . $edit_order->id) }}" class="btn btn-info">Reorder</a>&nbsp;
+                         <a href="#" class="btn btn-secondary btn-trigger-cancel-order" data-target="{{ url('/admin/orders/cancel-order/' . $edit_order->id) }}">Cancel</a>
+                     </div>
+                 </div>
+             </div>
          </div>
     </div>
 </div>

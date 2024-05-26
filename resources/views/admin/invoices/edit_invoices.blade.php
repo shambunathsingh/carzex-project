@@ -27,10 +27,10 @@
                         </div>
                         <div class="col-md-6 text-end">
                             <ul class="mb-0">
-                                <li>{{ $editOrder->first_name }} {{ $editOrder->last_name }}</li>
-                                <li>{{ $editOrder->email }}</li>
-                                <li>{{ $editOrder->phone }}</li>
-                                <li>{{ $editOrder->street_address }}, {{ $editOrder->town_city }}, {{ $editOrder->state }}, {{ $editOrder->pin_code }}</li>
+                                <li>{{ $edit_invoices->first_name }} {{ $edit_invoices->last_name }}</li>
+                                <li>{{ $edit_invoices->email }}</li>
+                                <li>{{ $edit_invoices->phone }}</li>
+                                <li>{{ $edit_invoices->street_address }}, {{ $edit_invoices->town_city }}, {{ $edit_invoices->state }}, {{ $edit_invoices->pin_code }}</li>
                             </ul>
                         </div>
                     </div>
@@ -40,10 +40,10 @@
                         <hr>
                     </div>
                     <div class="col-lg-4">
-                        <strong class="text-brand">Invoice Code:</strong> INV{{ $editOrder->id }}
+                        <strong class="text-brand">Invoice Code:</strong> INV{{ $edit_invoices->id }}
                     </div>
                     <div class="col-lg-4">
-                        <strong class="text-brand">Issue At:</strong> {{ $editOrder->created_at->format('d M, Y') }}
+                        <strong class="text-brand">Issue At:</strong> {{ $edit_invoices->created_at->format('d M, Y') }}
                     </div>
                     <div class="col-lg-4">
                         <strong class="text-brand">Payment Method:</strong> COD
@@ -61,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($editOrder->productOrders as $productOrder)
+                        @foreach ($edit_invoices->productOrders as $productOrder)
                             <tr>
                                 <td style="width: 70%">
                                     <p class="mb-0">{{ $productOrder->description }}</p>
@@ -74,11 +74,11 @@
                     <tfoot>
                         <tr>
                             <th colspan="2" class="text-end">Sub Total:</th>
-                            <th class="text-center">₹{{ number_format($editOrder->productOrders->sum('subtotal'), 2) }}</th>
+                            <th class="text-center">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</th>
                         </tr>
                         <tr>
                             <th colspan="2" class="text-end">Grand Total:</th>
-                            <th class="text-center">₹{{ number_format($editOrder->productOrders->sum('subtotal'), 2) }}</th>
+                            <th class="text-center">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -86,12 +86,12 @@
                     <div class="col-md-6">
                         <h5>Invoice For</h5>
                         <p class="font-sm">
-                            <strong>Issue At:</strong> {{ $editOrder->created_at->format('d M, Y') }}<br>
+                            <strong>Issue At:</strong> {{ $edit_invoices->created_at->format('d M, Y') }}<br>
                         </p>
                     </div>
                     <div class="col-md-6 text-end">
                         <h5>Total Amount</h5>
-                        <h3 class="mt-0 mb-0 text-danger">₹{{ number_format($editOrder->productOrders->sum('subtotal'), 2) }}</h3>
+                        <h3 class="mt-0 mb-0 text-danger">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</h3>
                     </div>
                 </div>
                 <hr>
