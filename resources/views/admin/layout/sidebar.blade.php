@@ -253,7 +253,7 @@
 
 
 
-                <li class="mainlink"><a href="#"><i class="far fa-envelope"></i><span
+                <li class="mainlink"><a href="{{ route('admin.ecommerce.contact') }}"><i class="far fa-envelope"></i><span
                             class="link-name">contact</span></a>
                 </li>
 

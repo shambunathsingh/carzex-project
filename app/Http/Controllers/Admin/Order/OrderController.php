@@ -10,12 +10,14 @@ use App\Models\Product\Product;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = "Carzex - Orders";
+        $perPage = $request->get('perPage', 10);
 
-        // Fetch all orders with related product orders
-        $orders = Order::with('productOrders')->get();
+        // Fetch paginated orders with related product orders
+        $orders = Order::with('productOrders')
+            ->paginate($perPage);
 
         // Calculate total amount for each order
         foreach ($orders as $order) {
@@ -28,9 +30,27 @@ class OrderController extends Controller
         // Return the view with the homepage data
         return view('admin.order.index', [
             'title' => $title,
-            'orders' => $orders
+            'orders' => $orders,
+            'perPage' => $perPage
         ]);
     }
+
+    public function getOrders(Request $request)
+    {
+        $perPage = $request->get('perPage', 10);
+        $orders = Order::with('productOrders')
+            ->paginate($perPage);
+
+        foreach ($orders as $order) {
+            $totalAmount = $order->productOrders->sum(function ($productOrder) {
+                return $productOrder->subtotal;
+            });
+            $order->totalAmount = $totalAmount;
+        }
+
+        return response()->json($orders);
+    }
+    
     public function invoices()
     {
         $title = "Carzex - invoices";

@@ -330,50 +330,42 @@
                                 <!-- todo table body  start-->
 
 
-
-                                <!-- todo table pagination area start -->
                                 <div class="tablbtnprt">
                                     <div class="lftprt">
                                         <div class="dataTables_length" id="botble-page-tables-page-table_length">
-                                            <label><span class="dt-length-style"><select
-                                                        name="botble-page-tables-page-table_length"
-                                                        aria-controls="botble-page-tables-page-table"
-                                                        class="form-control input-sm">
-                                                        <option value="10">10</option>
-                                                        <option value="30">30</option>
-                                                        <option value="50">50</option>
-                                                        <option value="100">100</option>
-                                                        <option value="500">500</option>
-                                                        <option value="-1">All</option>
-                                                    </select></span></label>
+                                            <label>
+                                                <span class="dt-length-style">
+                                                    <select name="botble-page-tables-page-table_length"
+                                                            aria-controls="botble-page-tables-page-table"
+                                                            class="form-control input-sm"
+                                                            onchange="window.location.href=this.value;">
+                                                        @foreach([10, 30, 50, 100, 500, -1] as $size)
+                                                            <option value="{{ request()->fullUrlWithQuery(['perPage' => $size]) }}" {{ $perPage == $size ? 'selected' : '' }}>
+                                                                {{ $size == -1 ? 'All' : $size }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </span>
+                                            </label>
                                         </div>
-                                        <div class="dataTables_info" id="botble-page-tables-page-table_info"
-                                            role="status" aria-live="polite"><span class="dt-length-records">
-                                                <i class="fa fa-globe"></i> <span class="d-none d-sm-inline">Show
-                                                    from</span> 1 to 10
-                                                in <span class="badge bg-secondary bold badge-dt">13</span>
+                                        <div class="dataTables_info" id="botble-page-tables-page-table_info" role="status" aria-live="polite">
+                                            <span class="dt-length-records">
+                                                <i class="fa fa-globe"></i>
+                                                <span class="d-none d-sm-inline">Show from</span>
+                                                {{ $orders->firstItem() }} to {{ $orders->lastItem() }}
+                                                in <span class="badge bg-secondary bold badge-dt">{{ $orders->total() }}</span>
                                                 <span class="hidden-xs">records</span>
                                             </span>
                                         </div>
                                     </div>
-
+                        
                                     <div class="rghtprt">
                                         <!--Bordered Pagination-->
                                         <div class="b-pagination-outer">
-
-                                            <ul id="border-pagination">
-                                                <li><a class="" href="#">«Previous</a></li>
-                                                <li><a href="#">1</a></li>
-                                                <li><a href="#" class="active">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">Next»</a></li>
-                                            </ul>
+                                            {{ $orders->appends(['perPage' => $perPage])->links('admin.pagination.custom') }}
                                         </div>
-
                                     </div><!--wrapper-->
                                 </div>
-
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand\Brands;
+use App\Models\Contact\Contact;
 use App\Models\Category\Category;
 use App\Models\Product\Product;
 use App\Models\ProductAttribute\ProductAttribute;
@@ -15,6 +16,7 @@ use App\Models\ProductOption\ProductOption;
 use App\Models\ProductTags\ProductTags;
 use App\Models\Taxes\Taxes;
 use Illuminate\Http\Request;
+use App\Models\Contact\ContactReply;
 use PhpParser\Node\Stmt\Label;
 
 class EcommerceController extends Controller
@@ -125,8 +127,6 @@ class EcommerceController extends Controller
     }
 
 
-
-
     // product tag section
     public function product_tags()
     {
@@ -187,12 +187,6 @@ class EcommerceController extends Controller
 
         return view('admin.ecommerce.edit_brands', compact('brand'), ['title' => $title]);
     }
-
-
-
-
-
-
     // product discounts
     public function discounts()
     {
@@ -315,10 +309,6 @@ class EcommerceController extends Controller
 
         return view('admin.ecommerce.edit_product_label', compact('plabel'), ['title' => $title]);
     }
-
-
-
-
     // product label
     public function product_features()
     {
@@ -346,5 +336,110 @@ class EcommerceController extends Controller
         $pfeature = ProductFeatures::find($id);
 
         return view('admin.ecommerce.edit_product_feature', compact('pfeature'), ['title' => $title]);
+    }
+
+
+    // contacts =================================================================>
+    public function contact()
+    {
+        $title = "Carzex - Contact";
+
+        // Fetch all contacts
+        $contacts = Contact::all();
+
+        // Pass the variables to the view using the compact function
+        return view('admin.ecommerce.contact', compact('title', 'contacts'));
+    }
+    public function delete_Contact($id)
+    {
+        $Contact = Contact::findOrFail($id);
+        $Contact->delete();
+
+        return redirect()->back()->with('success', 'Contact deleted successfully.');
+    }
+    public function edit_contact($id)
+    {
+        $title = "Carzex - Edit Contact";
+
+        $contact = Contact::find($id);
+
+        return view('admin.ecommerce.edit_contact', compact('contact'), ['title' => $title]);
+    }
+    public function update_contact(Request $request, $id)
+    {
+        // Validate the request data
+        $request->validate([
+            'status' => '',
+            'message' => '',
+        ]);
+
+        // Find the contact by its ID
+        $contact = Contact::findOrFail($id);
+
+        // Create a new reply
+        $reply = new ContactReply();
+        $reply->message = $request->message;
+        $reply->contact_id = $contact->id;
+        $reply->save();
+
+        // Update the contact status
+        $contact->status = $request->status;
+        $contact->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Contact updated successfully.');
+    }
+
+
+    // settings==========================================================================================>
+    public function settings()
+    {
+        $title = "Carzex - Settings";
+
+        // Fetch all contacts
+        $settings = Contact::all();
+
+        // Pass the variables to the view using the compact function
+        return view('admin.ecommerce.settings', compact('title', 'settings'));
+    }
+
+    public function delete_settings($id)
+    {
+        $Contact = Contact::findOrFail($id);
+        $Contact->delete();
+
+        return redirect()->back()->with('success', 'Contact deleted successfully.');
+    }
+    public function edit_settings($id)
+    {
+        $title = "Carzex - Edit Contact";
+
+        $contact = Contact::find($id);
+
+        return view('admin.ecommerce.edit_contact', compact('contact'), ['title' => $title]);
+    }
+    public function update_settings(Request $request, $id)
+    {
+        // Validate the request data
+        $request->validate([
+            'status' => '',
+            'message' => '',
+        ]);
+
+        // Find the contact by its ID
+        $contact = Contact::findOrFail($id);
+
+        // Create a new reply
+        $reply = new ContactReply();
+        $reply->message = $request->message;
+        $reply->contact_id = $contact->id;
+        $reply->save();
+
+        // Update the contact status
+        $contact->status = $request->status;
+        $contact->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Contact updated successfully.');
     }
 }

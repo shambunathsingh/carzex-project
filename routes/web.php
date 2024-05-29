@@ -196,6 +196,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
+            Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
             Route::get('invoices', [OrderController::class, 'invoices'])->name('invoices');
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
             Route::get('edit-invoices/edit/{id}', [OrderController::class, 'edit_invoices'])->name('edit_invoices');
@@ -278,14 +279,31 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('update-brand/{id}', [ProductController::class, 'update_brand'])->name('update_brand');
             Route::get('delete-brand/{id}', [ProductController::class, 'delete_brand'])->name('delete_brand');
 
+            Route::get('contact', [EcommerceController::class, 'contact'])->name('contact');
+            Route::get('contact/delete-contact/{id}', [EcommerceController::class, 'delete_contact'])->name('delete_contact');
+            Route::get('contact/edit-contact/{id}', [EcommerceController::class, 'edit_contact'])->name('edit_contact');
+            Route::post('update-contact/{id}', [EcommerceController::class, 'update_contact'])->name('update_contact');
+            Route::get('update-contact/{id}', [EcommerceController::class, 'update_contact'])->name('update_contact');
+
+
+
+            // settings
+            Route::get('settings', [EcommerceController::class, 'settings'])->name('settings');
+
+
+            
             // flash-sales
 
+            Route::get('product/{product_id}', [FlashSalesController::class, 'getProductDetails']);
 
             Route::get('flash-sales', [FlashSalesController::class, 'flash_sales'])->name('flash_sales');
             Route::get('flash-sales/create', [FlashSalesController::class, 'create_product_flash_sales'])->name('create_flash_sales');
             Route::get('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
             Route::post('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
             Route::get('flash-sales/edit/{id}', [FlashSalesController::class, 'edit_product_flash_sales'])->name('edit_product_flash_sales');
+            // web.php
+            Route::post('update_product_flash_sales/{id}', [FlashSalesController::class, 'update_product_flash_sales'])
+                ->name('pdate_product_flash_sales');
 
             Route::post('flash-sales/edit/id', [FlashSalesController::class, 'update_flash_sales'])->name('update_flash_sales');
             Route::get('flash-sales/delete/{id}', [FlashSalesController::class, 'delete_flash_sales'])->name('delete_flash_sales');

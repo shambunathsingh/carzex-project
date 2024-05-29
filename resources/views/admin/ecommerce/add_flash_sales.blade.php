@@ -109,32 +109,30 @@
                         </div>
                         </div>
                         <div class="widget meta-boxes">
-                            <div class="widget-title">
-                                <h4>Products</h4>
+                        <div class="widget-title">
+                            <h4>Products</h4>
+                        </div>
+                    <div class="widget-body">
+                        <div class="form-group mb-3">
+                            <div class="box-search-advance product">
+                                <input type="text" name="query" class="next-input textbox-advancesearch" id="product-search" placeholder="Search products" autocomplete="off" value="{{ request('query') }}">
+                                <ul id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></ul>
                             </div>
-                            <div class="widget-body">
-                                <div class="form-group mb-3">
-                                    <input type="hidden" name="products" value="">
-                                    <div class="box-search-advance product">
-                                        <input type="text" name="query" class="next-input textbox-advancesearch" id="product-search" placeholder="Search products" autocomplete="off" value="{{ request('query') }}">
-                                        <ul id="suggestions" class="list-group" style="position: absolute; z-index: 1000;"></ul>
-                                    </div>
-                                </div>
-                                <div id="flash-sale-form" style="display: none;">
-                                    <input type="hidden" name="flash_sale_id" value="35"> <!-- Assuming you have a flash sale id -->
-                                    <input type="hidden" name="product_id" id="product_id">
-                                    <div class="form-group mb-3">
-                                        <label for="product_price" class="control-label required" aria-required="true">Product Price</label>
-                                        <input type="number" name="price" class="next-input" id="product_price" placeholder="Enter Price">
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="product_quantity" class="control-label required" aria-required="true">Product Quantity</label>
-                                        <input type="number" name="quantity" class="next-input" id="product_quantity" placeholder="Enter Quantity">
-                                    </div>
-                                    {{-- <button type="submit" class="bstn btn-primary">Add to Flash Sale</button> --}}
-                                </div>
+                        </div>
+                        <div id="flash-sale-form" style="display: none;">
+                            <input type="hidden" name="product_id" id="product_id">
+                            <div class="form-group mb-3">
+                                <label for="product_price" class="control-label required" aria-required="true">Product Price</label>
+                                <input type="number" name="price" class="next-input" id="product_price" placeholder="Enter Price">
                             </div>
-                        </div>                                         
+                            <div class="form-group mb-3">
+                                <label for="product_quantity" class="control-label required" aria-required="true">Product Quantity</label>
+                                <input type="number" name="quantity" class="next-input" id="product_quantity" placeholder="Enter Quantity">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                       
                 </div>
                 <div class="col-md-3 right-sidebar d-flex flex-column-reverse flex-md-column">
                     <div class="form-actions-wrapper">
@@ -237,77 +235,81 @@
         });
     });
 
-    $(document).ready(function() {
-        const today = new Date().toISOString().split('T')[0];
-        $('#end_date').val(today);
+  $(document).ready(function() {
+    const today = new Date().toISOString().split('T')[0];
+    $('#end_date').val(today);
 
-        $('#product-search').on('keyup', function() {
-            let query = $(this).val();
-            if (query.length > 1) {
-                $.ajax({
-                    url: "{{ route('admin.ecommerce.search_flash_sales_products') }}",
-                    type: "GET",
-                    data: {'query': query},
-                    success: function(data) {
-                        let suggestions = $('#suggestions');
-                        suggestions.empty();
-                        data.forEach(product => {
-                            suggestions.append(`
-                                <div class="list-group-item suggestion-item-container">
-                                    <a href="#" class="suggestion-item" data-id="${product.id}">
-                                        <img src="${product.images}" alt="${product.name}" class="suggestion-item-image">
-                                        <div class="suggestion-item-details">
-                                            <span class="suggestion-item-name">${product.name}</span>
-                                            <span class="suggestion-item-description">${product.description}</span>
-                                            <span class="suggestion-item-price">${product.sale_price}</span>
-                                        </div>
-                                    </a>
+    function fetchSuggestions(query) {
+        $.ajax({
+            url: "{{ route('admin.ecommerce.search_flash_sales_products') }}",
+            type: "GET",
+            data: {'query': query},
+            success: function(data) {
+                let suggestions = $('#suggestions');
+                suggestions.empty();
+                data.forEach(product => {
+                    suggestions.append(`
+                        <div class="list-group-item suggestion-item-container">
+                            <a href="#" class="suggestion-item" data-id="${product.id}">
+                                <img src="${product.images}" alt="${product.name}" class="suggestion-item-image">
+                                <div class="suggestion-item-details">
+                                    <span class="suggestion-item-name">${product.name}</span>
+                                    <span class="suggestion-item-description">${product.description}</span>
+                                    <span class="suggestion-item-price">${product.sale_price}</span>
                                 </div>
-                            `);
-                        });
-                    }
+                            </a>
+                        </div>
+                    `);
                 });
-            } else {
-                $('#suggestions').empty();
             }
         });
+    }
 
-        $(document).on('click', '.suggestion-item', function(e) {
-            e.preventDefault();
-            let productId = $(this).data('id');
-            
-            // Fetch product details
-            $.ajax({
-                url: '/admin/ecommerce/product/' + productId,
-                type: 'GET',
-                success: function(product) {
-                    $('#product_id').val(product.id);
-                    $('#product_price').val(product.sale_price);
-                    $('#product_quantity').val(product.quantity);
-                    $('#product-search').val(product.name);
-                    $('#suggestions').empty();
-                    $('#flash-sale-form').show();
-                }
-            });
-        });
+    $('#product-search').on('keyup', function() {
+        let query = $(this).val();
+        fetchSuggestions(query);
+    });
 
-        $('#flash-sale-form').on('submit', function(e) {
-            e.preventDefault();
-            
-            $.ajax({
-                url: "{{ route('admin.ecommerce.save_flash_sales') }}",
-                type: "POST",
-                data: $(this).serialize(),
-                success: function(response) {
-                    if(response.success) {
-                        alert('Product added to flash sale successfully!');
-                        $('#flash-sale-form')[0].reset();
-                        $('#flash-sale-form').hide();
-                    }
-                }
-            });
+    $('#product-search').on('focus', function() {
+        fetchSuggestions(''); // Fetch all products when the input is focused
+    });
+
+    $(document).on('click', '.suggestion-item', function(e) {
+        e.preventDefault();
+        let productId = $(this).data('id');
+        
+        // Fetch product details
+        $.ajax({
+            url: '/admin/ecommerce/product/' + productId,
+            type: 'GET',
+            success: function(product) {
+                $('#product_id').val(product.id);
+                $('#product_price').val(product.sale_price);
+                $('#product_quantity').val(product.quantity);
+                $('#product-search').val(product.name);
+                $('#suggestions').empty();
+                $('#flash-sale-form').show();
+            }
         });
     });
+
+    $('#flash-sale-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: "{{ route('admin.ecommerce.save_flash_sales') }}",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success) {
+                    alert('Product added to flash sale successfully!');
+                    $('#flash-sale-form')[0].reset();
+                    $('#flash-sale-form').hide();
+                }
+            }
+        });
+    });
+});
 
 </script>
 @endsection
