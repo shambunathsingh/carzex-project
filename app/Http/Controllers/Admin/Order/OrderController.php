@@ -35,6 +35,11 @@ class OrderController extends Controller
         ]);
     }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     public function getOrders(Request $request)
     {
         $perPage = $request->get('perPage', 10);
@@ -51,6 +56,10 @@ class OrderController extends Controller
         return response()->json($orders);
     }
     
+<<<<<<< Updated upstream
+=======
+>>>>>>> 77d9357beab3b7e75288dd79f078f933f38202ce
+>>>>>>> Stashed changes
     public function invoices()
     {
         $title = "Carzex - invoices";

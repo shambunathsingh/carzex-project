@@ -12,8 +12,8 @@
                     <li class="breadcrumb-item active"><span style="color: black; margin-right: 3px;"><i
                                 class="fa fa-home"></i></span>Dashboard</li>
 
-                    <li class="breadcrumb-item ">Locations</li>
-                    <li class="breadcrumb-item ">Import location</li>
+                    <li class="breadcrumb-item ">Ecommerce</li>
+                    <li class="breadcrumb-item ">Orders</li>
 
 
                 </ol>

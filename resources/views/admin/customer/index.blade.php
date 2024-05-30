@@ -12,8 +12,8 @@
                     <li class="breadcrumb-item active"><span style="color: black; margin-right: 3px;"><i
                                 class="fa fa-home"></i></span>Dashboard</li>
 
-                    <li class="breadcrumb-item ">Locations</li>
-                    <li class="breadcrumb-item ">Import location</li>
+                    <li class="breadcrumb-item ">Ecommerce</li>
+                    <li class="breadcrumb-item ">Customers</li>
 
 
                 </ol>
@@ -85,18 +85,27 @@
                                                 </div>
                                             </div>
                                             <div class="button-grp d-flex">
-                                                <button class="btn btn-secondary action-item mx-3 btn-info" tabindex="0"
-                                                    aria-controls="botble-ecommerce-tables-invoice-table" type="button">
-                                                    <span><span data-action="generate-invoices" data-href="">
-                                                            <i class="fas fa-file-export"></i> Generate Invoices</span>
-                                                    </span>
-                                                </button>
+                                                <a href="{{ route('admin.countries.add_country') }}"
+                                                    class="create d-flex align-items-center">
+                                                    <i class="fa-solid fa-plus btn-icon"></i>
+                                                    <p>Create</p>
+                                                </a>
+                                                {{-- <a class="export d-flex align-items-center" style="cursor: pointer;"
+                                                    data-toggle="modal" data-target="#exampleModal">
+                                                    <i class="fas fa-cloud-upload btn-icon"></i>
+                                                    <p>Import</p>
+                                                </a> --}}
+                                                {{-- <a href=""
+                                                    class="export d-flex align-items-center">
+                                                    <i class="fa-solid fa-cloud-download btn-icon"></i>
+                                                    <p>Export</p>
+                                                    <i class="fa-solid fa-angle-down"></i>
+                                                </a> --}}
                                                 <a class="relode d-flex align-items-center" style="cursor: pointer;"
                                                     onclick="location.reload();">
                                                     <i class="fa-solid fa-rotate-right btn-icon"></i>
                                                     <p>Reload</p>
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>
@@ -122,97 +131,91 @@
                                                 colspan="1" style="width: 20px;" aria-sort="descending"
                                                 aria-label="IDorderby asc">ID
                                             </th>
-                                            <th title="Name" class="text-start column-key-name sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1"
-                                                aria-label="Nameorderby asc">
-                                                CUSTOMER
-                                            </th>
-                                            <th title="Template"
-                                                class="text-start text-primary column-key-template sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1"
-                                                colspan="1" aria-label="Templateorderby asc" style="">CODE
+                                            <th title="Template" class="text-start column-key-template sorting"
+                                                tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1"
+                                                colspan="1" aria-label="Templateorderby asc" style="">Avatar
                                             </th>
                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">AMOUNT
+                                                tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1"
+                                                colspan="1" aria-label="Templateorderby asc" style="">Name
                                             </th>
-
                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">STATUS
+                                                tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1"
+                                                colspan="1" aria-label="Templateorderby asc" style="">
+                                                Email
                                             </th>
                                             <th title="Created At" width="100px"
                                                 class="text-center column-key-created_at sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">
-                                                Created At
-                                            </th>
-
-                                            <th title="Template" class="text-end column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">OPERATIONS
-                                            </th>
+                                                Created At</th>
+                                            <th title="Status" width="100px"
+                                                class="text-center column-key-status sorting" tabindex="0"
+                                                aria-controls="botble-page-tables-page-table" rowspan="1"
+                                                colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
+                                                Status</th>
+                                            <th title="<img src=&quot;https://carzex.in/vendor/core/core/base/images/flags/us.svg&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
+                                                class="text-center language-header no-sort sorting_disabled"
+                                                width="40px" rowspan="1" colspan="1" style="width: 40px;"
+                                                aria-label=""><img
+                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    title="English" width="16" alt="English"></th>
+                                            <th title="Operations" width="134px" class="text-center sorting_disabled"
+                                                rowspan="1" colspan="1" style="width: 134px;"
+                                                aria-label="Operations">Operations</th>
                                         </tr>
-
-
                                     </thead>
                                     <tbody>
-
-                                        @foreach ($orders as $order)
+                                        @foreach ($customers as $item)
                                             <tr role="row" class="odd">
-                                                <!-- Checkbox column -->
                                                 <td class="text-start no-sort dtr-control">
                                                     <div class="text-start">
                                                         <div class="checkbox checkbox-primary table-checkbox">
                                                             <input type="checkbox" class="checkboxes"
-                                                                name="{{ $order->id }}[]" value="">
+                                                                name="{{ $item->id }}[]" value="">
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <!-- Order ID column -->
-                                                <td class="column-key-id sorting_1">{{ $order->id }}</td>
-                                                <!-- Customer name column -->
-                                                <td class="text-start column-key-template">
-                                                    {{ $order->first_name }} {{ $order->last_name }}
+                                                <td class="column-key-id sorting_1">{{ $item->id }}</td>
+                                                <td class=" text-start column-key-name">
+                                                    <img src="" alt="">
                                                 </td>
-                                                <td class="text-start text-primary column-key-template">
-                                                    INV-{{ $order->id }}
+                                                <td class=" text-start column-key-name">
+                                                    <a
+                                                        href="{{ route('admin.ecommerce.edit_customers', ['id' => $item->id]) }}">{{ $item->name }}</a>
                                                 </td>
-                                                <!-- Total Amount column -->
-                                                <td class="text-start column-key-template">
-                                                    ₹ {{ $order->totalAmount }}
+                                                <td class=" text-start column-key-template" style="">
+                                                    {{ $item->email }}
                                                 </td>
-
-                                                <td class="text-start column-key-payment_status">
-                                                    @if ($order->is_paid == 1)
-                                                        <span class="label-success status-label">Completed</span>
-                                                    @else
-                                                        <span class="label-warning bg-warning status-label">Pending</span>
-                                                    @endif
+                                                <td class=" text-center column-key-created_at" style="">
+                                                    {{ $item->created_at->format('d-m-Y') }}
                                                 </td>
-                                                <!--Created At column -->
-                                                <td class="text-start column-key-created_at">
-                                                    {{ $order->created_at->format('d-m-Y') }}
+                                                <td class=" text-center column-key-status" style="">
+                                                    <span class="label-success status-label">Unreadable</span>
                                                 </td>
-                                                <td class="text-end column-key-template">
-                                                    <div class="table-actions">
-                                                        <a href="{{ route('admin.ecommerce.edit_invoices', ['id' => $order->id]) }}"
-                                                            class="btn btn-icon btn-sm btn-primary"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="fa fa-edit"></i>
+                                                <td class=" text-center language-header no-sort" style="">
+                                                    <div class="text-center language-column">
+                                                        <a
+                                                            href="{{ route('admin.ecommerce.edit_customers', ['id' => $item->id]) }}">
+                                                            <i class="fa fa-check text-success"></i>
                                                         </a>
+                                                    </div>
+                                                </td>
+                                                <td class=" text-center">
+                                                    <div class="table-actions">
 
-                                                        <a href="#"
-                                                            class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog"
+                                                        <a href="{{ route('admin.ecommerce.edit_customers', ['id' => $item->id]) }}"
+                                                            class="btn btn-icon btn-sm btn-primary"
+                                                            data-bs-toggle="tooltip" data-bs-original-title="Edit"><i
+                                                                class="fa fa-edit"></i></a>
+
+                                                        <a href="{{ route('admin.countries.delete_country', ['id' => $item->id]) }}"
+                                                            class="btn btn-icon btn-sm btn-danger deleteDialog"
                                                             data-bs-toggle="tooltip" data-section="" role="button"
                                                             data-bs-original-title="Delete"
-                                                            onclick="return confirm('Are you sure you want to delete this order?');">
-                                                            <i class="fa fa-trash btn-danger"></i>
+                                                            onclick="return confirm('Are you sure you want to delete this option?');">
+                                                            <i class="fa fa-trash"></i>
                                                         </a>
-
                                                     </div>
                                                 </td>
                                             </tr>
@@ -287,14 +290,14 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import Locationsheet</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Import Productsheet</h5>
                         <button type="button" class="btn btn-info close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="card-body">
-                            <form action="{{ route('admin.importLocation.import_location') }}" method="POST"
+                            <form action="{{ route('admin.ecommerce.import_product') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="input-group">

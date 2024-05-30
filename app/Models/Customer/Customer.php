@@ -16,7 +16,9 @@ class Customer extends Authenticatable
         'guest_id',
         'name',
         'email',
+        'dob',
         'phone',
-        'password'
+        'password',
+        'status'
     ];
 }

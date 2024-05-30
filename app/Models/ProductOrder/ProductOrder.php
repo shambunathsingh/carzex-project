@@ -14,15 +14,15 @@ class ProductOrder extends Model
     protected $table = "p_orders";
 
     protected $fillabe = [
-       'order_id',
-    'product_id',
-    'quantity',
-    'subtotal',
-    'is_paid',
-    'payment_id',
-    'order_token',
-    'coupon',
-    'payment_method'
+        'order_id',
+        'product_id',
+        'quantity',
+        'subtotal',
+        'is_paid',
+        'payment_id',
+        'order_token',
+        'coupon',
+        'payment_method'
     ];
 
     public function product()

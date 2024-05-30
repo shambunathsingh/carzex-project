@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\City\CitiesController;
 use App\Http\Controllers\Admin\Country\CountryController;
+use App\Http\Controllers\Admin\Customer\CustomerController;
 use App\Http\Controllers\Admin\Ecommerce\EcommerceController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -196,11 +197,30 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
             Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
             Route::get('invoices', [OrderController::class, 'invoices'])->name('invoices');
+>>>>>>> 77d9357beab3b7e75288dd79f078f933f38202ce
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
-            Route::get('edit-invoices/edit/{id}', [OrderController::class, 'edit_invoices'])->name('edit_invoices');
             Route::get('edit-order/edit/{id}', [OrderController::class, 'edit_order'])->name('edit_order');
+            
+            
+            
+            // Customer section
+            Route::get('customers', [CustomerController::class, 'index'])->name('customers');
+            Route::get('edit/{id}', [CustomerController::class, 'edit'])->name('edit_customers');
+            Route::post('update/{id}', [CustomerController::class, 'update'])->name('update_customers');
+
+
+            // Invoice section
+            Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices');
+            Route::get('edit-invoices/edit/{id}', [InvoiceController::class, 'edit_invoices'])->name('edit_invoices');
+            Route::get('download-invoices/{id}', [InvoiceController::class, 'download_invoices'])->name('download_invoices');
+            Route::get('show-invoices/{id}', [InvoiceController::class, 'showPdf'])->name('show_invoices');
 
 
             Route::post('store-product-categories', [ProductController::class, 'store_pcategory'])->name('save_pcategories');
@@ -286,11 +306,17 @@ Route::group(['middleware' => 'auth'], function () {
 
             // settings
             Route::get('settings', [EcommerceController::class, 'settings'])->name('settings');
+<<<<<<< Updated upstream
             Route::get('advanced-settings', [EcommerceController::class, 'advancedSettings'])->name('advancedSettings');
             Route::get('tracking-settings', [EcommerceController::class, 'trackingSettings'])->name('trackingSettings');
 
 
 
+=======
+
+
+            
+>>>>>>> Stashed changes
             // flash-sales
 
             Route::get('product/{product_id}', [FlashSalesController::class, 'getProductDetails']);
@@ -299,7 +325,14 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('flash-sales/create', [FlashSalesController::class, 'create_product_flash_sales'])->name('create_flash_sales');
             Route::get('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
             Route::post('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
+<<<<<<< Updated upstream
             // web.php
+=======
+            Route::get('flash-sales/edit/{id}', [FlashSalesController::class, 'edit_product_flash_sales'])->name('edit_product_flash_sales');
+            // web.php
+            Route::post('update_product_flash_sales/{id}', [FlashSalesController::class, 'update_product_flash_sales'])
+                ->name('pdate_product_flash_sales');
+>>>>>>> Stashed changes
 
             Route::get('flash-sales/delete/{id}', [FlashSalesController::class, 'delete_flash_sales'])->name('delete_flash_sales');
 

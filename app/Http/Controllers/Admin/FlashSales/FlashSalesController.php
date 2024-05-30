@@ -85,7 +85,60 @@ class FlashSalesController extends Controller
         }
     }
 
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< HEAD
+    public function update_flash_sales(Request $request, $id)
+    {
+        // Validate request data
+        $request->validate([
+            'name' => 'required|string',
+            'subtitle' => '',
+            'end_date' => 'required|date',
+            'status' => 'required|string',
+            'flash_sale_id' => 'required|integer',
+            'product_id' => '',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            // Find the existing FlashSale record
+            $flashSale = Flash_sales::findOrFail($id);
+            // Update the FlashSale model with the validated request data
+            $flashSale->name = $request->name;
+            $flashSale->subtitle = $request->subtitle;
+            $flashSale->end_date = $request->end_date;
+            $flashSale->status = $request->status;
+            // Save the updated FlashSale model to the database
+            $flashSale->save();
+
+            // Find the related FlashSaleProduct record
+            $flashSaleProduct = flash_sale_products::where('flash_sale_id', $id)->firstOrFail();
+            // Update the FlashSaleProduct model with the validated request data
+            $flashSaleProduct->product_id = $request->input('product_id');
+            $flashSaleProduct->price = $request->input('price');
+            $flashSaleProduct->quantity = $request->input('quantity');
+            // Save the updated FlashSaleProduct model to the database
+            $flashSaleProduct->save();
+
+            DB::commit();
+
+            // Redirect back with success message
+            return redirect()->back()->with('success', 'Flash sale updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Return an error response in case of any exceptions
+            return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
+        }
+    }
+=======
+
+>>>>>>> 77d9357beab3b7e75288dd79f078f933f38202ce
+>>>>>>> Stashed changes
     public function delete_flash_sales($id)
     {
         $Flash_sales = Flash_sales::findOrFail($id);

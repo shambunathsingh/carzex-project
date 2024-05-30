@@ -442,6 +442,7 @@ class EcommerceController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Contact updated successfully.');
     }
+<<<<<<< Updated upstream
 
 
 
@@ -467,4 +468,6 @@ class EcommerceController extends Controller
         // Pass the variables to the view using the compact function
         return view('admin.ecommerce.trackingSettings', compact('title', 'trackingSettings'));
     }
+=======
+>>>>>>> Stashed changes
 }
