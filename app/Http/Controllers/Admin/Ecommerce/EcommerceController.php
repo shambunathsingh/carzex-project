@@ -442,4 +442,29 @@ class EcommerceController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Contact updated successfully.');
     }
+
+
+
+      // Advanced Settings                    || ==========================================================================================>
+    public function advancedSettings()
+    {
+        $title = "Carzex - Advanced Settings ";
+
+        // Fetch all contacts
+        $advancedSettings = Contact::all();
+
+        // Pass the variables to the view using the compact function
+        return view('admin.ecommerce.advancedSettings', compact('title', 'advancedSettings'));
+    }
+      // tracking Settings                    || ==========================================================================================>
+    public function trackingSettings()
+    {
+        $title = "Carzex - Advanced Settings ";
+
+        // Fetch all contacts
+        $trackingSettings = Contact::all();
+
+        // Pass the variables to the view using the compact function
+        return view('admin.ecommerce.trackingSettings', compact('title', 'trackingSettings'));
+    }
 }

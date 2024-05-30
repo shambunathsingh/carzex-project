@@ -40,7 +40,7 @@
         color: #007bff;
     }
 </style>
-<form action="{{ route('admin.ecommerce.update_flash_sales', ['id' => $Flash_sales->id]) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.ecommerce.update_product_flash_sales', ['id' => $Flash_sales->id]) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('POST') <!-- Use PUT method for updating -->
 

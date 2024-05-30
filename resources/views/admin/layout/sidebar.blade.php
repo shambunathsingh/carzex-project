@@ -191,17 +191,17 @@
                                             class="fas fa-money-check-alt"></i></span>
                                     Taxes</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.settings') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-cogs"></i></span>
                                     Basic settings</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.advancedSettings') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-plus"></i></span>
                                     Advanced settings</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.trackingSettings') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa-solid fa-chart-pie"></i></span>
                                     Tracking settings</a>
@@ -240,9 +240,6 @@
                     </div>
                 </li>
                 </li>
-
-
-
 
                 <li class="mainlink"><a href="{{ route('admin.homepage') }}"><i class="far fa-image"></i><span
                             class="link-name">simple

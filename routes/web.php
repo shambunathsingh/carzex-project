@@ -211,9 +211,6 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/fetch-category-data/{id}', [CategoryController::class, 'fetchCategoryData'])->name('fetch.category.data');
 
-
-
-
             // Product categories
             Route::get('product-categories', [EcommerceController::class, 'product_categories'])->name('product_categories');
             Route::post('store-product-categories', [ProductController::class, 'store_pcategory'])->name('save_pcategories');
@@ -289,9 +286,11 @@ Route::group(['middleware' => 'auth'], function () {
 
             // settings
             Route::get('settings', [EcommerceController::class, 'settings'])->name('settings');
+            Route::get('advanced-settings', [EcommerceController::class, 'advancedSettings'])->name('advancedSettings');
+            Route::get('tracking-settings', [EcommerceController::class, 'trackingSettings'])->name('trackingSettings');
 
 
-            
+
             // flash-sales
 
             Route::get('product/{product_id}', [FlashSalesController::class, 'getProductDetails']);
@@ -300,23 +299,18 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('flash-sales/create', [FlashSalesController::class, 'create_product_flash_sales'])->name('create_flash_sales');
             Route::get('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
             Route::post('flash-sales/store', [FlashSalesController::class, 'store_flash_sales'])->name('save_flash_sales');
-            Route::get('flash-sales/edit/{id}', [FlashSalesController::class, 'edit_product_flash_sales'])->name('edit_product_flash_sales');
             // web.php
-            Route::post('update_product_flash_sales/{id}', [FlashSalesController::class, 'update_product_flash_sales'])
-                ->name('pdate_product_flash_sales');
 
-            Route::post('flash-sales/edit/id', [FlashSalesController::class, 'update_flash_sales'])->name('update_flash_sales');
             Route::get('flash-sales/delete/{id}', [FlashSalesController::class, 'delete_flash_sales'])->name('delete_flash_sales');
 
             Route::get('search/update_flash_sales', [FlashSalesController::class, 'search_flash_sales_products'])->name('search_flash_sales_products');
             Route::post('search/update_flash_sales', [FlashSalesController::class, 'search_flash_sales_products'])->name('search_flash_sales_products');
 
-            Route::get('search_flash_sales_products', [FlashSalesController::class, 'search_flash_sales_products'])->name('search_flash_sales_products');
-            Route::get('product/{id}', [FlashSalesController::class, 'get_product_details']);
-            Route::post('add_flash_sale_product', [FlashSalesController::class, 'add_flash_sale_product'])->name('add_flash_sale_product');
+            // Route::get('product/{id}', [FlashSalesController::class, 'get_product_details']);
+            // Route::post('add_flash_sale_product', [FlashSalesController::class, 'add_flash_sale_product'])->name('add_flash_sale_product');
 
-            Route::post('flash-sales/edit/{id}', [FlashSalesController::class, 'update_product_flash_sales'])->name('update_flash_sales');
-            // Route::post('flash-sales/update/{id}', [FlashSalesController::class, 'update_product_flash_sales'])->name('update_flash_sales');
+            Route::get('flash-sales/edit/{id}', [FlashSalesController::class, 'edit_product_flash_sales'])->name('edit_product_flash_sales');
+            Route::post('flash-sales/edit/{id}', [FlashSalesController::class, 'update_product_flash_sales'])->name('update_product_flash_sales');
 
             // prdouct brands
             Route::get('discounts', [EcommerceController::class, 'discounts'])->name('discounts');
