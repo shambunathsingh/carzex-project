@@ -15,29 +15,29 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
-            $table->strin('post_parent')->nullable();
+            $table->string('post_parent')->nullable();
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->text('post_excerpt')->nullable();
-            $table->string('images')->nullable();
+            $table->text('images')->nullable();
             $table->string('sku')->nullable();
             $table->string('parent_sku')->nullable();
             $table->string('children')->nullable();
             $table->string('downloadable')->nullable();
             $table->string('virtual')->nullable();
             $table->string('stock')->nullable();
-            $table->string('price')->nullable();
-            $table->string('sale_price')->nullable();
-            $table->string('cost_per_item')->nullable();
+            $table->string('price', 10, 2)->nullable();
+            $table->string('sale_price', 10, 2)->nullable();
+            $table->string('cost_per_item', 10, 2)->nullable();
             $table->string('barcode')->nullable();
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
             $table->string('quantity')->nullable();
             $table->string('stock_status')->nullable();
-            $table->string('weight')->nullable();
-            $table->string('length')->nullable();
-            $table->string('wide')->nullable();
-            $table->string('height')->nullable();
+            $table->string('weight', 8, 2)->nullable();
+            $table->string('length', 8, 2)->nullable();
+            $table->string('wide', 8, 2)->nullable();
+            $table->string('height', 8, 2)->nullable();
             $table->string('has_product_options')->nullable();
             $table->string('related_products')->nullable();
             $table->string('cross_sale_products')->nullable();
@@ -45,16 +45,16 @@ return new class extends Migration
             $table->string('is_popular')->nullable();
             $table->string('status')->nullable();
             $table->string('menu_order')->nullable();
-            $table->string('store_id')->nullable();
+            $table->string('store_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('is_featured')->nullable();
             $table->string('categories')->nullable();
-            $table->string('brand_id')->nullable();
+            $table->string('brand_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('product_collections')->nullable();
             $table->string('product_labels')->nullable();
             $table->string('taxes')->nullable();
             $table->string('tax_class')->nullable();
             $table->string('visibility')->nullable();
-            $table->string('author')->nullable();
+            $table->string('author')->nullable()->constrained('users')->onDelete('set null');
             $table->string('comment_status')->nullable();
             $table->string('backorders')->nullable();
             $table->string('sold_individually')->nullable();
@@ -63,7 +63,7 @@ return new class extends Migration
             $table->string('tax_status')->nullable();
             $table->string('upsell_ids')->nullable();
             $table->string('crosssell_ids')->nullable();
-            $table->string('purchase_note')->nullable();
+            $table->text('purchase_note')->nullable();
             $table->string('sale_price_dates_from')->nullable();
             $table->string('sale_price_dates_to')->nullable();
             $table->string('download_limit')->nullable();
@@ -75,6 +75,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
 
 
     /**
