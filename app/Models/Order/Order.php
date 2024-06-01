@@ -31,9 +31,6 @@ class Order extends Model
         'is_paid',
     ];
 
-    /**
-     * Get the product orders for the order.
-     */
     public function productOrders()
     {
         return $this->hasMany(ProductOrder::class);

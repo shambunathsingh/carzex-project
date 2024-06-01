@@ -32,7 +32,7 @@ use App\Models\Page\PageInfo;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
-
+use App\Http\Controllers\Admin\Payments\PaymentsController;
 use App\Http\Controllers\CashfreePaymentController;
 use App\Http\Controllers\SmsController;
 
@@ -58,6 +58,12 @@ use App\Http\Controllers\SmsController;
 
 // Route::post('/sms', [SmsController::class, 'sms'])->name('sms.send');
 // Route::post('/generate-otp', [SmsController::class, 'generateOtp'])->name('generateOtp');
+
+
+
+Route::get('/admin/payments', [PaymentsController::class, 'payments'])->name('admin.payments');
+Route::get('/admin/payments/edit/{id}', [PaymentsController::class, 'edit_product_payments'])->name('admin.payments.edit_product_payments');
+// Route::post('/admin/payments/update/{id}', [PaymentsController::class, 'update_product_payments'])->name('admin.payments.update');
 
 Route::get('/order_mail', [CartController::class, 'store']);
 
@@ -304,6 +310,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('advanced-settings', [EcommerceController::class, 'advancedSettings'])->name('advancedSettings');
             Route::get('tracking-settings', [EcommerceController::class, 'trackingSettings'])->name('trackingSettings');
+            Route::get('reports', [EcommerceController::class, 'reports'])->name('reports');
 
             // flash-sales
 

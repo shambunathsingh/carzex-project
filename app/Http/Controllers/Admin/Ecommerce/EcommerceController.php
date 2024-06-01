@@ -451,21 +451,22 @@ class EcommerceController extends Controller
     {
         $title = "Carzex - Advanced Settings ";
 
-        // Fetch all contacts
-        $advancedSettings = Contact::all();
-
         // Pass the variables to the view using the compact function
-        return view('admin.ecommerce.advancedSettings', compact('title', 'advancedSettings'));
+        return view('admin.ecommerce.advancedSettings', compact('title'));
     }
       // tracking Settings                    || ==========================================================================================>
     public function trackingSettings()
     {
         $title = "Carzex - Advanced Settings ";
 
-        // Fetch all contacts
-        $trackingSettings = Contact::all();
+        // Pass the variables to the view using the compact function
+        return view('admin.ecommerce.trackingSettings', compact('title'));
+    }
+     public function reports()
+    {
+        $title = "Carzex - Advanced Settings ";
 
         // Pass the variables to the view using the compact function
-        return view('admin.ecommerce.trackingSettings', compact('title', 'trackingSettings'));
+        return view('admin.ecommerce.reports', compact('title'));
     }
 }

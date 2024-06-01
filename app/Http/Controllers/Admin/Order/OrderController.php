@@ -34,12 +34,6 @@ class OrderController extends Controller
             'perPage' => $perPage
         ]);
     }
-
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
     public function getOrders(Request $request)
     {
         $perPage = $request->get('perPage', 10);
@@ -55,11 +49,7 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
-    
-<<<<<<< Updated upstream
-=======
->>>>>>> 77d9357beab3b7e75288dd79f078f933f38202ce
->>>>>>> Stashed changes
+
     public function invoices()
     {
         $title = "Carzex - invoices";
@@ -88,17 +78,17 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order deleted successfully.');
     }
-    public function edit_invoices($id)
-    {
-        $title = "Carzex - Edit Order";
-        $edit_invoices = Order::with('productOrders')->find($id);
+ public function edit_invoices($id)
+{
+    $title = "Carzex - Edit Order";
+    $invoices = Order::with('productOrders')->find($id);
 
-        if (!$edit_invoices) {
-            return redirect()->back()->with('error', 'Order not found.');
-        }
-
-        return view('admin.invoices.edit_invoices', compact('edit_invoices', 'title'));
+    if (!$invoices) {
+        return redirect()->back()->with('error', 'Order not found.');
     }
+
+    return view('admin.invoices.edit_invoices', compact('title', 'invoices'));
+}
 
     public function edit_order($id)
     {

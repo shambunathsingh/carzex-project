@@ -266,27 +266,25 @@
                 <li class="mb-0">
                     <div class="collapse" id="orders-collapse5" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a>
+                            <li class="sublink">
+                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">New</a> --}}
+                                <a href="{{ route('admin.payments') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Transactions</a>
                             </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a>
+                            <li class="sublink">
+                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a> --}}
+                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Transactions</a> --}}
                             </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Shipped</a>
+                            <li class="sublink">
+                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Shipped</a> --}}
                             </li>
-                            <li class="sublink"><a href="#"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a>
+                            <li class="sublink">
+                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Returned</a> --}}
                             </li>
                         </ul>
                     </div>
                 </li>
 
                 </li>
-
-
-
-
                 <li class="mainlink"><a class="collapsed" data-bs-toggle="collapse"
                         data-bs-target="#orders-collapse6" aria-expanded="false"><i class="fas fa-globe"></i><span
                             class="link-name">location</span><span class="left-angle"><i
