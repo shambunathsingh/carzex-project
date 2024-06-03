@@ -470,3 +470,6 @@ class EcommerceController extends Controller
         return view('admin.ecommerce.reports', compact('title'));
     }
 }
+
+
+

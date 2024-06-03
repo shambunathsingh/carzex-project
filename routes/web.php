@@ -62,6 +62,7 @@ use App\Http\Controllers\SmsController;
 
 
 Route::get('/admin/payments', [PaymentsController::class, 'payments'])->name('admin.payments');
+Route::get('/admin/payments/methods', [PaymentsController::class, 'methods'])->name('admin.payments.methods');
 Route::get('/admin/payments/edit/{id}', [PaymentsController::class, 'edit_product_payments'])->name('admin.payments.edit_product_payments');
 // Route::post('/admin/payments/update/{id}', [PaymentsController::class, 'update_product_payments'])->name('admin.payments.update');
 

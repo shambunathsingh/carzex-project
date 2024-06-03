@@ -81,7 +81,7 @@
                 <li class="mb-0">
                     <div class="collapse" id="orders-collapse3" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.reports') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="far fa-chart-bar"></i></span>Report</a>
                             </li>
@@ -171,7 +171,7 @@
                                             class="fas fa-shipping-fast"></i></span>
                                     Shipping</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.shipments') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-people-carry"></i></span>
                                     Shipments</a>
@@ -271,7 +271,7 @@
                                 <a href="{{ route('admin.payments') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Transactions</a>
                             </li>
                             <li class="sublink">
-                                {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Processed</a> --}}
+                                <a href="{{ route('admin.payments.methods') }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Payment methods</a>
                                 {{-- <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Transactions</a> --}}
                             </li>
                             <li class="sublink">

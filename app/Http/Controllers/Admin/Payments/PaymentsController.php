@@ -25,7 +25,18 @@ class PaymentsController extends Controller
         return view('admin.payments.payments', compact('title', 'payments', 'orders'));
     }
 
+public function methods()
+    {
+        $title = "Carzex - Methods";
+        $payments = ProductOrder::all();
+        // $orders = [];
 
+        // foreach ($payments as $payment) {
+        //     $orders[$payment->id] = Order::find($payment->order_id);
+        // }
+        // dd($orders);
+        return view('admin.payments.methods', compact('title'));
+    }
   public function edit_product_payments($id)
 {
     $title = "Carzex - Edit Payment";

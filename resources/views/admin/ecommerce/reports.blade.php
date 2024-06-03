@@ -1,11 +1,7 @@
 @extends('admin.layout.app')
 
 @section('content')
-{{--
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
-{{--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
---}}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -97,6 +93,7 @@
      }
 </style>
 
+
 <form action="" method="post" enctype="multipart/form-data">
      @csrf
 
@@ -107,9 +104,9 @@
                          <li><a href="{{ route('admin.dashboard') }}" class="breadcrumb-item"><i
                                         class="fa-solid fa-house"> </i> Dashboard /</a></li>
                          <li><a class="breadcrumb-item">Ecommerce /</a></li>
-                         <li><a href="{{ route('admin.ecommerce.settings') }}" class="breadcrumb-item">Settings /</a>
+                         <li><a href="{{ route('admin.ecommerce.reports') }}" class="breadcrumb-item">repots /</a>
                          </li>
-                         <li><a class="breadcrumb-item">Basic settings</a></li>
+                         <li><a class="breadcrumb-item">report</a></li>
                     </ul>
                </div>
 
@@ -132,7 +129,10 @@
                @endif
 
                <div class="container">
-                    <div class="row">
+<input class="form-control w-25 mb-5" type="datetime-local" id="dateTimeInput" value="" style="float: right;">
+<br>
+<br>
+                    <div class="row mt-5">
                          <div class="col-md-3">
                               <div class="card text-center">
                                    <div class="card-body">
@@ -381,5 +381,21 @@
                }
           });
      };
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // Get current date and time
+    const now = new Date();
+
+    // Format the date and time as required by datetime-local input
+    const formattedDate = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+    const formattedTime = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
+
+    // Combine date and time
+    const dateTime = formattedDate + "T" + formattedTime;
+
+    // Set the value of the input field
+    document.getElementById("dateTimeInput").value = dateTime;
+  });
 </script>
 @endsection
