@@ -37,13 +37,13 @@ class InvoiceController extends Controller
     public function edit_invoices($id)
     {
         $title = "Carzex - Edit Order";
-        $editOrder = Order::with('productOrders')->find($id);
+        $invoices = Order::with('productOrders')->find($id);
 
-        if (!$editOrder) {
+        if (!$invoices) {
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        return view('admin.invoices.edit_invoices', compact('editOrder', 'title'));
+        return view('admin.invoices.edit_invoices', compact('invoices', 'title'));
     }
 
 

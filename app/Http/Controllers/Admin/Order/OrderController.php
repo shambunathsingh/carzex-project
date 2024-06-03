@@ -50,23 +50,24 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-    public function invoices()
+    public function shipments()
     {
-        $title = "Carzex - invoices";
+        $title = "Carzex - shipments";
+        $orders = Order::all();
 
         // Fetch all orders with related product orders
-        $orders = Order::with('productOrders')->get();
+        // $orders = Order::with('productOrders')->get();
 
         // Calculate total amount for each order
         foreach ($orders as $order) {
             $totalAmount = $order->productOrders->sum(function ($productOrder) {
                 return $productOrder->subtotal;
             });
-            $order->totalAmount = $totalAmount;
+            $orders->totalAmount = $totalAmount;
         }
 
         // Return the view with the homepage data
-        return view('admin.invoices.index', [
+        return view('admin.order.shipments', [
             'title' => $title,
             'orders' => $orders
         ]);
@@ -78,17 +79,17 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order deleted successfully.');
     }
- public function edit_invoices($id)
-{
-    $title = "Carzex - Edit Order";
-    $invoices = Order::with('productOrders')->find($id);
+    public function edit_shipments($id)
+    {
+        $title = "Carzex - Edit Order";
+        $orders = Order::with('productOrders')->find($id);
 
-    if (!$invoices) {
-        return redirect()->back()->with('error', 'Order not found.');
+        if (!$orders) {
+            return redirect()->back()->with('error', 'Order not found.');
+        }
+
+        return view('admin.order.edit_shipment', compact('title', 'orders'));
     }
-
-    return view('admin.invoices.edit_invoices', compact('title', 'invoices'));
-}
 
     public function edit_order($id)
     {

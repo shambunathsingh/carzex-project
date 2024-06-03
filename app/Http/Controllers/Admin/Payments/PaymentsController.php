@@ -7,7 +7,7 @@ use App\Models\Payments\Payments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order\Order;
-use App\Models\Order\Order_p;
+use App\Models\ProductOrder\ProductOrder;
 
 
 class PaymentsController extends Controller
@@ -15,7 +15,7 @@ class PaymentsController extends Controller
     public function payments()
     {
         $title = "Carzex - Payments";
-        $payments = Order_p::all();
+        $payments = ProductOrder::all();
         $orders = [];
 
         foreach ($payments as $payment) {
@@ -29,7 +29,7 @@ class PaymentsController extends Controller
   public function edit_product_payments($id)
 {
     $title = "Carzex - Edit Payment";
-    $payments = Order_p::find($id);
+    $payments = ProductOrder::find($id);
 
     if (!$payments) {
         // Handle the case where the payment is not found.

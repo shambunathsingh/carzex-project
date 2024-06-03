@@ -203,11 +203,15 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
-
             Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
-            Route::get('invoices', [OrderController::class, 'invoices'])->name('invoices');
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
             Route::get('edit-order/edit/{id}', [OrderController::class, 'edit_order'])->name('edit_order');
+
+//  Shipments section
+            Route::get('shipments', [OrderController::class, 'shipments'])->name('shipments');
+            // Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
+            Route::get('delete-shipments/{id}', [OrderController::class, 'delete_shipments'])->name('delete_shipments');
+            Route::get('edit-shipments/edit/{id}', [OrderController::class, 'edit_shipments'])->name('edit_shipments');
 
 
 

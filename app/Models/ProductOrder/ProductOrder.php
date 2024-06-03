@@ -19,10 +19,10 @@ class ProductOrder extends Model
         'quantity',
         'subtotal',
         'is_paid',
+        'coupon',
+        'payment_method',
         'payment_id',
         'order_token',
-        'coupon',
-        'payment_method'
     ];
 
     public function product()
