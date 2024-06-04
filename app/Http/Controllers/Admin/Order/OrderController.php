@@ -34,6 +34,7 @@ class OrderController extends Controller
             'perPage' => $perPage
         ]);
     }
+
     public function getOrders(Request $request)
     {
         $perPage = $request->get('perPage', 10);
@@ -49,7 +50,7 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
-
+    
     public function shipments()
     {
         $title = "Carzex - shipments";

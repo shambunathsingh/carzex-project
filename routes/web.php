@@ -100,7 +100,7 @@ Route::middleware(['guest:web'])->group(function () {
 
     // Product Section
     Route::get('product-category', [FrontProductController::class, 'allproducts'])->name('allproducts');
-    Route::get('product-category/{categoryName}', [FrontProductController::class, 'show'])->name('product-category.show');
+    Route::get('product-category/{parentCategory}', [FrontProductController::class, 'show'])->name('product-category.show');
     Route::get('product-category/{parentCategory}/{categoryName}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
     Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
     Route::post('/price_filter', [FrontProductController::class, 'priceFilter'])->name('price_filter');

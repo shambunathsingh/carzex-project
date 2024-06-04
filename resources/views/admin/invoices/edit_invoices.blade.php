@@ -8,9 +8,9 @@
     font-weight: 100;
 }
 </style>
-<div id="main ">
+<div id="main">
     <div class="card">
-        <div class="card-body p-5">
+        <div class="card-body">
             <div class="invoice-info">
                 <div class="mb-3">
                     <div class="row align-items-center">
@@ -27,10 +27,10 @@
                         </div>
                         <div class="col-md-6 text-end">
                             <ul class="mb-0">
-                                <li>{{ $invoices->first_name }} {{ $invoices->last_name }}</li>
-                                <li>{{ $invoices->email }}</li>
-                                <li>{{ $invoices->phone }}</li>
-                                <li>{{ $invoices->street_address }}, {{ $invoices->town_city }}, {{ $invoices->state }}, {{ $invoices->pin_code }}</li>
+                                <li>{{ $edit_invoices->first_name }} {{ $edit_invoices->last_name }}</li>
+                                <li>{{ $edit_invoices->email }}</li>
+                                <li>{{ $edit_invoices->phone }}</li>
+                                <li>{{ $edit_invoices->street_address }}, {{ $edit_invoices->town_city }}, {{ $edit_invoices->state }}, {{ $edit_invoices->pin_code }}</li>
                             </ul>
                         </div>
                     </div>
@@ -40,10 +40,10 @@
                         <hr>
                     </div>
                     <div class="col-lg-4">
-                        <strong class="text-brand">Invoice Code:</strong> INV{{ $invoices->id }}
+                        <strong class="text-brand">Invoice Code:</strong> INV{{ $edit_invoices->id }}
                     </div>
                     <div class="col-lg-4">
-                        <strong class="text-brand">Issue At:</strong> {{ $invoices->created_at->format('d M, Y') }}
+                        <strong class="text-brand">Issue At:</strong> {{ $edit_invoices->created_at->format('d M, Y') }}
                     </div>
                     <div class="col-lg-4">
                         <strong class="text-brand">Payment Method:</strong> COD
@@ -61,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($invoices->productOrders as $productOrder)
+                        @foreach ($edit_invoices->productOrders as $productOrder)
                             <tr>
                                 <td style="width: 70%">
                                     <p class="mb-0">{{ $productOrder->description }}</p>
@@ -74,11 +74,11 @@
                     <tfoot>
                         <tr>
                             <th colspan="2" class="text-end">Sub Total:</th>
-                            <th class="text-center">₹{{ number_format($invoices->productOrders->sum('subtotal'), 2) }}</th>
+                            <th class="text-center">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</th>
                         </tr>
                         <tr>
                             <th colspan="2" class="text-end">Grand Total:</th>
-                            <th class="text-center">₹{{ number_format($invoices->productOrders->sum('subtotal'), 2) }}</th>
+                            <th class="text-center">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -86,23 +86,22 @@
                     <div class="col-md-6">
                         <h5>Invoice For</h5>
                         <p class="font-sm">
-                            <strong>Issue At:</strong> {{ $invoices->created_at->format('d M, Y') }}<br>
+                            <strong>Issue At:</strong> {{ $edit_invoices->created_at->format('d M, Y') }}<br>
                         </p>
                     </div>
                     <div class="col-md-6 text-end">
                         <h5>Total Amount</h5>
-                        <h3 class="mt-0 mb-0 text-danger">₹{{ number_format($invoices->productOrders->sum('subtotal'), 2) }}</h3>
+                        <h3 class="mt-0 mb-0 text-danger">₹{{ number_format($edit_invoices->productOrders->sum('subtotal'), 2) }}</h3>
                     </div>
                 </div>
                 <hr>
             </div>
         </div>
         <div class="card-footer text-center">
-                <a href="{{ route('admin.ecommerce.show_invoices',['id' => $invoices->id]) }}" target="_blank" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog">
-
+            <a href="#" target="_blank" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog">
                 <i class="fas fa-print"></i> Print Invoice
             </a>
-            <a href="{{ route('admin.ecommerce.download_invoices',['id' => $invoices->id]) }}" target="_blank" class="btn bg-primary btn-success">
+            <a href="#" target="_blank" class="btn bg-primary btn-success">
                 <i class="fas fa-download"></i> Download Invoice
             </a>
         </div>

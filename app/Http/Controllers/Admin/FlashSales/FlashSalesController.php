@@ -85,10 +85,6 @@ class FlashSalesController extends Controller
         }
     }
 
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< HEAD
     public function update_flash_sales(Request $request, $id)
     {
         // Validate request data
@@ -135,10 +131,7 @@ class FlashSalesController extends Controller
             return redirect()->back()->with('error', 'Failed to update flash sale: ' . $e->getMessage());
         }
     }
-=======
 
->>>>>>> 77d9357beab3b7e75288dd79f078f933f38202ce
->>>>>>> Stashed changes
     public function delete_flash_sales($id)
     {
         $Flash_sales = Flash_sales::findOrFail($id);

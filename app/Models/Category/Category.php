@@ -20,8 +20,10 @@ class Category extends Model
         'status',
         'order',
         'image',
+        'icon',
         'is_featured',
         'background_color',
+        'slug',
     ];
 
 
@@ -30,7 +32,7 @@ class Category extends Model
     {
         return $this->hasMany(Product::class, 'categories', 'id');
     }
-     public static function generateSlug($title)
+    public static function generateSlug($title)
     {
         $slug = Str::slug($title);
         $originalSlug = $slug;

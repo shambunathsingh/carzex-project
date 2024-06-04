@@ -21,15 +21,67 @@ class ProductController extends Controller
         return view('front.product.index', ['title' => $title, 'products' => $allproduct]);
     }
 
+    // public function single_product($id)
+    // {
+    //     $title = "Carzex - Product";
+
+    //     // Get the product detail
+    //     $productDetail = Product::findOrFail($id);
+
+    //     // Get related products by category
+    //     $relatedProducts = Product::where('categories', $productDetail->categories)
+    //         ->where('id', '!=', $id)
+    //         ->get(['id', 'name', 'sale_price', 'images']); // Assuming you have these fields
+
+    //     return view('front.product.single', [
+    //         'title' => $title,
+    //         'product' => $productDetail,
+    //         'relatedProducts' => $relatedProducts
+    //     ]);
+    // }
+    
     public function single_product($id)
     {
-
         $title = "Carzex - Product";
 
+        // Get the product detail
         $productDetail = Product::findOrFail($id);
 
-        return view('front.product.single', ['title' => $title, 'product' => $productDetail]);
+        // Add the current product to the recently viewed list
+        $this->addToRecentlyViewed($id);
+
+        // Get related products by category
+        $relatedProducts = Product::where('categories', $productDetail->categories)
+            ->where('id', '!=', $id)
+            ->get(['id', 'name', 'price', 'images', 'sale_price']); // Adjust fields as needed
+
+        // Get recently viewed products
+        $recentlyViewedIds = session()->get('recently_viewed', []);
+        $recentlyViewedProducts = Product::whereIn('id', $recentlyViewedIds)
+            ->where('id', '!=', $id)
+            ->get(['id', 'name', 'price', 'images', 'sale_price']); // Adjust fields as needed
+
+        return view('front.product.single', [
+            'title' => $title,
+            'product' => $productDetail,
+            'relatedProducts' => $relatedProducts,
+            'recentlyViewedProducts' => $recentlyViewedProducts
+        ]);
     }
+
+    private function addToRecentlyViewed($productId)
+    {
+        $recentlyViewed = session()->get('recently_viewed', []);
+
+        if (!in_array($productId, $recentlyViewed)) {
+            $recentlyViewed[] = $productId;
+            if (count($recentlyViewed) > 5) {
+                array_shift($recentlyViewed);
+            }
+            session()->put('recently_viewed', $recentlyViewed);
+        }
+    }
+
 
     public function show($categoryName)
     {

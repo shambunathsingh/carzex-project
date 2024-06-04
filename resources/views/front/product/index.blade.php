@@ -537,9 +537,10 @@
                                                     </div>
 
                                                     <div class="adtbynbtn">
-                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
-                                                                To Cart</button></a>
-                                                        <button>Buy Now</button>
+                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
+                                                        <button>Add To Cart</button></a>
+                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
+                                                        <button>Buy Now</button></a>
                                                     </div>
                                                 </div>
                                             </div>
