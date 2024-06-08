@@ -293,29 +293,30 @@
                             <div class="widget-title">
                                 <h4><label for="image" class="control-label">Image</label></h4>
                             </div>
-                            <div class="widget-body">
-                                <div class="image-box">
-                                    <input type="file" name="image" style="display: none;" class="image-data"
-                                        id="icon_image_input">
-                                    <div class="preview-image-wrapper ">
-                                        <img src="{{ asset('storage/posts/' . $post->image) }}"
-                                            data-default="{{ asset('storage/posts/' . $post->image) }}"
-                                            alt="Preview image" class="preview_image" width="150">
-                                        <a class="btn_remove_image" title="Remove image">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                    <div class="image-box-actions">
-                                        <a style="cursor: pointer;" type="file" class="btn_gallery "
-                                            data-result="image" data-action="select-image" data-allow-thumb="1"
-                                            id="choose_image_button">
-                                            Choose image
-                                        </a>
+                                                        
+                                <div class="widget-body">
+                                    <div class="image-box">
+                                        <!-- Hidden file input for image upload -->
+                                        <input type="file" name="image" style="display: none;" class="image-data" id="icon_image_input" onchange="previewImage(event)">
+
+                                        <!-- Image preview wrapper -->
+                                        <div class="preview-image-wrapper">
+                                            <img src="{{ asset('storage/posts/' . $post->image) }}"
+                                                data-default="{{ asset('storage/posts/' . $post->image) }}"
+                                                alt="Preview image" class="preview_image" id="preview_image" width="150">
+                                            <a class="btn_remove_image" title="Remove image" onclick="removeImage()">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+
+                                        <!-- Image box actions -->
+                                        <div class="image-box-actions">
+                                            <a style="cursor: pointer;" class="btn_gallery" id="choose_image_button">
+                                                Choose image
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-
-
-
 
                             </div>
                         </div>
@@ -351,7 +352,6 @@
 
     </form>
 @endsection
-
 @section('scripts')
     <script>
         ClassicEditor
@@ -365,10 +365,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("choose_image_button").addEventListener("click", function() {
-
                 document.getElementById("icon_image_input").click();
-
             });
         });
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('preview_image');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function removeImage() {
+            const previewImage = document.getElementById('preview_image');
+            const defaultImage = previewImage.getAttribute('data-default');
+            previewImage.src = defaultImage;
+
+            const fileInput = document.getElementById('icon_image_input');
+            fileInput.value = '';
+        }
     </script>
 @endsection

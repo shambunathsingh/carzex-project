@@ -57,10 +57,6 @@
                 </li>
                 </li>
 
-
-
-
-
                 <li class="mainlink"><a href="{{ route('admin.newsletters.index') }}"><i
                             class="far fa-newspaper"></i><span class="link-name">Newsletters</span></a>
                 </li>
@@ -100,12 +96,12 @@
                                             class="fas fa-book"></i></span>
                                     Invoices</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.invoice_template') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-book"></i></span>
                                     Invoice template</a>
                             </li>
-                            <li class="sublink"><a href="#"
+                            <li class="sublink"><a href="{{ route('admin.ecommerce.incompleteOrders') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fas fa-shopping-basket"></i></span>
                                     Incomplete orders</a>

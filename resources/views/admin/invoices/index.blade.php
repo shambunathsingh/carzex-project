@@ -1,7 +1,6 @@
 @extends('admin.layout.app')
 
 @section('content')
-
     <div class="page-content " style="min-height: 758px;">
 
         <div id="main">
@@ -37,8 +36,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-
-
+            
+  <div id="success-message" class="alert alert-success" role="alert" style="display: none;">
+    Successfully generated invoices!
+</div>
                 <div class="portlet light bordered portlet-no-padding">
 
 
@@ -86,11 +87,13 @@
                                             </div>
                                             <div class="button-grp d-flex">
                                                 <button class="btn btn-secondary action-item mx-3 btn-info" tabindex="0"
-                                                    aria-controls="botble-ecommerce-tables-invoice-table" type="button">
-                                                    <span><span data-action="generate-invoices" data-href="">
-                                                            <i class="fas fa-file-export"></i> Generate Invoices</span>
+                                                aria-controls="botble-ecommerce-tables-invoice-table" type="button" id="generate-invoices-btn">
+                                                <span>
+                                                    <span data-action="generate-invoices" data-href="">
+                                                        <i class="fas fa-file-export"></i> Generate Invoices
                                                     </span>
-                                                </button>
+                                                </span>
+                                            </button>
                                                 <a class="relode d-flex align-items-center" style="cursor: pointer;"
                                                     onclick="location.reload();">
                                                     <i class="fa-solid fa-rotate-right btn-icon"></i>
@@ -141,13 +144,13 @@
                                             <th title="Template" class="text-start column-key-template sorting"
                                                 tabindex="0" aria-controls="botble-page-tables-page-table"
                                                 rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">STATUS
+                                                style="">CREATED AT
                                             </th>
                                             <th title="Created At" width="100px"
                                                 class="text-center column-key-created_at sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">
-                                                Created At
+                                                STATUS
                                             </th>
 
                                             <th title="Template" class="text-end column-key-template sorting"
@@ -183,20 +186,20 @@
                                                 </td>
                                                 <!-- Total Amount column -->
                                                 <td class="text-start column-key-template">
-                                                    ₹ {{ $order->totalAmount }}
+                                                    ₹ {{ number_format( $order->totalAmount,2 )}}
                                                 </td>
-
-                                                <td class="text-start column-key-payment_status">
+                                                <!--Created At column -->
+                                                <td class="text-start column-key-created_at">
+                                                    {{ $order->created_at->format('d-m-Y') }}
+                                                </td>
+                                                <td class="text-center column-key-payment_status">
                                                     @if ($order->is_paid == 1)
                                                         <span class="label-success status-label">Completed</span>
                                                     @else
                                                         <span class="label-warning bg-warning status-label">Pending</span>
                                                     @endif
                                                 </td>
-                                                <!--Created At column -->
-                                                <td class="text-start column-key-created_at">
-                                                    {{ $order->created_at->format('d-m-Y') }}
-                                                </td>
+                                               
                                                 <td class="text-end column-key-template">
                                                     <div class="table-actions">
                                                         <a href="{{ route('admin.ecommerce.edit_invoices', ['id' => $order->id]) }}"
@@ -316,11 +319,27 @@
 
 
     </div>
+      
+
 @endsection
 
 @section('scripts')
     <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#generate-invoices-btn').click(function () {
+                // Show success message
+                $('#success-message').show();
+
+                // Hide success message after 10 seconds
+                setTimeout(function () {
+                    $('#success-message').fadeOut('slow');
+                }, 1000); // 10000 milliseconds = 10 seconds
+            });
+        });
+    </script>
 @endsection

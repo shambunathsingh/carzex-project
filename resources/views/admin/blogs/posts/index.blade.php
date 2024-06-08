@@ -1,7 +1,6 @@
 @extends('admin.layout.app')
 
 @section('content')
-
     <div class="page-content " style="min-height: 758px;">
 
         <div id="main">
@@ -146,11 +145,11 @@
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
                                                 Status</th>
-                                            <th title="<img src=&quot;https://carzex.in/vendor/core/core/base/images/flags/us.svg&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
+                                            <th title="<img src=&quot;{{ asset('storage/posts/us.png') }} &quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
                                                 class="text-center language-header no-sort sorting_disabled"
                                                 width="40px" rowspan="1" colspan="1" style="width: 40px;"
                                                 aria-label=""><img
-                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    src="{{ asset('storage/posts/us.png') }}"
                                                     title="English" width="16" alt="English"></th>
                                             <th title="Operations" width="134px" class="text-center sorting_disabled"
                                                 rowspan="1" colspan="1" style="width: 134px;"
@@ -178,7 +177,7 @@
                                                 <td class="column-key-id sorting_1">{{ $item->id }}</td>
                                                 <td class="column-key-id sorting_1">
                                                     <img src="{{ asset('storage/posts/' . $item->image) }}" alt=""
-                                                        width="150">
+                                                        width="40">
                                                 </td>
                                                 <td class=" text-start column-key-name">
                                                     <a href="{{ route('admin.blog.edit_posts', ['id' => $item->id]) }}">
@@ -188,7 +187,7 @@
                                                     {{ $cat_name }}
                                                 </td>
                                                 <td class=" text-start column-key-name">
-
+                                                    Admin
                                                 </td>
                                                 <td class=" text-center column-key-created_at" style="">
                                                     {{ $item->created_at->format('d-m-Y') }}

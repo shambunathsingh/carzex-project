@@ -113,8 +113,6 @@ class CartController extends Controller
     }
 
 
-
-
     public function processPayment(Request $request)
     {
         // Validate the request data
@@ -134,22 +132,22 @@ class CartController extends Controller
             'orderNotes' => 'nullable|string',
             'is_paid' => 'nullable|string',
         ]);
-        
-        
-        
+
+
+
         $cartItems = session('cart');
         $customerId = Auth::guard('customer')->user()->id;
 
-        
-        
+
+
         // Calculate total amount
         $totalAmount = 0;
         foreach ($cartItems as $item) {
             $totalAmount += $item['subtotal'];
         }
-        
-      
-      // Create an order
+
+
+        // Create an order
         $order = new Order();
         $order->customer_id = $customerId;
         $order->first_name = $validatedData['firstName'];
@@ -167,15 +165,15 @@ class CartController extends Controller
         $order->order_notes = $validatedData['orderNotes'];
         $order->is_paid = $validatedData['is_paid'];  // Assuming payment is processed successfully
         $order->save();
-      
+
 
         $fullname = $validatedData['firstName'] . ' ' . $validatedData['laststName']; // Corrected concatenation
         $email = $validatedData['emailAdress']; // Corrected field name
         $phone = $validatedData['phone'];
 
         $url = "https://sandbox.cashfree.com/pg/orders";
-        
-        
+
+
 
         $headers = array(
             "Content-Type: application/json",
@@ -183,8 +181,8 @@ class CartController extends Controller
             "x-client-id: " . env('CASHFREE_API_KEY'),
             "x-client-secret: " . env('CASHFREE_API_SECRET')
         );
-        
-        
+
+
 
         $data = json_encode([
             'order_id' =>  'order_' . rand(1111111111, 9999999999),
@@ -200,11 +198,11 @@ class CartController extends Controller
                 "return_url" => 'https://luxxport.com/cashfree/payments/success/?order_id={order_id}&order_token={order_token}'
             ]
         ]);
-        
-       
+
+
         $curl = curl_init($url);
-        
-        
+
+
 
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_POST, true);
@@ -213,7 +211,7 @@ class CartController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
         $resp = curl_exec($curl);
-        
+
         // dd($validatedData,$cartItems,$totalAmount,$customerId,$fullname,$email,$phone,$resp);
         // exit;
 
@@ -244,7 +242,7 @@ class CartController extends Controller
 
         return redirect()->to($responseData->payment_link);
 
-        
+
 
         // Create an order
         // $order = new Order();
@@ -289,26 +287,26 @@ class CartController extends Controller
     }
 
 
-public function thankyou()
-{
-    $title = "Carzex - Thank you";
+    public function thankyou()
+    {
+        $title = "Carzex - Thank you";
 
-    // Retrieve authenticated customer's ID
-    $customerId = Auth::guard('customer')->user()->id;
+        // Retrieve authenticated customer's ID
+        $customerId = Auth::guard('customer')->user()->id;
 
-    // Fetch orders for the logged-in customer
-    $orders = Order::with('productOrders.product')
-                   ->where('customer_id', $customerId)
-                   ->orderBy('created_at', 'desc')
-                   ->get();
-                   
+        // Fetch orders for the logged-in customer
+        $orders = Order::with('productOrders.product')
+            ->where('customer_id', $customerId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    return view('front.thankyou', ['title' => $title, 'orders' => $orders]);
-}
+
+        return view('front.thankyou', ['title' => $title, 'orders' => $orders]);
+    }
 
     public function store(Request $request)
     {
-      $validatedData = $request->validate([
+        $validatedData = $request->validate([
             // Define your validation rules here
         ]);
 
@@ -400,7 +398,7 @@ public function thankyou()
     //         ->send(); // send
 
     //     dd($data);
-        
-        
+
+
     // }
 }

@@ -5,6 +5,8 @@ namespace App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Order\Order;
+use App\Models\CartDetail;
 
 class Customer extends Authenticatable
 {
@@ -21,4 +23,12 @@ class Customer extends Authenticatable
         'password',
         'status'
     ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+    public function cartItems()
+    {
+        return $this->hasMany(CartDetail::class);
+    }
 }

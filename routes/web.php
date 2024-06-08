@@ -193,6 +193,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('all-pages', [PageController::class, 'index'])->name('pages');
             Route::get('edit/{id}', [PageController::class, 'edit'])->name('page_edit');
+            Route::get('delete/{id}', [PageController::class, 'delete'])->name('page_delete');
             Route::get('add-page', [PageController::class, 'add'])->name('page_add');
             Route::post('save-page', [PageController::class, 'store'])->name('page_save');
             Route::post('update-page/{id}', [PageController::class, 'update'])->name('page_update');
@@ -202,13 +203,18 @@ Route::group(['middleware' => 'auth'], function () {
         // Ecommerce Section
         Route::group(['prefix' => 'ecommerce/', 'as' => 'ecommerce.'], function () {
 
+            // incompleteOrders
+            Route::get('incomplete/customers/{id}', [OrderController::class, 'incomplete_show'])->name('incomplete_show');
+
+            Route::get('/orders/incomplete', [OrderController::class, 'incompleteOrders'])->name('incompleteOrders');
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
+            Route::get('incomplete-orders', [OrderController::class, 'incomplete_orders'])->name('incomplete_orders');
             Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
             Route::get('edit-order/edit/{id}', [OrderController::class, 'edit_order'])->name('edit_order');
 
-//  Shipments section
+            //  Shipments section
             Route::get('shipments', [OrderController::class, 'shipments'])->name('shipments');
             // Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
             Route::get('delete-shipments/{id}', [OrderController::class, 'delete_shipments'])->name('delete_shipments');
@@ -224,6 +230,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Invoice section
             Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices');
+            Route::get('invoices-template', [InvoiceController::class, 'invoice_template'])->name('invoice_template');
             Route::get('edit-invoices/edit/{id}', [InvoiceController::class, 'edit_invoices'])->name('edit_invoices');
             Route::get('download-invoices/{id}', [InvoiceController::class, 'download_invoices'])->name('download_invoices');
             Route::get('show-invoices/{id}', [InvoiceController::class, 'showPdf'])->name('show_invoices');
@@ -530,13 +537,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('store-media', [MediaController::class, 'store'])->name('save_media');
         Route::post('download-images', [MediaController::class, 'downloadImages'])->name('download_images');
 
+        // Route::post('/home-banner/update', [HomeController::class, 'banner_update'])->name('banner_update');
 
 
         Route::get('all-sliders', [PageController::class, 'home'])->name('homepage');
         Route::get('add-slider', [PageController::class, 'add_slider'])->name('banner_upload');
+        Route::post('add-slider', [PageController::class, 'home_banner'])->name('home_banner');
         Route::get('edit-slider/{id}', [PageController::class, 'banner_edit'])->name('banner_edit');
-        Route::put('update-banner/{id}', [PageController::class, 'banner_update'])->name('banner_update');
-        Route::get('delete-banner/{id}', [PageController::class, 'banner_delete'])->name('banner_update');
+        Route::post('update-slider', [PageController::class, 'update_banner'])->name('update_banner');
+        Route::get('delete-banner/{id}', [PageController::class, 'banner_delete'])->name('banner_delete');
 
         Route::get('videopage', [PageController::class, 'video'])->name('videopage');
         Route::post('upload-video', [PageController::class, 'video_upload'])->name('video_upload');

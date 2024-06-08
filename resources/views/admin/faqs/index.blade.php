@@ -141,7 +141,7 @@
                                                 class="text-center language-header no-sort sorting_disabled"
                                                 width="40px" rowspan="1" colspan="1" style="width: 40px;"
                                                 aria-label=""><img
-                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    src="{{ asset('storage/posts/us.png') }}"
                                                     title="English" width="16" alt="English"></th>
                                             <th title="Operations" width="134px" class="text-center sorting_disabled"
                                                 rowspan="1" colspan="1" style="width: 134px;"

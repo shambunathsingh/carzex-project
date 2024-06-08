@@ -6,6 +6,8 @@ use App\Models\Category\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\ProductOrder\ProductOrder;
+use App\Models\Order\Order;
 
 class Product extends Model
 {
@@ -92,5 +94,9 @@ class Product extends Model
         }
 
         return $slug;
+    }
+    public function order()
+    {
+        return $this->belongsTo(order::class);
     }
 }

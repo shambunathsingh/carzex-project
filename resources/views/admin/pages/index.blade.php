@@ -143,11 +143,11 @@
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
                                                 Status</th>
-                                            <th title="<img src=&quot;https://carzex.in/vendor/core/core/base/images/flags/us.svg&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
+                                            <th title="<img src=&quot;{{ asset('storage/posts/us.png') }}&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
                                                 class="text-center language-header no-sort sorting_disabled"
                                                 width="40px" rowspan="1" colspan="1" style="width: 40px;"
                                                 aria-label=""><img
-                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    src="{{ asset('storage/posts/us.png') }}"
                                                     title="English" width="16" alt="English"></th>
                                             <th title="Operations" width="134px" class="text-center sorting_disabled"
                                                 rowspan="1" colspan="1" style="width: 134px;"
@@ -192,12 +192,13 @@
                                                             data-bs-toggle="tooltip" data-bs-original-title="Edit"><i
                                                                 class="fa fa-edit"></i></a>
 
-                                                        <!-- <a href="#"
-                                                            class="btn btn-icon btn-sm btn-danger deleteDialog"
+                                                        <a href="{{ route('admin.page.page_delete', ['id' => $item->id]) }}"
+                                                            class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog"
                                                             data-bs-toggle="tooltip" data-section="" role="button"
-                                                            data-bs-original-title="Delete">
+                                                            data-bs-original-title="Delete" 
+                                                        onclick="return confirm('Are you sure you want to delete this Page?');">
                                                             <i class="fa fa-trash"></i>
-                                                        </a> -->
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>

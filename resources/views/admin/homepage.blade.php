@@ -130,12 +130,7 @@
                                             <th title="Name" class="text-start column-key-name sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" aria-label="Nameorderby asc">
-                                                Key</th>
-                                            {{-- <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">Template
-                                            </th> --}}
+                                                Banner</th>
                                             <th title="Created At" width="100px"
                                                 class="text-center column-key-created_at sorting" tabindex="0"
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
@@ -146,11 +141,11 @@
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
                                                 Status</th>
-                                            <th title="<img src=&quot;https://carzex.in/vendor/core/core/base/images/flags/us.svg&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
+                                            <th title="<img src=&quot;{{ asset('storage/posts/us.png') }}&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
                                                 class="text-center language-header no-sort sorting_disabled"
                                                 width="40px" rowspan="1" colspan="1" style="width: 40px;"
                                                 aria-label=""><img
-                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    src="{{ asset('storage/posts/us.png') }}"
                                                     title="English" width="16" alt="English"></th>
                                             <th title="Operations" width="134px" class="text-center sorting_disabled"
                                                 rowspan="1" colspan="1" style="width: 134px;"
@@ -169,20 +164,18 @@
                                                     </div>
                                                 </td>
                                                 <td class="column-key-id sorting_1">{{ $item->id }}</td>
-                                                <td class=" text-start column-key-name">
-                                                    Sample
-                                                </td>
-                                                {{-- <td class=" text-start column-key-name"><a
+                                                <td class=" text-start column-key-name"><a
+
                                                         href="{{ route('admin.banner_edit', ['id' => $item->id]) }}">{{ $item->name }}</a>
-                                                </td> --}}
+                                                </td>
                                                 <td class=" text-start column-key-template" style="">
-                                                    <img src="{{ asset('storage/banners/' . $item->banner) }}"
-                                                        width="100" height="100" alt="Banner Image">
+                                                    <img src="{{ asset('storage/'. $item->banner) }}"
+                                                        width="50" height="50" alt="Banner Image">
                                                 </td>
                                                 <td class=" text-center column-key-created_at" style="">
                                                     {{ $item->created_at->format('d-m-Y') }}</td>
                                                 <td class=" text-center column-key-status" style="">
-                                                    <span class="label-success status-label">Published</span>
+                                                    <span class="label-success status-label">{{ $item->status }}</span>
                                                 </td>
                                                 <td class=" text-center language-header no-sort" style="">
                                                     <div class="text-center language-column">
@@ -199,7 +192,7 @@
                                                             data-bs-toggle="tooltip" data-bs-original-title="Edit"><i
                                                                 class="fa fa-edit"></i></a>
 
-                                                        <a onclick="return confirmDelete('{{ route('admin.banner_update', $item->id) }}');"
+                                                        <a onclick="return confirmDelete('{{ route('admin.banner_delete', $item->id) }}');"
                                                             class="btn btn-icon btn-sm btn-danger deleteDialog"
                                                             data-bs-toggle="tooltip" data-section="" role="button"
                                                             data-bs-original-title="Delete">

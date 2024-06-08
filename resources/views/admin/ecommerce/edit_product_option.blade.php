@@ -236,4 +236,50 @@
             });
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#add-new-row').click(function() {
+        // Get the current number of rows
+        var rowCount = $('.option-sortable .option-row').length;
+
+        // Generate the HTML for the new row
+        var newRow = `
+        <tr class="option-row ui-sortable-handle" data-index="${rowCount}" style="">
+            <td class="text-center">
+                <i class="fa fa-sort"></i>
+            </td>
+            <td>
+                <input type="text" class="form-control option-label"
+                    name="options[${rowCount}][option_value]" value=""
+                    placeholder="Please fill label">
+            </td>
+            <td>
+                <input type="number" class="form-control affect_price"
+                    name="options[${rowCount}][affect_price]" value=""
+                    placeholder="Please fill affect price">
+            </td>
+            <td>
+                <select class="form-select affect_type" name="options[${rowCount}][affect_type]">
+                    <option value="0">Fixed</option>
+                    <option value="1">Percent</option>
+                </select>
+            </td>
+            <td style="width: 50px">
+                <button class="btn btn-default remove-row" data-index="${rowCount}"><i
+                        class="fa fa-trash" style="color: red!important;"></i></button>
+            </td>
+        </tr>`;
+
+        // Append the new row to the table body
+        $('.option-sortable').append(newRow);
+    });
+
+    // Delegate event for removing rows
+    $(document).on('click', '.remove-row', function() {
+        $(this).closest('.option-row').remove();
+    });
+});
+</script>
 @endsection

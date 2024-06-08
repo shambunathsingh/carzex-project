@@ -11,7 +11,7 @@
 <div id="main">
     <div class="card">
         <div class="card-body">
-            <div class="invoice-info">
+            <div class="invoice-info py-3 px-5">
                 <div class="mb-3">
                     <div class="row align-items-center">
                         <div class="col-md-6">

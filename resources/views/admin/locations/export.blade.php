@@ -159,11 +159,11 @@
                                                 aria-controls="botble-page-tables-page-table" rowspan="1"
                                                 colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
                                                 Status</th>
-                                            <th title="<img src=&quot;https://carzex.in/vendor/core/core/base/images/flags/us.svg&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
+                                            <th title="<img src=&quot;{{ asset('storage/posts/us.png') }}&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
                                                 class="text-center language-header no-sort sorting_disabled"
                                                 width="40px" rowspan="1" colspan="1" style="width: 40px;"
                                                 aria-label=""><img
-                                                    src="https://carzex.in/vendor/core/core/base/images/flags/us.svg"
+                                                    src="{{ asset('storage/posts/us.png') }}"
                                                     title="English" width="16" alt="English"></th> --}}
                                             <th title="Operations" width="134px" class="text-center sorting_disabled"
                                                 rowspan="1" colspan="1" style="width: 134px;"

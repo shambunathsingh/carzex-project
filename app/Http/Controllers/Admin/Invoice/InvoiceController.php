@@ -33,17 +33,25 @@ class InvoiceController extends Controller
             'orders' => $orders
         ]);
     }
+    public function invoice_template()
+    {
+        $title = "Carzex - invoice-template";
 
+        // Return the view with the homepage data
+        return view('admin.invoices.invoice_template', [
+            'title' => $title,
+        ]);
+    }
     public function edit_invoices($id)
     {
         $title = "Carzex - Edit Order";
-        $invoices = Order::with('productOrders')->find($id);
+        $edit_invoices = Order::with('productOrders')->find($id);
 
-        if (!$invoices) {
+        if (!$edit_invoices) {
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        return view('admin.invoices.edit_invoices', compact('invoices', 'title'));
+        return view('admin.invoices.edit_invoices', compact('edit_invoices', 'title'));
     }
 
 

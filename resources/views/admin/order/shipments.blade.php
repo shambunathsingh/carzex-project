@@ -4,6 +4,7 @@
     <div class="page-content " style="min-height: 758px;">
 
         <div id="main">
+                                      {{$orders}}
 
 
             <div class="breadcambarea">
@@ -146,8 +147,8 @@
                                                 <td class="text-center column-key-template">{{ $order->id }}</td>
                                                 <!-- Customer name column -->
                                                 <td class="text-center column-key-template">
-                                                    @if(isset($orders[$order->id]))
-                                                        {{ $orders[$order->id]->first_name }} {{ $orders[$order->id]->last_name }}
+                                                    @if(isset($order->id))
+                                                        {{ $order->first_name }} {{ $order->last_name }}
                                                     @else
                                                         Order not found
                                                     @endif
