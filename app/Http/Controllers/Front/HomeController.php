@@ -192,6 +192,30 @@ class HomeController extends Controller
 
         return view('front.blog.index', ['title' => $title, 'pages' => $allpages, 'posts' => $post_list, 'postCategory' => $cat_list, 'latest_posts' => $latest_posts]);
     }
+    public function singleblog($id)
+    {
+        $allpages = Page::all();
+
+        // Retrieve the specific post by id
+        $post = Post::where('id', $id)->firstOrFail();
+
+        // Retrieve all post categories
+        $cat_list = PostCategory::all();
+
+        // Retrieve the latest two posts
+        $latest_posts = Post::latest()->take(2)->get();
+
+        $title = "Carzex - Blogs";
+
+        return view('front.blog.singleblog', [
+            'title' => $title,
+            'pages' => $allpages,
+            'post' => $post, // Pass the specific post to the view
+            'postCategory' => $cat_list,
+            'latest_posts' => $latest_posts
+        ]);
+    }
+
 
     public function terms_condition()
     {

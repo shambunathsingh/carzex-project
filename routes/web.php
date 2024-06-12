@@ -34,7 +34,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart\Cart;
 use App\Http\Controllers\Admin\Payments\PaymentsController;
 use App\Http\Controllers\CashfreePaymentController;
-use App\Http\Controllers\SmsController;
+use App\Http\Controllers\Admin\Marketplaces\MarketplaceController;
 
 // Route::get('search/update_flash_sales', [FlashSalesController::class, 'search_flash_sales_products'])->name('admin.ecommerce.update_flash_sales');
 
@@ -93,6 +93,7 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('return-warranty', [HomeController::class, 'return_warranty'])->name('return_warranty');
     Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
     Route::get('blogs', [HomeController::class, 'blog'])->name('blog');
+    Route::get('blogs/{id}', [HomeController::class, 'singleblog'])->name('singleblog');
     Route::get('terms-conditions', [HomeController::class, 'terms_condition'])->name('terms_condition');
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('teams', [HomeController::class, 'team'])->name('team');
@@ -177,7 +178,21 @@ Route::group(['middleware' => 'auth'], function () {
 
         /* ADMIN SECTION */
         Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::group(['prefix' => 'marketplaces/', 'as' => 'marketplaces.'], function () {
+            Route::get('reports', [MarketplaceController::class, 'Marketplacesreports'])->name('reports');
+            Route::get('stores', [MarketplaceController::class, 'index'])->name('stores');
+            Route::get('create', [MarketplaceController::class, 'create'])->name('create');
+            Route::post('create', [MarketplaceController::class, 'datastore'])->name('datastore');
+            Route::get('edit/{id}', [MarketplaceController::class, 'edit'])->name('editstores');
+            Route::GET('update/{id}', [MarketplaceController::class, 'update'])->name('update');
+            Route::post('update/{id}', [MarketplaceController::class, 'update'])->name('update');
+            Route::get('destroy/{id}', [MarketplaceController::class, 'destroy'])->name('destroy');
 
+
+            Route::get('vendors', [MarketplaceController::class, 'listVendorInfos'])->name('vendors');
+            Route::get('settings', [MarketplaceController::class, 'settings'])->name('settings');
+            Route::get('vendors/create', [MarketplaceController::class, 'showCreateForm'])->name('showCreateForm');
+        });
 
         // Category Section
         // Route::get('categories', [CategoryController::class, 'index'])->name('category');
@@ -323,6 +338,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('advanced-settings', [EcommerceController::class, 'advancedSettings'])->name('advancedSettings');
             Route::get('tracking-settings', [EcommerceController::class, 'trackingSettings'])->name('trackingSettings');
             Route::get('reports', [EcommerceController::class, 'reports'])->name('reports');
+
 
             // flash-sales
 

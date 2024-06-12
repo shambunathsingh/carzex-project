@@ -6,6 +6,7 @@ use App\Models\ProductOrder\ProductOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer\Customer;
+use App\Models\Shipment\Shipment;
 
 class Order extends Model
 {
@@ -38,12 +39,16 @@ class Order extends Model
     // }
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+        return $this->belongsTo(Customer::class);
     }
 
     // Define the relationship with the ProductOrder model (assuming it exists)
     public function productOrders()
     {
-        return $this->hasMany(ProductOrder::class, 'order_id', 'order_id');
+        return $this->hasMany(ProductOrder::class);
+    }
+    public function shipment()
+    {
+        return $this->hasMany(Shipment::class);
     }
 }

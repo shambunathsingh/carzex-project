@@ -11,6 +11,8 @@ use App\Models\Customer\Customer;
 use App\Models\Product\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Shipment\Shipment;
+
 
 class OrderController extends Controller
 {
@@ -63,6 +65,14 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
+    public function delete_order($id)
+    {
+        $Order = Order::findOrFail($id);
+        $Order->delete();
+
+
+        return redirect()->back()->with('success', 'Order deleted successfully.');
+    }
 
     public function shipments()
     {
@@ -70,32 +80,40 @@ class OrderController extends Controller
         // $orders = productOrders::all();
 
         // Fetch all orders with related product orders
-        $orders = Order::with('productOrders')->get();
+        $shipments = Shipment::with('Order')->get();
         // Return the view with the homepage data
         return view('admin.order.shipments', [
             'title' => $title,
-            'orders' => $orders
+            'shipments' => $shipments
         ]);
     }
-    public function delete_order($id)
-    {
-        $Order = Order::findOrFail($id);
-        $Order->delete();
 
-        return redirect()->back()->with('success', 'Order deleted successfully.');
-    }
     public function edit_shipments($id)
     {
         $title = "Carzex - Edit Order";
-        // $order = ProductOrder::with('product', 'order')->find($id);
-        $order = Order::with('productOrders.product')->find($id);
 
-        if (!$order) {
-            return redirect()->back()->with('error', 'Order not found.');
+        // Assuming $id is the shipment ID
+        $shipment = Shipment::with('order')->find($id);
+
+        // Check if shipment exists
+        if (!$shipment) {
+            // Handle the case where shipment doesn't exist, maybe redirect or show an error message
         }
 
-        return view('admin.order.edit_shipment', compact('title', 'order'));
+        // Retrieve the customer associated with the order of the shipment
+        $customer = Customer::findOrFail($shipment->order->customer_id);
+
+        // Assuming you want to fetch order items for the specific order, not the product_id
+        $orderItems = ProductOrder::where('order_id', $shipment->order->id)->get();
+
+        // Retrieve products associated with order items
+        $productIds = $orderItems->pluck('product_id')->toArray();
+        $products = Product::whereIn('id', $productIds)->get();
+
+        return view('admin.order.edit_shipment', compact('title', 'shipment', 'customer', 'orderItems', 'products'));
     }
+
+
 
     public function edit_order($id)
     {

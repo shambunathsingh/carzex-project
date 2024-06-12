@@ -318,47 +318,60 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget meta-boxes">
-                                <div class="widget-title">
-                                    <h4><span> Product options</span></h4>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="product-option-form-wrap">
-                                        <div class="product-option-form-group">
-                                            <div class="product-option-form-body mt-3 mb-3"><input type="hidden"
-                                                    name="has_product_options" value="1">
-                                                <div id="accordion-product-option" class="accordion">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-md-6"><button type="button" id="add-new-option"
-                                                        class="btn btn-info add-new-option">Add new
-                                                        option</button></div>
-                                                <div class="col-12 col-md-6 d-flex justify-content-end">
-                                                    <div class="ui-select-wrapper d-inline-block" style="width: 200px;">
-                                                        <select id="global-option" class="form-control ui-select is-valid"
-                                                            aria-invalid="false">
-                                                            <option value="-1">Select Global Option
-                                                            </option>
-                                                            <option value="1">Warranty</option>
-                                                            <option value="2">RAM</option>
-                                                            <option value="3">CPU</option>
-                                                            <option value="4">HDD</option>
-                                                        </select> <svg class="svg-next-icon svg-next-icon-size-16"><svg
-                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                                <path d="M10 16l-4-4h8l-4 4zm0-12L6 8h8l-4-4z">
-                                                                </path>
-                                                            </svg></svg>
-                                                    </div> <button type="button" role="button"
-                                                        class="btn btn-info add-from-global-option ms-3">Add
-                                                        Global Option</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                          <style>
+        .mt-3 {
+            margin-top: 1rem;
+        }
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+        .ms-3 {
+            margin-left: 1rem;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                                </div>
+    <div class="widget meta-boxes">
+        <div class="widget-title">
+            <h4><span>Product options</span></h4>
+        </div>
+        <div class="widget-body">
+            <div class="product-option-form-wrap">
+                <div class="product-option-form-group">
+                    <div class="product-option-form-body mt-3 mb-3">
+                        <input type="hidden" name="has_product_options" value="1">
+                        <div id="accordion-product-option" class="accordion">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <button type="button" id="add-new-option" class="btn btn-info add-new-option">Add new option</button>
+                        </div>
+                        <div class="col-12 col-md-6 d-flex justify-content-end">
+                            <div class="ui-select-wrapper d-inline-block" style="width: 200px;">
+                                <select id="global-option" class="form-control ui-select is-valid" aria-invalid="false">
+                                    <option value="-1">Select Global Option</option>
+                                    <option value="1">Warranty</option>
+                                    <option value="2">RAM</option>
+                                    <option value="3">CPU</option>
+                                    <option value="4">HDD</option>
+                                </select>
+                                <svg class="svg-next-icon svg-next-icon-size-16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M10 16l-4-4h8l-4 4zm0-12L6 8h8l-4-4z"></path>
+                                    </svg>
+                                </svg>
                             </div>
+                            <button type="button" role="button" class="btn btn-info add-from-global-option ms-3">Add Global Option</button>
+                        </div>
+                    </div>
+                    <div id="new-option-container" class="mt-3"></div> <!-- Container for new options -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
                             <div data-target="" class="wrap-relation-product" style="position: relative; zoom: 1;">
                                 <div id="product-extras" class="widget meta-boxes">
                                     <div class="widget-title">
@@ -941,6 +954,23 @@
                         input.click();
                     }
                 });
+            });
+        });
+    </script>
+       <script>
+        $(document).ready(function() {
+            $('#add-new-option').on('click', function() {
+                var newRow = `
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Option Name">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Option Value">
+                        </div>
+                    </div>
+                `;
+                $('#new-option-container').append(newRow);
             });
         });
     </script>

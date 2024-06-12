@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Order\Order;
 use App\Models\CartDetail;
+use App\Models\Marketplaces\VendorInfo;
 
 class Customer extends Authenticatable
 {
@@ -30,5 +31,9 @@ class Customer extends Authenticatable
     public function cartItems()
     {
         return $this->hasMany(CartDetail::class);
+    }
+    public function VendorInfo()
+    {
+        return $this->belongsTo(VendorInfo::class);
     }
 }

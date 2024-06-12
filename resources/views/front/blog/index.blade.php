@@ -94,7 +94,9 @@
                                                 <span class="meta-comments"><i class="far fa-comments"></i><span>Comments
                                                         Off</span></span>
                                             </div>
-                                            <button class="readmore">readmore...</button>
+                                            {{-- <button class="readmore">readmore...</button> --}}
+<a class="readmore" href="{{ route('singleblog', ['id' => $item->id]) }}">Read More</a>
+
                                         </div>
                                     </div>
                                 </div>

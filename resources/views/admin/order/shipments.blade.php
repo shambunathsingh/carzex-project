@@ -4,7 +4,7 @@
     <div class="page-content " style="min-height: 758px;">
 
         <div id="main">
-                                      {{$orders}}
+        {{-- {{$shipments}} --}}
 
 
             <div class="breadcambarea">
@@ -121,6 +121,9 @@
                                                 SHIPPING AMOUNT
                                             </th>
                                             <th title="Status" class="text-center column-key-created_at sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Status orderby asc">
+                                               COD STATUS
+                                            </th>
+                                             <th title="Status" class="text-center column-key-created_at sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Status orderby asc">
                                                 STATUS
                                             </th>
                                             <th title="Created At" width="100px" class="text-center column-key-created_at sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" style="width: 100px;" aria-label="Created At orderby asc">
@@ -132,23 +135,29 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
-                                        @foreach ($orders as $order)
+                                        @foreach ($shipments as $shipment)
                                             <tr role="row" class="odd">
                                                 <!-- Checkbox column -->
                                                 <td class="text-start no-sort dtr-control">
                                                     <div class="text-start">
                                                         <div class="checkbox checkbox-primary table-checkbox">
-                                                            <input type="checkbox" class="checkboxes" name="{{ $order->id }}[]" value="">
+                                                            <input type="checkbox" class="checkboxes" name="{{ $shipment->id }}[]" value="">
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <!-- Order ID column -->
-                                                <td class="text-center">{{ $order->id }}</td>
-                                                <td class="text-center column-key-template">{{ $order->id }}</td>
+                                                <td class="text-center">{{ $shipment->id }}</td>
+                                                <td class="text-center column-key-template bold">
+                                                  <a href="{{ route('admin.ecommerce.edit_shipments', ['id' => $shipment->id]) }}">
+                                                    #1000000{{ $shipment->order_id }}
+                                                    <i class="fas fa-external-link-alt"></i>
+
+                                                  </a>
+                                                    </td>
                                                 <!-- Customer name column -->
                                                 <td class="text-center column-key-template">
-                                                    @if(isset($order->id))
-                                                        {{ $order->first_name }} {{ $order->last_name }}
+                                                    @if(isset($shipment->order->id))
+                                                        {{ $shipment->order->first_name }} {{ $shipment->order->last_name }}
                                                     @else
                                                         Order not found
                                                     @endif
@@ -158,21 +167,29 @@
                                                     ₹ 00.00
                                                 </td>
                                                 <!-- Status column -->
-                                                <td class="text-center column-key-order_status">
-                                                    @if ($order->is_paid == 1)
-                                                        <span class="label-success status-label">Completed</span>
-                                                    @else
-                                                        <span class="label-warning bg-warning status-label">Pending</span>
-                                                    @endif
-                                                </td>
+                                               <td class="text-center column-key-order_status">
+                                                @if ($shipment->cod_status == 'completed')
+                                                    <span class="label-info bg-info status-label">Completed</span>
+                                                @else
+                                                    <span class="label-warning bg-warning status-label px-3">Pending</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center column-key-order_status">
+                                                @if ($shipment->status == 'delivered')
+                                                    <span class="label-success status-label">Delivered</span>
+                                                @else
+                                                    <span class="label-warning bg-warning status-label">Approved</span>
+                                                @endif
+                                            </td>
+
                                                 <!-- Created At column -->
                                                 <td class="text-start column-key-created_at">
-                                                    {{ $order->created_at->format('d-m-Y') }}
+                                                    {{ $shipment->created_at->format('d-m-Y') }}
                                                 </td>
                                                 <!-- Operations column -->
                                                 <td class="text-end column-key-template">
                                                     <div class="table-actions">
-                                                        <a href="{{ route('admin.ecommerce.edit_shipments', ['id' => $order->id]) }}" class="btn btn-icon btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                                        <a href="{{ route('admin.ecommerce.edit_shipments', ['id' => $shipment->id]) }}" class="btn btn-icon btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog" data-bs-toggle="tooltip" data-section="" role="button" data-bs-original-title="Delete" onclick="return confirm('Are you sure you want to delete this order?');">
