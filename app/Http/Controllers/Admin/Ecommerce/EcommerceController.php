@@ -72,9 +72,13 @@ class EcommerceController extends Controller
     {
         $title = "Carzex - Products";
         $product_list = Product::all();
-
-        return view('admin.ecommerce.product', ['title' => $title], ['products' => $product_list]);
+    
+        return view('admin.ecommerce.product', [
+            'title' => $title,
+            'products' => $product_list
+        ]);
     }
+    
 
     public function create_product()
     {
