@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages;
 
+use App\Actions\File\FileUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Homepage\HomePage;
 use App\Models\Page\Page;
@@ -168,33 +169,41 @@ class PageController extends Controller
             'status' => 'required|in:published,draft,pending',
         ]);
 
+        $banner = new HomePage();
+        $banner->name = $request->input('name');
+        $banner->description = $request->input('description');
+        $banner->status = $request->input('status');
+
         // Check if a file is uploaded
+        // if ($request->hasFile('banner')) {
+        //     // Get the file from the request
+        //     $file = $request->file('banner');
+        //     // Generate a unique name for the file
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     // Store the file in the public/banners directory
+        //     $filePath = $file->storeAs('public/banners', $fileName);
+        //     // Create or update the homepage record with the file path and other fields
+        //     $banner->banner = 'banners/' . $fileName;
+        // }
+
+        // Updated code for image upload
         if ($request->hasFile('banner')) {
-            // Get the file from the request
             $file = $request->file('banner');
+            if ($file->isValid()) {
 
-            // Generate a unique name for the file
-            $fileName = time() . '_' . $file->getClientOriginalName();
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "banners");
 
-            // Store the file in the public/banners directory
-            $filePath = $file->storeAs('public/banners', $fileName);
-
-            // Create or update the homepage record with the file path and other fields
-            $banner = new HomePage();
-            $banner->banner = 'banners/' . $fileName;
-            $banner->name = $request->input('name');
-            $banner->description = $request->input('description');
-            $banner->status = $request->input('status');
-            $banner->save();
-
-            // Optionally, you may also want to resize the image or perform other image processing tasks here
-
-            // Return a success response
-            return redirect()->back()->with('success', 'Banner uploaded successfully!');
+                $banner->banner = $url;
+            }
         }
 
+        $banner->save();
+
+        return redirect()->back()->with('success', 'Banner uploaded successfully!');
+
         // Return an error response if no file is uploaded
-        return redirect()->back()->with('error', 'No banner uploaded.');
+        // return redirect()->back()->with('error', 'No banner uploaded.');
     }
 
 
@@ -225,28 +234,40 @@ class PageController extends Controller
         $homepage = HomePage::firstOrCreate([]);
 
         // Check if a file is uploaded
-        if ($request->hasFile('banner')) {
-            // Get the file from the request
-            $file = $request->file('banner');
+        // if ($request->hasFile('banner')) {
+        //     // Get the file from the request
+        //     $file = $request->file('banner');
 
-            // Generate a unique name for the file
-            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        //     // Generate a unique name for the file
+        //     $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
 
-            // Store the file in the public/banners directory
-            try {
-                $file->storeAs('public/banners', $fileName);
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Failed to upload the banner.');
-            }
+        //     // Store the file in the public/banners directory
+        //     try {
+        //         $file->storeAs('public/banners', $fileName);
+        //     } catch (\Exception $e) {
+        //         return redirect()->back()->with('error', 'Failed to upload the banner.');
+        //     }
 
-            // Update the banner field with the new file name
-            $homepage->banner = 'banners/' . $fileName;
-        }
+        //     // Update the banner field with the new file name
+        //     $homepage->banner = 'banners/' . $fileName;
+        // }
 
         // Update other fields
         $homepage->name = $request->input('name');
         $homepage->description = $request->input('description');
         $homepage->status = $request->input('status');
+
+        // Updated code for image upload
+        if ($request->hasFile('banner')) {
+            $file = $request->file('banner');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "banners");
+
+                $homepage->banner = $url;
+            }
+        }
 
         // Save the changes
         $homepage->save();

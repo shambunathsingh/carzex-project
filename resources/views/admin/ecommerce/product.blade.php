@@ -2,6 +2,48 @@
 
 @section('content')
 
+    @php
+        function parseImages($images)
+        {
+            $parsedImages = [];
+
+            // Check if the images string contains multiple images with metadata
+            if (strpos($images, '|') !== false) {
+                $parts = explode('|', $images);
+                foreach ($parts as $part) {
+                    $imgData = explode('!', $part);
+                    $url = trim($imgData[0]);
+                    $alt = $title = $desc = $caption = '';
+
+                    foreach ($imgData as $data) {
+                        if (strpos($data, 'alt : ') !== false) {
+                            $alt = trim(str_replace('alt : ', '', $data));
+                        } elseif (strpos($data, 'title : ') !== false) {
+                            $title = trim(str_replace('title : ', '', $data));
+                        } elseif (strpos($data, 'desc : ') !== false) {
+                            $desc = trim(str_replace('desc : ', '', $data));
+                        } elseif (strpos($data, 'caption : ') !== false) {
+                            $caption = trim(str_replace('caption : ', '', $data));
+                        }
+                    }
+
+                    $parsedImages[] = [
+                        'url' => $url,
+                        'alt' => $alt,
+                        'title' => $title,
+                        'desc' => $desc,
+                        'caption' => $caption,
+                    ];
+                }
+            } else {
+                // Single image path without metadata
+                $parsedImages[] = ['url' => $images, 'alt' => '', 'title' => '', 'desc' => '', 'caption' => ''];
+            }
+
+            return $parsedImages;
+        }
+    @endphp
+
     <div class="page-content " style="min-height: 758px;">
 
         <div id="main">
@@ -199,11 +241,24 @@
                                                 </td>
                                                 <td class="column-key-id sorting_1">{{ $item->id }}</td>
                                                 <td class=" text-start column-key-name">
-                                                    {{-- @if ($item->images)
-                                                        <img src="{{ asset('storage/products/' . $item->images) }}"
-                                                            width="150" alt="Banner Image">
-                                                    @endif --}}
-                                                    <img src="{{ $item->images }}" width="150" alt="Banner Image">
+                                                    @php
+                                                        $images = parseImages($item->images);
+                                                        $firstImage = $images[0] ?? null;
+                                                    @endphp
+                                                    @if ($firstImage)
+                                                        <div class="image-container">
+                                                            <img src="{{ $firstImage['url'] }}"
+                                                                alt="{{ $firstImage['alt'] }}"
+                                                                title="{{ $firstImage['title'] }}" width="150">
+                                                            @if ($firstImage['desc'])
+                                                                <p>{{ $firstImage['desc'] }}</p>
+                                                            @endif
+                                                            @if ($firstImage['caption'])
+                                                                <caption>{{ $firstImage['caption'] }}</caption>
+                                                            @endif
+                                                        </div>
+                                                    @endif
+                                                    {{-- <img src="{{ $item->images }}" width="150" alt="Banner Image"> --}}
                                                 </td>
                                                 <td class=" text-start column-key-name">
                                                     <a

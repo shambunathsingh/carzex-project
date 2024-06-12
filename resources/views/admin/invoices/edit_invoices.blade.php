@@ -98,10 +98,10 @@
             </div>
         </div>
         <div class="card-footer text-center">
-            <a href="#" target="_blank" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog">
+            <a href="{{route('admin.ecommerce.show_invoices', ['id' => $edit_invoices->id])}}" target="_blank" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog">
                 <i class="fas fa-print"></i> Print Invoice
             </a>
-            <a href="#" target="_blank" class="btn bg-primary btn-success">
+            <a href="{{route('admin.ecommerce.download_invoices', ['id' => $edit_invoices->id])}}" target="_blank" class="btn bg-primary btn-success">
                 <i class="fas fa-download"></i> Download Invoice
             </a>
         </div>

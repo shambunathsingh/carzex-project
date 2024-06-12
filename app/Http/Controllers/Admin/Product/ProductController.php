@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Actions\File\FileUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Brand\Brands;
 use App\Models\Category\Category;
@@ -15,6 +16,7 @@ use App\Models\Taxes\Taxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 class ProductController extends Controller
 {
     public function index()
@@ -76,12 +78,20 @@ class ProductController extends Controller
         // Additional information
         // $pcategory->icon_image = $request->icon_image;
         // Check if image file is present
+
+
+        // Updated code for image upload
         if ($request->hasFile('icon_image')) {
-            $logo = $request->file('icon_image');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/p_category', $logoName);
-            $pcategory->image = $logoName;
+            $file = $request->file('icon_image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "p_category");
+
+                $pcategory->image = $url;
+            }
         }
+
         $pcategory->background_color = $request->background_color;
 
         // Save the category
@@ -122,12 +132,26 @@ class ProductController extends Controller
         // Additional information
         // $pcategory->icon_image = $request->icon_image;
         // Check if image file is present
+        // if ($request->hasFile('icon_image')) {
+        //     $logo = $request->file('icon_image');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $logo->storeAs('public/p_category', $logoName);
+        //     $pcategory->image = $logoName;
+        // }
+
+
+        // Updated code for image upload
         if ($request->hasFile('icon_image')) {
-            $logo = $request->file('icon_image');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/p_category', $logoName);
-            $pcategory->image = $logoName;
+            $file = $request->file('icon_image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "p_category");
+
+                $pcategory->image = $url;
+            }
         }
+
         $pcategory->background_color = $request->background_color;
 
         // Update the category
@@ -204,12 +228,25 @@ class ProductController extends Controller
         // }
 
         // Check if image file is present
+        // if ($request->hasFile('images')) {
+        //     $logo = $request->file('images');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $path = $logo->storeAs('public/products', $logoName);
+        //     $url = Storage::url($path);
+        //     $product->images = $url;
+        // }
+
+
+        // Updated code for image upload
         if ($request->hasFile('images')) {
-            $logo = $request->file('images');
-            $logoName = $logo->getClientOriginalName();
-            $path = $logo->storeAs('public/products', $logoName);
-            $url = Storage::url($path);
-            $product->images = $url;
+            $file = $request->file('images');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "products");
+
+                $product->images = $url;
+            }
         }
 
         $product->sku = $request->sku;
@@ -298,12 +335,27 @@ class ProductController extends Controller
         //     $logo->storeAs('public/products', $logoName);
         //     $product->images = $logoName;
         // }
+        // if ($request->hasFile('images')) {
+        //     $logo = $request->file('images');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $path = $logo->storeAs('public/products', $logoName);
+        //     $url = Storage::url($path);
+        //     $product->images = $url;
+        // }
+
+
+
+
+        // Updated code for image upload
         if ($request->hasFile('images')) {
-            $logo = $request->file('images');
-            $logoName = $logo->getClientOriginalName();
-            $path = $logo->storeAs('public/products', $logoName);
-            $url = Storage::url($path);
-            $product->images = $url;
+            $file = $request->file('images');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "products");
+
+                $product->images = $url;
+            }
         }
 
         $product->sku = $request->sku;
@@ -427,11 +479,24 @@ class ProductController extends Controller
         $brand->order = $request->order;
 
         // Check if logo file is present
+        // if ($request->hasFile('logo')) {
+        //     $logo = $request->file('logo');
+        //     $logoName = $logo->getClientOriginalName(); // You may customize the filename as needed
+        //     $logo->storeAs('public/logos', $logoName); // Store the logo in the storage folder, change 'logos' to your desired directory
+        //     $brand->logo = $logoName; // Save the filename to the database
+        // }
+
+
+        // Updated code for image upload
         if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = $logo->getClientOriginalName(); // You may customize the filename as needed
-            $logo->storeAs('public/logos', $logoName); // Store the logo in the storage folder, change 'logos' to your desired directory
-            $brand->logo = $logoName; // Save the filename to the database
+            $file = $request->file('logo');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "logos");
+
+                $brand->logo = $url;
+            }
         }
 
         $brand->featured = $request->featured;
@@ -467,17 +532,29 @@ class ProductController extends Controller
         $brand->featured = $request->featured;
 
         // Check if a new logo is uploaded
-        if ($request->hasFile('logo')) {
-            // Delete old logo if it exists
-            // if ($brand->logo) {
-            //     Storage::delete('/public/app/logos/' . $brand->logo);
-            // }
+        // if ($request->hasFile('logo')) {
+        //     // Delete old logo if it exists
+        //     // if ($brand->logo) {
+        //     //     Storage::delete('/public/app/logos/' . $brand->logo);
+        //     // }
 
-            // Store new logo
-            $logo = $request->file('logo');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/logos', $logoName); // You might adjust the storage path as needed
-            $brand->logo = $logoName;
+        //     // Store new logo
+        //     $logo = $request->file('logo');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $logo->storeAs('public/logos', $logoName); // You might adjust the storage path as needed
+        //     $brand->logo = $logoName;
+        // }
+
+        // Updated code for image upload
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "logos");
+
+                $brand->logo = $url;
+            }
         }
 
         $brand->save();
@@ -685,6 +762,18 @@ class ProductController extends Controller
             $pcollection->image = $logoName;
         }
 
+        // Updated code for image upload
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "product_collections");
+
+                $pcollection->image = $url;
+            }
+        }
+
         $pcollection->featured = $request->featured;
 
         $pcollection->save();
@@ -715,12 +804,24 @@ class ProductController extends Controller
         $pcollection->featured = $request->featured;
 
         // Check if a new image is uploaded
-        if ($request->hasFile('image')) {
+        // if ($request->hasFile('image')) {
 
-            $logo = $request->file('image');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/product_collections', $logoName);
-            $pcollection->image = $logoName;
+        //     $logo = $request->file('image');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $logo->storeAs('public/product_collections', $logoName);
+        //     $pcollection->image = $logoName;
+        // }
+
+        // Updated code for image upload
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "product_collections");
+
+                $pcollection->image = $url;
+            }
         }
 
         $pcollection->save();
@@ -813,11 +914,23 @@ class ProductController extends Controller
         // $pfeature->image = $request->image;
 
         // Check if image file is present
+        // if ($request->hasFile('image')) {
+        //     $logo = $request->file('image');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $logo->storeAs('public/product_features', $logoName);
+        //     $pfeature->image = $logoName;
+        // }
+
+        // Updated code for image upload
         if ($request->hasFile('image')) {
-            $logo = $request->file('image');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/product_features', $logoName);
-            $pfeature->image = $logoName;
+            $file = $request->file('image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "product_features");
+
+                $pfeature->image = $url;
+            }
         }
 
         $pfeature->status = $request->status;
@@ -846,11 +959,23 @@ class ProductController extends Controller
         // $pfeature->image = $request->image;
 
         // Check if image file is present
+        // if ($request->hasFile('image')) {
+        //     $logo = $request->file('image');
+        //     $logoName = $logo->getClientOriginalName();
+        //     $logo->storeAs('public/product_features', $logoName);
+        //     $pfeature->image = $logoName;
+        // }
+
+        // Updated code for image upload
         if ($request->hasFile('image')) {
-            $logo = $request->file('image');
-            $logoName = $logo->getClientOriginalName();
-            $logo->storeAs('public/product_features', $logoName);
-            $pfeature->image = $logoName;
+            $file = $request->file('image');
+            if ($file->isValid()) {
+
+                $logoName = $file->getClientOriginalName();
+                $url = FileUpload::upload($file, "product_features");
+
+                $pfeature->image = $url;
+            }
         }
 
         $pfeature->status = $request->status;

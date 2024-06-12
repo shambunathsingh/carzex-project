@@ -77,7 +77,7 @@
                                             <div class="images-wrapper">
                                                 <div data-name="images[]"
                                                     class="text-center cursor-pointer js-btn-trigger-add-image default-placeholder-gallery-image  hidden ">
-                                                    <img src="https://carzex.in/vendor/core/core/base/images/placeholder.png"
+                                                    <img src=""
                                                         alt="Image" width="120">
                                                     <br>
                                                     <p style="color: rgb(195, 207, 216);">Using button
