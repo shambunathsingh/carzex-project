@@ -1,5 +1,15 @@
 @extends('front.layout.app')
 
+<style>
+    .productcategoryarea {
+        background: url('{{ asset('uploads/' . $category->image) }}');
+        background-size: cover;
+        background-position: center;
+        height: 340px;
+    }
+</style>
+
+
 @section('content')
     <main>
 
@@ -538,9 +548,9 @@
 
                                                     <div class="adtbynbtn">
                                                         <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
-                                                        <button>Add To Cart</button></a>
+                                                            <button>Add To Cart</button></a>
                                                         <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
-                                                        <button>Buy Now</button></a>
+                                                            <button>Buy Now</button></a>
                                                     </div>
                                                 </div>
                                             </div>

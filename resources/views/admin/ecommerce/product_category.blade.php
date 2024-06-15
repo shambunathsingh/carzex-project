@@ -294,11 +294,9 @@
                                                 <div class="image-box">
                                                     <input type="file" name="icon_image" value=""
                                                         style="display: none;" class="image-data" id="icon_image_input">
-                                                    <div class="preview-image-wrapper ">
-                                                        <img src="https://carzex.in/vendor/core/core/base/images/placeholder.png"
-                                                            data-default="https://carzex.in/vendor/core/core/base/images/placeholder.png"
-                                                            alt="Preview image" class="preview_image" width="150"
-                                                            id="image">
+                                                    <div class="">
+                                                        <img src="" data-default="" alt="Preview image"
+                                                            class="preview_image" width="150" height="150" id="image">
                                                         <a class="btn_remove_image" title="Remove image">
                                                             <i class="fa fa-times"></i>
                                                         </a>
@@ -312,6 +310,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+
+
 
                                             <div class="form-group">
                                                 <label class="control-label" for="background_color">Background
@@ -492,12 +493,9 @@
                     // Set selected parent category
                     $('#parent_id').val(response.parent_id).change();
 
-
                     // Set selected image
-                    var src = '{{ asset('storage/p_category/') }}';
+                    var src = '{{ asset('uploads/') }}';
                     $('#image').attr('src', src + '/' + response.image);
-
-
 
                     // Update form action URL
                     var updateUrl = '{{ route('admin.ecommerce.update_pcategory', ['id' => ':id']) }}'.replace(
@@ -514,6 +512,7 @@
             });
         }
     </script>
+
 
 
 
@@ -539,6 +538,39 @@
                 const selectedColor = this.value;
                 nameInput.value = selectedColor;
             });
+        });
+    </script>
+
+    {{-- Image preview --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chooseImageButton = document.getElementById('choose_image_button');
+            const iconImageInput = document.getElementById('icon_image_input');
+            const previewImage = document.getElementById('image');
+            const removeImageButton = document.querySelector('.btn_remove_image');
+
+            if (chooseImageButton && iconImageInput && previewImage && removeImageButton) {
+                // Ensure event listeners are added only once
+                chooseImageButton.addEventListener('click', function() {
+                    iconImageInput.click();
+                });
+
+                iconImageInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImage.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                removeImageButton.addEventListener('click', function() {
+                    iconImageInput.value = '';
+                    previewImage.src = '';
+                });
+            }
         });
     </script>
 @endsection

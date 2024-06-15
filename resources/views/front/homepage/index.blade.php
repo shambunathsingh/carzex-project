@@ -135,173 +135,22 @@
 
                                 <a href="{{ url($url) }}">
                                     <div class="cateImg">
-                                        <img src="{{ asset('storage/p_category/' . $cat_item->image) }}" alt="">
+                                        <img src="{{ asset('uploads/' . $cat_item->image) }}" alt="">
                                     </div>
                                     <div class="cateName text-center">
                                         <h6>{{ $cat_item->name }}</h6>
                                     </div>
                                 </a>
+
                             </div>
                         </div>
                     @endforeach
-
-
-                    {{-- <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/2.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>BIKE BODY COVERS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/3.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR LED HEADLIGHT BULBS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/4.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR ANDROID SCREENS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/5.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR JUMP STARTER</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/6.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR FOG BAR LIGHTS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/7.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>BIKE FOG BAR LIGHTS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/8.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR WELCOME SILL PLATES</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/9.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR CAMERAS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/10.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR REAR PARKING SENSORS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/11.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR INTERIOR DECORATION LIGHTS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/12.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR EXTERIOR DECORATION LIGHTS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/13.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR BUMPER PROTECTORSS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/14.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR UTILITIES</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/15.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR FOOTMATS</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-12">
-                        <div class="cateinner">
-                            <div class="cateImg">
-                                <a href="#"><img src="assets/img/catagory/16.webp" alt=""></a>
-                            </div>
-                            <div class="cateName text-center">
-                                <h6>CAR REAR VIEW CAMERA SCREENS</h6>
-                            </div>
-                        </div>
-                    </div> --}}
 
                 </div>
             </div>
         </section>
 
-        <section class="tutorial">
+        {{-- <section class="tutorial">
             <div class="container">
                 <div class="row">
                     @php
@@ -330,33 +179,9 @@
                         @endphp
                     @endforeach
 
-                    {{-- <div class="col-md-6 col-12">
-                        <div class="tuto_heading text-center">
-                            <h4>Carzex Intro</h4>
-                        </div>
-                        <div class="video_content">
-                            <video class="elementor-video"
-                                src="https://www.carzex.com/wp-content/uploads/2023/08/WhatsApp-Video-2023-08-10-at-12.25.16-PM.mp4"
-                                loop="" controls="" controlslist="nodownload">
-                            </video>
-
-                        </div>
-                    </div> --}}
-                    {{-- <div class="col-md-6 col-12">
-                        <div class="tuto_heading text-center">
-                            <h4>How to Order Products</h4>
-                        </div>
-                        <div class="video_content">
-                            <video class="elementor-video"
-                                src="https://www.carzex.com/wp-content/uploads/2023/01/hOW-TO-ORDER-PRODUCT-1.mp4"
-                                loop="" controls="" controlslist="nodownload">
-                            </video>
-
-                        </div>
-                    </div> --}}
                 </div>
             </div>
-        </section>
+        </section> --}}
 
 
 
