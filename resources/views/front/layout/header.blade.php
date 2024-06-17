@@ -2,11 +2,11 @@
     /* CSS for dropdown */
     .dropdown {
 
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 400px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
+        /* position: absolute; */
+        /* background-color: #f9f9f9; */
+        /* min-width: 400px; */
+        /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+        /* z-index: 1; */
     }
 
     .dropdown-item {
@@ -21,8 +21,23 @@
         cursor: pointer;
 
     }
-</style>
-<header class="header_area header_padding">
+        .dropdown-menu {
+            min-width: 200px;
+        }
+        .dropdown-item > i {
+            margin-right: 10px;
+        }
+        .header_wishlist .dropdown-toggle::after {
+            display: none;
+        }
+        .header_wishlist {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+
+    <header class="header_area header_padding">
     <!--header top start-->
     <div class="header_top">
         <div class="container">
@@ -91,16 +106,28 @@
 
                         </div>
                         <div class="middel_right_info">
-                            <div class="header_wishlist">
-                                <a href="{{ route('myaccount') }}" class="profile-trigger">
+                            {{-- <div class="header_wishlist"> --}}
+                                {{-- <a href="{{ route('myaccount') }}" class="profile-trigger">
                                     <span class="ion-android-person"></span>
-                                </a>
+                                </a> --}}
+                                 <div class="header_wishlist mblehdrr dropdown">
+                                    <a class="btn dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="ion-android-person"></span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{ route('overview') }}"><i class="bi bi-person"></i> My Account</a>
+                                        <a class="dropdown-item" href="#"><i class="bi bi-geo-alt"></i> Order Tracking</a>
+                                        <a class="dropdown-item" href="{{ route('show_wishlist') }}"><i class="lnr lnr-heart"></i> My Wishlist</a>
+                                        <a class="dropdown-item" href=""{{ route('overview') }}><i class="bi bi-pencil-square"></i> Update Profile</a>
+                                        <a class="dropdown-item" href="{{ route('myaccount_logout') }}"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+                                    </div>
+                                </div>
                                 {{-- <ul class="profilemenu">
                                     <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a></li>
                                     <li><a href="http://localhost:8000/logout"><i class="fa-solid fa-key"></i>Logout</a>
                                     </li>
                                 </ul> --}}
-                            </div>
+                            {{-- </div>  --}}
 
                             @if (Auth::guard('customer')->check())
                                 <div class="header_wishlist">
@@ -129,14 +156,14 @@
                                     <span class="cart_quantity">0</span>
                                 </div>
                             @endif
-
+{{-- 
                             @if (Auth::guard('customer')->check())
                                 <div class="header_wishlist">
                                     <a href="{{ route('myaccount_logout') }}">
                                         <i class="fa-solid fa-right-from-bracket fa-2x"></i>
                                     </a>
                                 </div>
-                            @endif
+                            @endif --}}
                         </div>
 
 

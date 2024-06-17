@@ -21,6 +21,50 @@ class AccountController extends Controller
 
         return view('front.myaccount', ['title' => $title]);
     }
+    public function updateprofile(Request $request, $id)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:customers,email,' . $id,
+            'phone' => 'nullable|string|max:20',
+            'dob' => 'nullable|date',
+            'address' => 'nullable|string|max:255', // Changed to nullable to allow optional updates
+            'status' => 'required|string',
+            'privatenotes' => 'nullable|string', // Added string validation rule
+        ]);
+
+        $customer = Customer::findOrFail($id);
+
+        $customer->address = $request->input('address');
+        // $customer->privatenotes = $request->textarea('privatenotes');
+        // Find the customer by ID
+
+        // Update customer data
+        $customer->update($validatedData);
+        return redirect()->back()->with('success', 'updated successful.');
+    }
+    public function overview()
+    {
+        $title = 'My overview';
+        $customer = Auth::guard('customer')->user();
+
+        if (!$customer) {
+            // Redirect to the login page if the customer is not authenticated
+            return redirect()->route('myaccount');
+        }
+
+        // Assuming you have a relationship set up in your Order model to load ProductOrder
+        $orders = $customer->orders()->with('productOrders')->get();
+
+        // Calculate total subtotal for each order
+        foreach ($orders as $order) {
+            $order->total_subtotal = $order->productOrders->sum('subtotal');
+        }
+
+
+        return view('front.overview', ['title' => $title, 'orders' => $orders]);
+    }
     public function register()
     {
 

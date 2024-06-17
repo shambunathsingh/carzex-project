@@ -159,11 +159,6 @@ class EcommerceController extends Controller
     }
 
 
-
-
-
-
-
     // product brands
     public function brands()
     {

@@ -123,6 +123,8 @@ Route::middleware(['guest:web'])->group(function () {
 
     // Account Section
     Route::get('my-account', [AccountController::class, 'index'])->name('myaccount');
+    Route::get('overview', [AccountController::class, 'overview'])->name('overview');
+    Route::POST('overview/{id}', [AccountController::class, 'updateprofile'])->name('updateprofile');
     Route::get('register', [AccountController::class, 'register'])->name('new_register');
     Route::post('create-user', [AccountController::class, 'registerUser'])->name('register_newUser');
     Route::post('customer-login', [AccountController::class, 'login'])->name('login_newUser');

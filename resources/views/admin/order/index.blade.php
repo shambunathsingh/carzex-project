@@ -110,221 +110,110 @@
                                 <!-- todo table body  start-->
 
 
-                                <table
-                                    class="table table-striped table-hover vertical-middle dataTable no-footer dtr-inline"
-                                    id="botble-page-tables-page-table" role="grid"
-                                    aria-describedby="botble-page-tables-page-table_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th width="10px" class="text-start no-sort sorting_disabled" rowspan="1"
-                                                colspan="1" style="width: 10px;" aria-label=""><input
-                                                    class="table-check-all" data-set=".dataTable .checkboxes" name=""
-                                                    type="checkbox"></th>
-                                            <th title="ID" width="20px" class="column-key-id sorting_desc"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1"
-                                                colspan="1" style="width: 20px;" aria-sort="descending"
-                                                aria-label="IDorderby asc">ID
-                                            </th>
-                                            <th title="Name" class="text-start column-key-name sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1"
-                                                aria-label="Nameorderby asc">
-                                                CUSTOMER
-                                                </th>
-                                                
-                                            <!--<th title="Template" class="text-start column-key-template sorting"-->
-                                            <!--    tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1"-->
-                                            <!--    colspan="1" aria-label="Templateorderby asc" style="">No. of-->
-                                            <!--    Product-->
-                                            <!--</th>-->
-                                            <!--ID	CUSTOMER	EMAIL	PHONE	AMOUNT	TAX AMOUNT	SHIPPING AMOUNT	PAYMENT METHOD	PAYMENT STATUS	STATUS	OPERATIONS-->
-                                           
-                                            <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">EMAIL
-                                            </th>
-                                            
-                                            <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">PHONE
-                                            </th>
-                                              <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">AMOUNT
-                                            </th>
-                                            <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">TAX AMOUNT
-                                            </th>
-                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">SHIPPING AMOUNT
-                                            </th>
-                                            
-                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">PAYMENT METHOD
-                                            </th>
-                                            
-                                              <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">PAYMENT STATUS
-                                            </th>
-                                            
-                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">STATUS
-                                            </th>
-                                             <th title="Template" class="text-start column-key-template sorting"
-                                                tabindex="0" aria-controls="botble-page-tables-page-table"
-                                                rowspan="1" colspan="1" aria-label="Templateorderby asc"
-                                                style="">OPERATIONS
-                                            </th>
-                                            <!--<th title="Template" class="text-start column-key-template sorting"-->
-                                            <!--    tabindex="0" aria-controls="botble-page-tables-page-table"-->
-                                            <!--    rowspan="1" colspan="1" aria-label="Templateorderby asc"-->
-                                            <!--    style="">Quantity-->
-                                            <!--</th>-->
-                                            <!--<th title="Template" class="text-start column-key-template sorting"-->
-                                            <!--    tabindex="0" aria-controls="botble-page-tables-page-table"-->
-                                            <!--    rowspan="1" colspan="1" aria-label="Templateorderby asc"-->
-                                            <!--    style="">Total Amount-->
-                                            <!--</th>-->
-                                            <th title="Created At" width="100px"
-                                                class="text-center column-key-created_at sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1"
-                                                colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">
-                                                Created At</th>
-                                            {{-- <th title="Status" width="100px"
-                                                class="text-center column-key-status sorting" tabindex="0"
-                                                aria-controls="botble-page-tables-page-table" rowspan="1"
-                                                colspan="1" style="width: 100px;" aria-label="Statusorderby asc">
-                                                Status</th>
-                                            <th title="<img src=&quot;{{ asset('storage/posts/us.png') }}&quot; title=&quot;English&quot; width=&quot;16&quot; alt=&quot;English&quot;>"
-                                                class="text-center language-header no-sort sorting_disabled"
-                                                width="40px" rowspan="1" colspan="1" style="width: 40px;"
-                                                aria-label=""><img
-                                                    src="{{ asset('storage/posts/us.png') }}"
-                                                    title="English" width="16" alt="English"></th> --}}
-                                            {{-- <th title="Operations" width="134px" class="text-center sorting_disabled"
-                                                rowspan="1" colspan="1" style="width: 134px;"
-                                                aria-label="Operations">Operations</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($orders as $order)
-                                            <tr role="row" class="odd">
-                                                <!-- Checkbox column -->
-                                                <td class="text-start no-sort dtr-control">
-                                                    <div class="text-start">
-                                                        <div class="checkbox checkbox-primary table-checkbox">
-                                                            <input type="checkbox" class="checkboxes"
-                                                                name="{{ $order->id }}[]" value="">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <!-- Order ID column -->
-                                                <td class="column-key-id sorting_1">{{ $order->id }}</td>
-                                                <!-- Customer name column -->
-                                                <td class="text-start column-key-template">
-                                                    {{ $order->first_name }} {{ $order->last_name }}
-                                                </td>
-                                                
-                                                <td class="text-start column-key-template">
-                                                    {{ $order->email }}
-                                                </td>
-                                            
-                                                 <td class="text-start column-key-template">
-                                                    {{ $order->phone }}
-                                                </td>
-                                                  <!-- Total Amount column -->
-                                                <td class="text-start column-key-template">
-                                                    ₹ {{ $order->totalAmount }}
-                                                </td>
-                                                <td class="text-start column-key-template">
-                                                    ₹ 00.00
-                                                </td>
-                                                <td class="text-start column-key-template">
-                                                    ₹ 00.00
-                                                </td>
-                                                 <td class="text-start column-key-template">
-                                                        COD
-                                                </td>
-                                               <td class="text-center column-key-payment_status">
-                                                    @if ($order->is_paid == 1)
-                                                     <span class="label-success status-label">Completed</span>
-                                                    @else
-                                                     <span class="label-warning bg-warning status-label">Pending</span>
-                                                    @endif
-                                                </td>
-                                                  <td class=" text-center column-key-payment_status">
-                                                    <span class="label-success status-label">Completed</span>
-                                                </td>
-                                                 <!--Created At column -->
-                                                <td class="text-center column-key-created_at">
-                                                    {{ $order->created_at->format('d-m-Y') }}
-                                                </td>
-                                                <td class="text-start column-key-template">
-                                                <div class="table-actions">
-                                                    <a href="{{ route('admin.ecommerce.edit_order', ['id' => $order->id]) }}"
-                                                        class="btn btn-icon btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                   
-                                                    <a href="{{ route('admin.ecommerce.delete_order', ['id' => $order->id]) }}"
-                                                        class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog"
-                                                        data-bs-toggle="tooltip" data-section="" role="button"
-                                                        data-bs-original-title="Delete"
-                                                        onclick="return confirm('Are you sure you want to delete this order?');">
-                                                        <i class="fa fa-trash btn-danger"></i>
-                                                    </a>
-                                                    
-                                                </div>
-                                                </td>
-                                                <!-- No. of Product column -->
-                                                <!--<td class="text-start column-key-template">-->
-                                                <!--    {{ count($order->productOrders) }}-->
-                                                <!--</td>-->
+                            <table class="table table-striped table-hover vertical-middle dataTable no-footer dtr-inline" id="botble-page-tables-page-table" role="grid" aria-describedby="botble-page-tables-page-table_info">
+        <thead>
+            <tr role="row">
+                <th width="10px" class="text-start no-sort sorting_disabled" rowspan="1" colspan="1" style="width: 10px;" aria-label="">
+                    <input class="table-check-all" data-set=".dataTable .checkboxes" name="" type="checkbox">
+                </th>
+                <th title="ID" width="20px" class="column-key-id sorting_desc" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" style="width: 20px;" aria-sort="descending" aria-label="IDorderby asc">ID</th>
+                <th title="Name" class="text-start column-key-name sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Nameorderby asc">CUSTOMER</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">EMAIL</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">PHONE</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">AMOUNT</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">TAX AMOUNT</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">SHIPPING AMOUNT</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">PAYMENT METHOD</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">PAYMENT STATUS</th>
+                <th title="Template" class="text-start column-key-template sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" aria-label="Templateorderby asc" style="">OPERATIONS</th>
+                <th title="Created At" width="100px" class="text-center column-key-created_at sorting" tabindex="0" aria-controls="botble-page-tables-page-table" rowspan="1" colspan="1" style="width: 100px;" aria-label="Created Atorderby asc">Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($orders as $order)
+                <tr role="row" class="odd">
+                    <td class="text-start no-sort dtr-control">
+                        <a class="rowbtn toggle-btn" onclick="toggleRow({{ $order->id }})" data-id="{{ $order->id }}">+</a>
+                    </td>
+                    <td class="column-key-id sorting_1">{{ $order->id }}</td>
+                    <td class="text-start column-key-template">{{ $order->first_name }} {{ $order->last_name }}</td>
+                    <td class="text-start column-key-template">{{ $order->email }}</td>
+                    <td class="text-start column-key-template">{{ $order->phone }}</td>
+                    <td class="text-start column-key-template">₹ {{ $order->totalAmount }}</td>
+                    <td class="text-start column-key-template">₹ 00.00</td>
+                    <td class="text-start column-key-template">₹ 00.00</td>
+                    <td class="text-start column-key-template">COD</td>
+                    <td class="text-center column-key-payment_status">
+                        @if ($order->is_paid == 1)
+                            <span class="label-success status-label">Completed</span>
+                        @else
+                            <span class="label-warning bg-warning status-label">Pending</span>
+                        @endif
+                    </td>
+                  
+                    <td class="text-center column-key-created_at">{{ $order->created_at->format('d-m-Y') }}</td>
+                    <td class="text-start column-key-template">
+                        <div class="table-actions">
+                            <a href="{{ route('admin.ecommerce.edit_order', ['id' => $order->id]) }}" class="btn btn-icon btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="{{ route('admin.ecommerce.delete_order', ['id' => $order->id]) }}" class="btn btn-icon btn-sm btn-danger bg-danger deleteDialog" data-bs-toggle="tooltip" data-section="" role="button" data-bs-original-title="Delete" onclick="return confirm('Are you sure you want to delete this order?');">
+                                <i class="fa fa-trash btn-danger"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="details-{{ $order->id }}" class="hidden-row text-center">
+                     <td colspan="15">
+                    {{-- <div> <strong> STATUS</strong>Completed</div> --}}
+                        <span><strong>STATUS: </strong><span class="label-success status-label"> Completed</span></span>
 
-                                                <!-- Quantity column (sum of all product orders for this order) -->
-                                                <!--<td class="text-start column-key-template">-->
-                                                <!--    {{ $order->productOrders->sum('quantity') }}-->
-                                                <!--</td>-->
+                        <div>Store: Global Office</div>
+                        <div> <strong> Created At: </strong>{{ $order->created_at->format('d-m-Y') }}</div>
+                        
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-                                                <!-- Total Amount column -->
-                                                <!--<td class="text-start column-key-template">-->
-                                                <!--    {{ $order->totalAmount }}-->
-                                                <!--</td>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function toggleRow(rowId) {
+            var row = $('#details-' + rowId);
+            row.toggle();
+            var button = $('.toggle-btn[data-id="' + rowId + '"]');
+            button.text(button.text() == '+' ? '-' : '+');
+        }
+    </script>
 
-                                                
-
-                                                <!-- Operations column -->
-                                                {{-- <td class="text-center">
-                                                    <div class="table-actions">
-                                                        <a href="" class="btn btn-icon btn-sm btn-primary"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <a href=""
-                                                            class="btn btn-icon btn-sm btn-danger deleteDialog"
-                                                            data-bs-toggle="tooltip" data-section="" role="button"
-                                                            data-bs-original-title="Delete"
-                                                            onclick="return confirm('Are you sure you want to delete this product?');">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </div>
-                                                </td> --}}
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+    <style>
+        .hidden-row {
+            display: none;
+        }
+        .rowbtn {
+            align-items: center;
+            padding: 0px 4px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            background-color: #ae0707;
+            border-radius: 25px;
+            
+        }
+        .label-success {
+            background-color: #4CAF50;
+            padding: 5px;
+            border-radius: 3px;
+            color: white;
+        }
+        .label-warning {
+            background-color: yellow;
+            padding: 5px;
+            border-radius: 3px;
+            color: black;
+        }
+    </style>
 
                                 <!-- todo table body  start-->
 
