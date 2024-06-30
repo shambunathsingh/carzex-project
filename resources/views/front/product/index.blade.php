@@ -2,12 +2,18 @@
 
 <style>
     .productcategoryarea {
-        background: url('{{ asset('uploads/' . $category->image) }}');
+        @if(isset($category->image))
+            background: url('{{ url(asset('uploads/' . $category->background_image)) }}');
+        @else
+            background: url('{{ url(asset('uploads/default.jpg')) }}'); /* Fallback if $category->image is not set */
+        @endif
         background-size: cover;
-        background-position: center;
+        background-position: center ;
         height: 340px;
     }
 </style>
+
+
 
 
 @section('content')
@@ -32,6 +38,7 @@
 
             </div>
         </div>
+
 
 
 
@@ -71,7 +78,7 @@
                                                     step="1" id="customRange3" name="priceRange">
                                                 <div class="d-flex justify-content-between mt-2">
                                                     <p>Price: <span id="minPrice">₹0</span> — <span
-                                                            id="maxPrice">₹100</span>
+                                                            id="maxPrice">₹10,000</span>
                                                     </p>
                                                     <button type="submit" class="fbthl">Filter</button>
                                                 </div>
@@ -91,11 +98,11 @@
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="chbndcr">
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select class="form-select" aria-label="Default select example" name="brand_id" id="brand">>
                                                 <option selected>choose your car brand</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                  @foreach($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -112,11 +119,11 @@
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="chyurcr">
-                                            <select class="form-select" aria-label="Default select example">
+                                            <select class="form-select" aria-label="Default select example" name="brand_id" id="brand">>
                                                 <option selected>choose your Car</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                   @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -127,102 +134,59 @@
                         <div class="feturedpdct">
                             <h5><strong>FEATURED</strong></h5>
 
-                            <div class="fprdct">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="">
-                                            <div class="imgfp border ">
-                                                <img src="./assets/img/featured/featured1.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-
-                                        <div class="fpbdy">
-                                            <a href="#">
-                                                Carzex Android 10 Universal...
+                                <div class="fprdct">
+                             @foreach ($featuredProducts as $product)
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="{{ url('product', $product->id) }}">
+                                                <div class="imgfp border ">
+                                                     @if ($product->images)
+                                                        @php
+                                                            // Split the string by '!' to separate the URL from the alt text
+                                                            $imageParts = explode('!', $product->images);
+                                                            // Take the first part and trim any extra whitespace
+                                                            $imageUrl = trim($imageParts[0]);
+                                                            // Further split by commas in case there are multiple URLs
+                                                            $imageUrls = explode(',', $imageUrl);
+                                                            // Get the first URL and trim any extra whitespace
+                                                            $firstImageUrl = trim($imageUrls[0]);
+                                                        @endphp
+                                                        <img src="{{ $firstImageUrl }}" class="inner-img" alt="...">
+                                                    @else
+                                                        <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="inner-img" alt="...">
+                                                    @endif
+                                                    {{-- <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}"> --}}
+                                                </div>
                                             </a>
-                                            <div class="str">
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="fpbdy">
+                                                {{-- <a href="{{ url('product', $product->id) }}"> --}}
+                                                   <a href="{{ route('single_product', ['slug' => $product->slug]) }}">
+                                                                {{ implode(' ', array_slice(explode(' ', $product->name), 0, 3)) }} @if(str_word_count($product->name) > 3) ... <span style="color: blue;">Read More</span> @endif
+                                                            {{-- </a> --}}
+                                                </a>
+                                                <div class="str">
+                                                    @for ($i = 0; $i < 5; $i++)
+                                                        <span><i class="fa-solid fa-star {{ $i < $product->rating ? '' : 'text-muted' }}"></i></span>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <div class="fprice">
+                                                <p>
+                                                    <span>MRP:</span> 
+                                                    <span class="fdsm" style="text-decoration-line: line-through; color: aqua;">₹{{ $product->sale_price }}</span>
+                                                </p>
+                                                <p>
+                                                    <span>Price:</span> 
+                                                    <span class="fdsm" style="font-weight: 600!important; color:red;">₹{{ $product->price }}</span> 
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="fprice">
-                                            <p><span>MRP:</span> <span class="fdsm"
-                                                    style="text-decoration-line: line-through; color: aqua;">₹213</span>
-                                            </p>
-                                            <p><span>Price:</span> <span class="fdsm"
-                                                    style="font-weight: 600!important; color:red; ">₹213</span> </p>
-                                        </div>
                                     </div>
+                                    <hr>
+                            @endforeach
                                 </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="">
-                                            <div class="imgfp border ">
-                                                <img src="./assets/img/featured/featured3.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-
-                                        <div class="fpbdy">
-                                            <a href="#">
-                                                Carzex Android 10 Universal...
-                                            </a>
-                                            <div class="str">
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                            </div>
-                                        </div>
-                                        <div class="fprice">
-                                            <p><span>MRP:</span> <span class="fdsm"
-                                                    style="text-decoration-line: line-through; color: aqua;">₹213</span>
-                                            </p>
-                                            <p><span>Price:</span> <span class="fdsm"
-                                                    style="font-weight: 600!important; color:red; ">₹213</span> </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a href="">
-                                            <div class="imgfp border ">
-                                                <img src="./assets/img/featured/featured2.jpg" alt="">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-
-                                        <div class="fpbdy">
-                                            <a href="#">
-                                                Carzex Android 10 Universal...
-                                            </a>
-                                            <div class="str">
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                                <span><i class="fa-solid fa-star"></i></span>
-                                            </div>
-                                        </div>
-                                        <div class="fprice">
-                                            <p><span>MRP:</span> <span class="fdsm"
-                                                    style="text-decoration-line: line-through; color: aqua;">₹213</span>
-                                            </p>
-                                            <p><span>Price:</span> <span class="fdsm"
-                                                    style="font-weight: 600!important; color:red; ">₹213</span> </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -231,11 +195,13 @@
                     <div class=" srtingfltr formobilehiden">
                         <p>Sort By:</p>
                         <div class="srtngader">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>default Sorting</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                             <select name="sort" id="sort" class="form-select">
+                                <option value="default">Default sorting</option>
+                                <option value="popularity">Sort by popularity</option>
+                                <option value="rating">Sort by average rating</option>
+                                <option value="latest">Sort by latest</option>
+                                <option value="price_low_high">Sort by price: low to high</option>
+                                <option value="price_high_low">Sort by price: high to low</option>
                             </select>
                         </div>
                     </div>
@@ -454,113 +420,226 @@
 
                     <div class="ctgryarebox">
                         <div class="row flex flex-wrap">
-                            @if (session('filteredProducts'))
-                                @foreach (session('filteredProducts') as $item)
-                                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                                        <div class="ctgpdbx border rounded shadow">
-                                            <div class="card" aria-hidden="true">
+                                {{-- @if (session('filteredProducts'))
+                                    @foreach (session('filteredProducts') as $item)
+                                        <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                            <div class="ctgpdbx border rounded shadow">
+                                                <div class="card" aria-hidden="true">
 
-                                                <div class="img-wrapper">
-                                                    <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                                    @if ($item->images)
-                                                        <img src="{{ asset($item->images) }}" class="inner-img"
-                                                            alt="...">
-                                                    @else
-                                                        <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
-                                                            class="inner-img" alt="...">
-                                                    @endif
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><a
-                                                            href="{{ route('single_product', ['id' => $item->id]) }}">
-                                                            {{ $item->name }}
-                                                        </a></h5>
-                                                    <p class="caxt">
-                                                    <div class="str">
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
+                                                    <div class="img-wrapper">
+                                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                                        @if ($item->images)
+                                                            <img src="{{ asset($item->images) }}" class="inner-img"
+                                                                alt="...">
+                                                        @else
+                                                            <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
+                                                                class="inner-img" alt="...">
+                                                        @endif
                                                     </div>
-                                                    </p>
 
-                                                    <div class="productprice">
-                                                        <p><span>MRP:</span> <span class="fdsm"
-                                                                style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><a
+                                                                href="{{ route('single_product', ['id' => $item->id]) }}">
+                                                                {{ $item->name }}
+                                                            </a></h5>
+                                                        <p class="caxt">
+                                                        <div class="str">
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                        </div>
                                                         </p>
-                                                        <p><span>Price:</span> <span class="fdsm"
-                                                                style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
-                                                        </p>
-                                                    </div>
 
-                                                    <div class="adtbynbtn">
-                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
-                                                                To Cart</button></a>
-                                                        <button>Buy Now</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                @foreach ($products as $item)
-                                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                                        <div class="ctgpdbx border rounded shadow">
-                                            <div class="card" aria-hidden="true">
+                                                        <div class="productprice">
+                                                            <p><span>MRP:</span> <span class="fdsm"
+                                                                    style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
+                                                            </p>
+                                                            <p><span>Price:</span> <span class="fdsm"
+                                                                    style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
+                                                            </p>
+                                                        </div>
 
-                                                <div class="img-wrapper">
-                                                    <span class="badge rounded-pill text-bg-primary">-10%</span>
-                                                    @if ($item->images)
-                                                        <img src="{{ asset($item->images) }}" class="inner-img"
-                                                            alt="...">
-                                                    @else
-                                                        <img src="{{ asset('./assets/img/s-product/no-image.png') }}"
-                                                            class="inner-img" alt="...">
-                                                    @endif
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><a
-                                                            href="{{ route('single_product', ['id' => $item->id]) }}">
-                                                            {{ $item->name }}
-                                                        </a></h5>
-                                                    <p class="caxt">
-                                                    <div class="str">
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                        <span><i class="fa-solid fa-star"></i></span>
-                                                    </div>
-                                                    </p>
-
-                                                    <div class="productprice">
-                                                        <p><span>MRP:</span> <span class="fdsm"
-                                                                style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
-                                                        </p>
-                                                        <p><span>Price:</span> <span class="fdsm"
-                                                                style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="adtbynbtn">
-                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
-                                                            <button>Add To Cart</button></a>
-                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}">
+                                                        <div class="adtbynbtn">
+                                                            <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
+                                                                    To Cart</button></a>
+                                                                    <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"
                                                             <button>Buy Now</button></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($products as $item)
+                                    
+                                        <div class="col-md-3 col-sm-4 col-6 mb-3">
+                                            <div class="ctgpdbx border rounded shadow">
+                                                <div class="card" aria-hidden="true">
 
+                                                    <div class="img-wrapper">
+                                                        <span class="badge rounded-pill text-bg-primary">-10%</span>
+                                                    @if ($item->images)
+                                                        @php
+                                                            // Split the string by '!' to separate the URL from the alt text
+                                                            $imageParts = explode('!', $item->images);
+                                                            // Take the first part and trim any extra whitespace
+                                                            $imageUrl = trim($imageParts[0]);
+                                                            // Further split by commas in case there are multiple URLs
+                                                            $imageUrls = explode(',', $imageUrl);
+                                                            // Get the first URL and trim any extra whitespace
+                                                            $firstImageUrl = trim($imageUrls[0]);
+                                                        @endphp
+                                                        <img src="{{ $firstImageUrl }}" class="inner-img" alt="...">
+                                                    @else
+                                                        <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="inner-img" alt="...">
+                                                    @endif
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('single_product', ['slug' => $item->slug]) }}">
+                                                                {{ implode(' ', array_slice(explode(' ', $item->name), 0, 3)) }} @if(str_word_count($item->name) > 3) ... <span style="color: blue;">Read More</span> @endif
+                                                            </a>
+                                                        </h5>
 
+                                                        <p class="caxt">
+                                                        <div class="str">
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                        </div>
+                                                        </p>
 
+                                                        <div class="productprice">
+                                                            <p><span>MRP:</span> <span class="fdsm"
+                                                                    style="text-decoration-line: line-through; color: gray;">&#8377;{{ $item->price }}</span>
+                                                            </p>
+                                                            <p><span>Price:</span> <span class="fdsm"
+                                                                    style="color:#01a9f3;">&#8377;{{ $item->sale_price }}</span>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="adtbynbtn">
+                                                            <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Add
+                                                                    To Cart</button></a>
+                                                        <a href="{{ route('add_to_cart', ['id' => $item->id]) }}"><button>Buy Now</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif --}}
+
+                            <div class="row" id="product-list">
+                                <!-- Product list will be appended here -->
+                                @if (session('filteredProducts'))
+                                    @foreach (session('filteredProducts') as $item)
+                                        @include('product/product_item', ['item' => $item])
+                                    @endforeach
+                                @else
+                                    @foreach ($products as $item)
+                                        @include('front.product.product_item', ['item' => $item])
+                                    @endforeach
+                                @endif
+                            </div>
+
+                           <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const routes = {
+        single_product: "{{ route('single_product', ['slug' => ':slug']) }}",
+        add_to_cart: "{{ route('add_to_cart', ['slug' => ':slug']) }}",
+        no_image: "{{ asset('./assets/img/s-product/no-image.png') }}"
+    };
+
+    $(document).ready(function () {
+        function buildProductHtml(product) {
+            var discountBadge = '<span class="badge rounded-pill text-bg-primary">-10%</span>';
+            var imageUrl = product.images ? product.images.split('!')[0].split(',')[0].trim() : routes.no_image;
+            var truncatedName = product.name.split(' ').slice(0, 3).join(' ');
+            var readMore = product.name.split(' ').length > 3 ? '... <span style="color: blue;">Read More</span>' : '';
+            var singleProductUrl = routes.single_product.replace(':slug', product.slug);
+            var addToCartUrl = routes.add_to_cart.replace(':slug', product.slug);
+            
+            var productHtml = `
+                <div class="col-md-3 col-sm-4 col-6 mb-3">
+                    <div class="ctgpdbx border rounded shadow">
+                        <div class="card" aria-hidden="true">
+                            <div class="img-wrapper">
+                                ${discountBadge}
+                                <img src="${imageUrl}" class="inner-img" alt="...">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="${singleProductUrl}">
+                                        ${truncatedName} ${readMore}
+                                    </a>
+                                </h5>
+                                <p class="caxt">
+                                <div class="str">
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                </div>
+                                </p>
+                                <div class="productprice">
+                                    <p><span>MRP:</span> <span class="fdsm" style="text-decoration-line: line-through; color: gray;">&#8377;${product.price}</span></p>
+                                    <p><span>Price:</span> <span class="fdsm" style="color:#01a9f3;">&#8377;${product.sale_price}</span></p>
+                                </div>
+                                <div class="adtbynbtn">
+                                    <a href="${addToCartUrl}"><button>Add To Cart</button></a>
+                                    <a href="${addToCartUrl}"><button>Buy Now</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return productHtml;
+        }
+
+        function filterProducts() {
+            var brandId = $('#brand').val();
+            var sortOption = $('#sort').val();
+
+            $.ajax({
+                url: "{{ route('products.filter_sort') }}",
+                method: 'GET',
+                data: {
+                    brand_id: brandId,
+                    sort: sortOption
+                },
+                success: function (data) {
+                    var productList = $('#product-list');
+                    productList.empty();
+
+                    if (data.length > 0) {
+                        $.each(data, function (index, product) {
+                            productList.append(buildProductHtml(product));
+                        });
+                    } else {
+                        productList.append('<li>No products found</li>');
+                    }
+                }
+            });
+        }
+
+        $('#brand, #sort').on('change', function () {
+            filterProducts();
+        });
+
+        $('#filter-form').on('submit', function (e) {
+            e.preventDefault();
+            filterProducts();
+        });
+    });
+</script>
                             {{-- <div class="col-md-3 col-sm-4 col-6 mb-3">
                                 <div class="ctgpdbx border rounded shadow">
                                     <div class="card" aria-hidden="true">
@@ -729,3 +808,5 @@
         $('#priceFilterForm').submit();
     });
 </script>
+
+

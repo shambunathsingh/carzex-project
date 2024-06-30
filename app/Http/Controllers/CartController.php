@@ -17,15 +17,25 @@ use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
-    public function add_to_cart($id)
+    public function add_to_cart($slug)
     {
         // Check if the customer is authenticated
         if (Auth::guard('customer')->check()) {
             $customerId = Auth::guard('customer')->user()->id;
 
+            // Fetch the product using the slug
+            $product = Product::where('slug', $slug)->first();
+
+            if (!$product) {
+                // Handle the case when the product is not found
+                return redirect()->back()->withErrors(['error' => 'Product not found']);
+            }
+
+            $productId = $product->id;
+
             // Check if the product already exists in the cart for the customer
             $existingCartItem = Cart::where('customer_id', $customerId)
-                ->where('product_id', $id)
+                ->where('product_id', $productId)
                 ->first();
 
             // If the product exists, update its quantity or any other fields you need
@@ -37,13 +47,13 @@ class CartController extends Controller
                 // If the product doesn't exist, create a new cart item
                 $cart = new Cart();
                 $cart->customer_id = $customerId;
-                $cart->product_id = $id;
+                $cart->product_id = $productId;
                 $cart->save();
             }
 
-            // Fetch all cart items for the customer
-            $cartList = Cart::where('customer_id', $customerId)->get();
-
+            // Fetch all cart items for the customer with product data
+            $cartList = Cart::with('product')->where('customer_id', $customerId)->get();
+            // dd($cartList);
             // Assuming $title is defined somewhere
             $title = "Your Cart";
 
@@ -52,6 +62,7 @@ class CartController extends Controller
             return redirect()->route('myaccount');
         }
     }
+
     public function cart()
     {
         $title = "Carzex - Cart";
@@ -76,15 +87,15 @@ class CartController extends Controller
         $cartItems = session('cart', []);
 
         // Check if cart items exist and are in the correct format
-        if (!is_array($cartItems) || empty($cartItems)) {
-            // Handle error, e.g., redirect back with an error message
-            return redirect()->back()->with('error', 'Cart is empty or not in the correct format.');
-        }
+        // if (!is_array($cartItems) || empty($cartItems)) {
+        //     // Handle error, e.g., redirect back with an error message
+        //     return redirect()->back()->with('error', 'Cart is empty or not in the correct format.');
+        // }
 
         // Fetch product names based on product IDs
-        $productNames = [];  // Initialize an empty array to store product names
+        $productNames = [];
         foreach ($cartItems as $item) {
-            $product = Product::find($item['productId']);  // Assuming Product is your model name
+            $product = Product::find($item['productId']); // Assuming Product is your model name
             if ($product) {
                 $productNames[$item['productId']] = $product->name;
             } else {
@@ -92,11 +103,10 @@ class CartController extends Controller
             }
         }
 
-        // Calculate subtotal and total
-        $subtotal = 0;
-        foreach ($cartItems as $item) {
-            $subtotal += $item['subtotal'];
-        }
+        // Calculate subtotal
+        $subtotal = array_reduce($cartItems, function ($carry, $item) {
+            return $carry + $item['subtotal'];
+        }, 0);
 
         // You can add shipping or other costs here
         $shipping = 0; // Assuming free shipping for this example
@@ -104,6 +114,7 @@ class CartController extends Controller
 
         // Return the view with cart data and product names
         return view('front.payment.index', [
+            'title' => $title,
             'cartItems' => $cartItems,
             'subtotal' => $subtotal,
             'total' => $total,
@@ -111,7 +122,6 @@ class CartController extends Controller
             'productNames' => $productNames
         ]);
     }
-
 
     public function processPayment(Request $request)
     {

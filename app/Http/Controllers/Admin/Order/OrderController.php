@@ -40,16 +40,16 @@ class OrderController extends Controller
             'perPage' => $perPage
         ]);
     }
-    public function incomplete_orders(Request $request)
-    {
-        $title = "Carzex - Incomplete orders";
+    // public function incomplete_orders(Request $request)
+    // {
+    //     $title = "Carzex - Incomplete orders";
 
 
-        // Return the view with the homepage data
-        return view('admin.order.incomplete_orders', [
-            'title' => $title
-        ]);
-    }
+    //     // Return the view with the homepage data
+    //     return view('admin.order.incomplete_orders', [
+    //         'title' => $title
+    //     ]);
+    // }
     public function getOrders(Request $request)
     {
         $perPage = $request->get('perPage', 10);

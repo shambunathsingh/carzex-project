@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\ProductOrder\ProductOrder;
 use App\Models\Order\Order;
+use App\Models\CartDetail;
 
 class Product extends Model
 {
@@ -80,7 +81,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'categories', 'id');
+        return $this->belongsTo(Category::class, 'categories', 'slug');
     }
     public static function generateSlug($title)
     {
@@ -98,5 +99,9 @@ class Product extends Model
     public function order()
     {
         return $this->belongsTo(order::class);
+    }
+    public function CartDetail()
+    {
+        return $this->belongsTo(CartDetail::class);
     }
 }

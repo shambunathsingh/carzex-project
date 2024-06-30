@@ -30,7 +30,7 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'categories', 'id');
+        return $this->hasMany(Product::class, 'categories', 'slug');
     }
     public static function generateSlug($title)
     {

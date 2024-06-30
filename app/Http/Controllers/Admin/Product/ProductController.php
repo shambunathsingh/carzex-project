@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Product;
 use App\Actions\File\FileUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Brand\Brands;
+use App\Models\Carmodel\Carmodel;
 use App\Models\Category\Category;
 use App\Models\Product\Product;
 use App\Models\ProductCollection\ProductCollection;
@@ -574,6 +575,46 @@ class ProductController extends Controller
 
 
 
+    public function store_carmodel(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'brand_id' => 'required|integer',
+            'car_model' => 'required|string|max:255',
+            'status' => 'required|string',
+        ]);
+
+        // Create a new car model
+        $carModel = Carmodel::create([
+            'brand_id' => $validatedData['brand_id'],
+            'car_model' => $validatedData['car_model'],
+            'status' => $validatedData['status'],
+
+        ]);
+
+        // Return a response
+        return redirect()->back()->with('success', 'Car model created successfully.');
+    }
+    public function update_carmodel(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'brand_id' => 'required|integer',
+            'car_model' => 'required|string|max:255',
+            'status' => 'required|string',
+        ]);
+
+        $carmodel = Carmodel::findOrFail($id);
+        $carmodel->update($validatedData);
+
+        return redirect()->back()->with('success', 'Car model updated successfully');
+    }
+    public function delete_carmodel($id)
+    {
+        $carmodel = Carmodel::findOrFail($id);
+        $carmodel->delete();
+
+        return redirect()->back()->with('success', 'Car model deleted successfully');
+    }
     // PRODUCT DISCOUNT SECTION 
     public function store_discounts(Request $request)
     {

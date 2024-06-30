@@ -25,6 +25,7 @@ class HomeController extends Controller
         $this->cartService = $cartService;
     }
 
+
     public function index()
     {
         $title = "Carzex - Car Depot";

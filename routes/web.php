@@ -102,12 +102,16 @@ Route::middleware(['guest:web'])->group(function () {
     // Product Section
     Route::get('product-category', [FrontProductController::class, 'allproducts'])->name('allproducts');
     Route::get('product-category/{parentCategory}', [FrontProductController::class, 'show'])->name('product-category.show');
-    Route::get('product-category/{parentCategory}/{categoryName}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
-    Route::get('product/{id}', [FrontProductController::class, 'single_product'])->name('single_product');
+    Route::get('product-category/{parentCategoryslug}/{categoryNameslug}', [FrontProductController::class, 'showWithParent'])->name('product-category.showWithParent');
+    Route::get('product/{slug}', [FrontProductController::class, 'single_product'])->name('single_product');
     Route::post('/price_filter', [FrontProductController::class, 'priceFilter'])->name('price_filter');
+    Route::get('/products', [FrontProductController::class, 'index'])->name('products.index');
+    Route::get('/products/filter', [FrontProductController::class, 'filter'])->name('products.filter');
+    Route::get('/products/sort', [FrontProductController::class, 'sort'])->name('products.sort');
+    Route::get('/products/filter_sort', [FrontProductController::class, 'filterSort'])->name('products.filter_sort');
 
     // Add to Cart
-    Route::get('add-to-cart={id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+    Route::get('add-to-cart={slug}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
     Route::get('cart', [CartController::class, 'cart'])->name('cart');
     Route::post('/store-cart', function (Request $request) {
         $allCartItems = $request->input('allCartItems');
@@ -226,7 +230,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/orders/incomplete', [OrderController::class, 'incompleteOrders'])->name('incompleteOrders');
             // Order section
             Route::get('orders', [OrderController::class, 'index'])->name('orders');
-            Route::get('incomplete-orders', [OrderController::class, 'incomplete_orders'])->name('incomplete_orders');
+            // Route::get('incomplete-orders', [OrderController::class, 'incomplete_orders'])->name('incomplete_orders');
             Route::get('api/orders', [OrderController::class, 'getOrders'])->name('api.orders');
             Route::get('delete-order/{id}', [OrderController::class, 'delete_order'])->name('delete_order');
             Route::get('edit-order/edit/{id}', [OrderController::class, 'edit_order'])->name('edit_order');
@@ -325,7 +329,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('brands/edit-brand/{id}', [EcommerceController::class, 'edit_product_brands'])->name('edit_product_brands');
             Route::post('update-brand/{id}', [ProductController::class, 'update_brand'])->name('update_brand');
             Route::get('delete-brand/{id}', [ProductController::class, 'delete_brand'])->name('delete_brand');
+            
+            // prdouct carmodel
+            Route::get('carmodel', [EcommerceController::class, 'carmodel'])->name('carmodel');
 
+            Route::get('carmodel/create', [EcommerceController::class, 'create_product_carmodel'])->name('create_carmodel');
+            Route::post('store-carmodel', [ProductController::class, 'store_carmodel'])->name('save_carmodel');
+
+            Route::get('carmodel/edit-carmodel/{id}', [EcommerceController::class, 'edit_product_carmodel'])->name('edit_product_carmodel');
+            Route::post('update-carmodel/{id}', [ProductController::class, 'update_carmodel'])->name('update_carmodel');
+            Route::get('delete-carmodel/{id}', [ProductController::class, 'delete_carmodel'])->name('delete_carmodel');
             Route::get('contact', [EcommerceController::class, 'contact'])->name('contact');
             Route::get('contact/delete-contact/{id}', [EcommerceController::class, 'delete_contact'])->name('delete_contact');
             Route::get('contact/edit-contact/{id}', [EcommerceController::class, 'edit_contact'])->name('edit_contact');

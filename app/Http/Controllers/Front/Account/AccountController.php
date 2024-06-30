@@ -37,7 +37,7 @@ class AccountController extends Controller
         $customer = Customer::findOrFail($id);
 
         $customer->address = $request->input('address');
-        // $customer->privatenotes = $request->textarea('privatenotes');
+        $customer->privatenotes = $request->input('privatenotes');
         // Find the customer by ID
 
         // Update customer data

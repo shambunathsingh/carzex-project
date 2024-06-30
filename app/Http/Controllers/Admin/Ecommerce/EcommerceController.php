@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand\Brands;
+use App\Models\Carmodel\Carmodel;
 use App\Models\Contact\Contact;
 use App\Models\Category\Category;
 use App\Models\Product\Product;
@@ -72,13 +73,13 @@ class EcommerceController extends Controller
     {
         $title = "Carzex - Products";
         $product_list = Product::all();
-    
+
         return view('admin.ecommerce.product', [
             'title' => $title,
             'products' => $product_list
         ]);
     }
-    
+
 
     public function create_product()
     {
@@ -185,6 +186,33 @@ class EcommerceController extends Controller
         $brand = Brands::find($id);
 
         return view('admin.ecommerce.edit_brands', compact('brand'), ['title' => $title]);
+    }
+    // product carmodel
+    public function carmodel()
+    {
+        $title = "Carzex - carmodel";
+
+        $carmodel_list = Carmodel::all();
+
+        return view('admin.ecommerce.carmodel', ['title' => $title, 'carmodel' => $carmodel_list]);
+    }
+
+
+    public function create_product_carmodel()
+    {
+        $title = "Carzex - New carmodel";
+
+        $brands_list = Brands::all();
+        return view('admin.ecommerce.add_carmodel', ['title' => $title, 'brands' => $brands_list]);
+    }
+
+    public function edit_product_carmodel($id)
+    {
+        $title = "Carzex - Edit carmodel";
+        $brands = Brands::all();
+
+        $carmodel = carmodel::find($id);
+        return view('admin.ecommerce.edit_carmodel', compact('carmodel', 'brands'), ['title' => $title]);
     }
     // product discounts
     public function discounts()
@@ -445,7 +473,7 @@ class EcommerceController extends Controller
 
 
 
-      // Advanced Settings                    || ==========================================================================================>
+    // Advanced Settings                    || ==========================================================================================>
     public function advancedSettings()
     {
         $title = "Carzex - Advanced Settings ";
@@ -453,7 +481,7 @@ class EcommerceController extends Controller
         // Pass the variables to the view using the compact function
         return view('admin.ecommerce.advancedSettings', compact('title'));
     }
-      // tracking Settings                    || ==========================================================================================>
+    // tracking Settings                    || ==========================================================================================>
     public function trackingSettings()
     {
         $title = "Carzex - Advanced Settings ";
@@ -461,15 +489,11 @@ class EcommerceController extends Controller
         // Pass the variables to the view using the compact function
         return view('admin.ecommerce.trackingSettings', compact('title'));
     }
-     public function reports()
+    public function reports()
     {
         $title = "Carzex - Advanced Settings ";
 
         // Pass the variables to the view using the compact function
         return view('admin.ecommerce.reports', compact('title'));
     }
-    
 }
-
-
-

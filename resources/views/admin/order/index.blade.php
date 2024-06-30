@@ -142,7 +142,7 @@
                     <td class="text-start column-key-template">₹ {{ $order->totalAmount }}</td>
                     <td class="text-start column-key-template">₹ 00.00</td>
                     <td class="text-start column-key-template">₹ 00.00</td>
-                    <td class="text-start column-key-template">COD</td>
+                    <td class="text-start column-key-template">cash on delivery cod</td>
                     <td class="text-center column-key-payment_status">
                         @if ($order->is_paid == 1)
                             <span class="label-success status-label">Completed</span>

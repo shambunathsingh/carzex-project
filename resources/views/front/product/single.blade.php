@@ -3,6 +3,21 @@
 
 @section('content')
     <main class="snglcver">
+<!-- Include xZoom CSS -->
+<!-- Include Slick CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+<!-- Include Fancybox CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include Slick JavaScript -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- Include Fancybox JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
         <!-- todo single product area -->
@@ -12,38 +27,135 @@
                 <div class="row flex">
                     <div class="col-md-4">
                         <div class="snglpzmimg">
-                            <div class="xzoom-container">
-                                <a data-fancybox-trigger="gallery" href="javascript:;">
-                                    <!-- <span class="badge text-bg-primary">-20%</span> -->
-                                    <img class="xzoom" id="xzoom-default" src="{{ asset($product->images) }}"
-                                        xoriginal="{{ asset($product->images) }}" title="Product 1 is awesome" />
+                        <div class="main-image">
+    @if ($product->images)
+        @php
+            // Split the string by '|' to get individual image details
+            $imageDetails = explode('|', $product->images);
+            // Initialize an empty array to store parsed image data
+            $parsedImages = [];
 
-                                </a>
-                                <div class="xzoom-thumbs">
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big2.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big2.jpg"
-                                            title="Product 1 is awesome" width="80" /></a>
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big3.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big3.jpg"
-                                            xpreview="/assets/img/blog/blog-big3.jpg" title="Product 2 is awesome"
-                                            width="80" /></a>
+            foreach ($imageDetails as $imageDetail) {
+                // Split the details by '!' to separate parts
+                $parts = explode('!', $imageDetail);
+                $url = trim($parts[0]);
+                $alt = isset($parts[1]) ? trim(explode(':', $parts[1])[1]) : '';
+                $title = isset($parts[2]) ? trim(explode(':', $parts[2])[1]) : '';
+                $parsedImages[] = ['url' => $url, 'alt' => $alt, 'title' => $title];
+            }
 
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big4.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big4.jpg"
-                                            title="Product 3 is awesome" width="80" /></a>
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big1.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big1.jpg"
-                                            title="Product 4 is awesome" width="80" /></a>
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big3.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big3.jpg"
-                                            xpreview="/assets/img/blog/blog-big3.jpg" title="Product 2 is awesome"
-                                            width="80" /></a>
-                                    <a class="popup" data-fancybox="gallery" href="/assets/img/blog/blog-big3.jpg"><img
-                                            class="xzoom-gallery" src="/assets/img/blog/blog-big3.jpg"
-                                            xpreview="/assets/img/blog/blog-big3.jpg" title="Product 2 is awesome"
-                                            width="80" /></a>
-                                </div>
-                            </div>
+            // Get the first image URL for the main image
+            $firstImageUrl = $parsedImages[0]['url'];
+        @endphp
+        <a data-fancybox="gallery" href="{{ $firstImageUrl }}">
+            <img src="{{ $firstImageUrl }}" class="large-img" alt="{{ $parsedImages[0]['alt'] }}" title="{{ $parsedImages[0]['title'] }}">
+        </a>
+    @else
+        <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="large-img" alt="No Image Available">
+    @endif
+</div>
+
+<div class="thumbnail-slider">
+    @if ($product->images)
+        @foreach ($parsedImages as $image)
+            <div>
+                <a data-fancybox="gallery" href="{{ $image['url'] }}">
+                    <img src="{{ $image['url'] }}" alt="{{ $image['alt'] }}" title="{{ $image['title'] }}" />
+                </a>
+            </div>
+        @endforeach
+    @else
+        <!-- Example placeholders in case there are no images -->
+        <div>
+            <a data-fancybox="gallery" href="/assets/img/blog/blog-big2.jpg">
+                <img src="/assets/img/blog/blog-big2.jpg" alt="Placeholder" title="Placeholder" />
+            </a>
+        </div>
+        <div>
+            <a data-fancybox="gallery" href="/assets/img/blog/blog-big3.jpg">
+                <img src="/assets/img/blog/blog-big3.jpg" alt="Placeholder" title="Placeholder" />
+            </a>
+        </div>
+        <div>
+            <a data-fancybox="gallery" href="/assets/img/blog/blog-big4.jpg">
+                <img src="/assets/img/blog/blog-big4.jpg" alt="Placeholder" title="Placeholder" />
+            </a>
+        </div>
+        <div>
+            <a data-fancybox="gallery" href="/assets/img/blog/blog-big1.jpg">
+                <img src="/assets/img/blog/blog-big1.jpg" alt="Placeholder" title="Placeholder" />
+            </a>
+        </div>
+    @endif
+</div>
+
+<script>
+$(document).ready(function(){
+    $('.thumbnail-slider').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        arrows: true,
+        centerMode: true,
+        focusOnSelect: true
+    });
+
+    $('[data-fancybox="gallery"]').fancybox();
+});
+</script>
+
+<style>
+.main-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-image img.large-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.thumbnail-slider {
+    text-align: center;
+}
+
+.thumbnail-slider .slick-slide {
+    padding: 5px;
+    height: 100px;
+    display: inline;
+}
+
+.thumbnail-slider .slick-slide img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+.slick-dots{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none !important;
+}
+.slick-prev{ 
+     display: inline-block;
+    position: absolute;
+    z-index: 1;
+    display: none !important;
+
+    }
+    .slick-next { 
+    display: inline-block;
+    display: none !important;
+    position: absolute;
+    z-index: 1;
+    margin-top: -10%;
+    float: right !important;
+    text-align: end;
+    }
+</style>
                         </div>
                         <div class="ppppp">
                             <p><span>Disclaimer</span></p>
@@ -127,7 +239,10 @@
 
                                     <div class="prdrdc">
                                         <h5>Product Highlight</h5>
-                                        <li>Key Features – Android system || Bluetooth|| Mirror Link|| Voice Calling via
+                                        {!! $product->post_excerpt !!}
+
+                                        
+                                        {{-- <li>Key Features – Android system || Bluetooth|| Mirror Link|| Voice Calling via
                                             Bluetooth|| MosFet Output 54 watts x 4 || 7 inch HD Touch Screen (1024 x
                                             600) , 1080P High Definition FM Range 87.5MHZ-108.,Power Off With Auto
                                             Memory Store Function , Reverse Parking Input Function, Bass & Treble LSR
@@ -139,7 +254,7 @@
                                             same display quality from any angle, Better Contrast, and Better Display.
                                             Gorilla Glass makes it scratch resistant</li>
                                         <li>Compatible For:- Universal Car || Screen Size:- 7 Inch HD || Storage: 16 GB
-                                            ROM || Screen Type:- 1080×720 px Full HD Capacitive Touch</li>
+                                            ROM || Screen Type:- 1080×720 px Full HD Capacitive Touch</li> --}}
                                     </div>
 
                                     <div class="pdshare">
@@ -186,10 +301,10 @@
                             </script>
                             </div>
                             <div class="btnarea ">
-                                <a href="{{ route('add_to_cart', ['id' => $product->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $product->slug]) }}">
                                 <button class="btn btimary">Add to Cart</button></a>
 
-                                <a href="{{ route('add_to_cart', ['id' => $product->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $product->slug]) }}">
                                 <button class="btn btimary">Buy Now</button></a>
                                 <button class="btn whlst" id="wishlist">Add to wishlist</button>
                                 <input type="hidden" name="productid" id="productid" value="{{ $product->id }}">
@@ -384,8 +499,40 @@
                                     <div class="card" aria-hidden="true">
                                         <div class="img-wrapper">
                                             <span class="badge rounded-pill text-bg-primary">-{{ $relatedProduct->discount ?? 30 }}%</span>
-                                            <img class="xzoom" id="xzoom-default" src="{{ asset($relatedProduct->images) }}"
-                                        xoriginal="{{ asset($relatedProduct->images) }}" title="Product 1 is awesome" />
+                                            @if ($relatedProduct->images)
+    @php
+        // Split the string by '|' to get individual image details
+        $imageDetails = explode('|', $relatedProduct->images);
+        // Initialize an empty array to store parsed image data
+        $parsedImages = [];
+
+        foreach ($imageDetails as $imageDetail) {
+            // Split the details by '!' to separate parts
+            $parts = explode('!', $imageDetail);
+            $url = trim($parts[0]);
+            $alt = isset($parts[1]) ? trim(explode(':', $parts[1])[1]) : '';
+            $title = isset($parts[2]) ? trim(explode(':', $parts[2])[1]) : '';
+            $parsedImages[] = ['url' => $url, 'alt' => $alt, 'title' => $title];
+        }
+
+        // Check if parsedImages array is not empty before accessing index 0
+        $firstImageUrl = isset($parsedImages[0]['url']) ? $parsedImages[0]['url'] : '';
+    @endphp
+
+    @if (!empty($firstImageUrl))
+        <a data-fancybox="gallery" href="{{ $firstImageUrl }}">
+            <img src="{{ $firstImageUrl }}" class="large-img" alt="{{ $parsedImages[0]['alt'] }}" title="{{ $parsedImages[0]['title'] }}">
+        </a>
+    @else
+        <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="large-img" alt="No Image Available">
+    @endif
+
+@else
+    <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="large-img" alt="No Image Available">
+@endif
+
+                                            {{-- <img class="xzoom" id="xzoom-default" src="{{ asset($relatedProduct->images) }}"
+                                        xoriginal="{{ asset($relatedProduct->images) }}" title="Product 1 is awesome" /> --}}
                                         </div>
                                         <div class="card-body ">
                                             <h5 class="card-title"><a href="{{ url('product/'.$relatedProduct->id) }}">
@@ -407,10 +554,10 @@
                                                 <p><span>Price:</span> <span class="fdsm" style="color:#01a9f3;">₹{{ number_format($relatedProduct->sale_price, 2) }}</span></p>
                                             </div>
                                             <div class="adtbynbtn">
-                                <a href="{{ route('add_to_cart', ['id' => $relatedProduct->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $relatedProduct->slug]) }}">
 
                                                 <button>Add To Cart</button></a>
-                                <a href="{{ route('add_to_cart', ['id' => $relatedProduct->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $relatedProduct->slug]) }}">
 
                                                 <button>Buy Now</button></a>
                                             </div>
@@ -440,8 +587,38 @@
                                     <div class="card" aria-hidden="true">
                                         <div class="img-wrapper">
                                             <span class="badge rounded-pill text-bg-primary">-{{ $recentlyViewedProduct->discount ?? 30 }}%</span>
-                                       <img class="xzoom" id="xzoom-default" src="{{ asset($recentlyViewedProduct->images) }}"
-                                        xoriginal="{{ asset($recentlyViewedProduct->images) }}" title="Product 1 is awesome" />
+                                          @if ($recentlyViewedProduct->images)
+    @php
+        // Split the string by '|' to get individual image details
+        $imageDetails = explode('|', $recentlyViewedProduct->images);
+        // Initialize an empty array to store parsed image data
+        $parsedImages = [];
+
+        foreach ($imageDetails as $imageDetail) {
+            // Split the details by '!' to separate parts
+            $parts = explode('!', $imageDetail);
+            $url = trim($parts[0]);
+            $alt = isset($parts[1]) ? trim(explode(':', $parts[1])[1]) : '';
+            $title = isset($parts[2]) ? trim(explode(':', $parts[2])[1]) : '';
+            $parsedImages[] = ['url' => $url, 'alt' => $alt, 'title' => $title];
+        }
+
+        // Check if parsedImages array is not empty before accessing index 0
+        $firstImageUrl = isset($parsedImages[0]['url']) ? $parsedImages[0]['url'] : '';
+    @endphp
+
+    @if (!empty($firstImageUrl))
+        <a data-fancybox="gallery" href="{{ $firstImageUrl }}">
+            <img src="{{ $firstImageUrl }}" class="large-img" alt="{{ $parsedImages[0]['alt'] }}" title="{{ $parsedImages[0]['title'] }}">
+        </a>
+    @else
+        <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="large-img" alt="No Image Available">
+    @endif
+
+@else
+    <img src="{{ asset('./assets/img/s-product/no-image.png') }}" class="large-img" alt="No Image Available">
+@endif
+
                                         </div>
                                         <div class="card-body ">
                                             <h5 class="card-title"><a href="{{ url('product/'.$recentlyViewedProduct->id) }}">
@@ -464,10 +641,10 @@
                                                 <p><span>Price:</span> <span class="fdsm" style="color:#01a9f3;">₹{{ number_format($recentlyViewedProduct->sale_price, 2) }}</span></p>
                                             </div>
                                             <div class="adtbynbtn">
-                                <a href="{{ route('add_to_cart', ['id' => $recentlyViewedProduct->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $recentlyViewedProduct->slug]) }}">
 
                                                 <button>Add To Cart</button></a>
-                                <a href="{{ route('add_to_cart', ['id' => $recentlyViewedProduct->id]) }}">
+                                <a href="{{ route('add_to_cart', ['slug' => $recentlyViewedProduct->slug]) }}">
 
                                                 <button>Buy Now</button></a>
                                             </div>

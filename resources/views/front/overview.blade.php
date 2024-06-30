@@ -238,7 +238,7 @@
 
                     <div class="form-group">
                         <label for="privatenotes">Private Notes:</label>
-                        <textarea class="form-control" id="privatenotes" name="privatenotes" placeholder="Enter any private notes">{{ old('privatenotes', Auth::guard('customer')->user()->privatenotes) }}</textarea>
+                        <input class="form-control" id="privatenotes" name="privatenotes" placeholder="Enter any private notes" value="{{ old('privatenotes', Auth::guard('customer')->user()->privatenotes) }}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>

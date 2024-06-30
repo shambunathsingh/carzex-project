@@ -147,6 +147,11 @@
                                             class="fa fa-registered"></i></span>
                                     Brands</a>
                             </li>
+                             <li class="sublink"><a href="{{ route('admin.ecommerce.carmodel') }}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
+                                            class="fa fa-registered"></i></span>
+                                    Car models</a>
+                            </li>
                             <li class="sublink"><a href="{{ route('admin.ecommerce.product_collection') }}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"><span><i
                                             class="fa fa-file-excel"></i></span>

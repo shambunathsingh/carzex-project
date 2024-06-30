@@ -1,12 +1,12 @@
 <style>
     /* CSS for dropdown */
-    .dropdown {
+    .dropdownsearch {
 
-        /* position: absolute; */
-        /* background-color: #f9f9f9; */
-        /* min-width: 400px; */
-        /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
-        /* z-index: 1; */
+         position: absolute; 
+         background-color: #f9f9f9; 
+         min-width: 400px; 
+         /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+         z-index: 3; 
     }
 
     .dropdown-item {
@@ -102,7 +102,7 @@
                                     <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                 </div>
                             </form>
-                        <div id="searchSuggestions" class="dropdown"></div>
+                        <div id="searchSuggestions" class="dropdown dropdownsearch"></div>
 
                         </div>
                         <div class="middel_right_info">
@@ -228,12 +228,12 @@
                 @if ($cartItem['customer_id'] == Auth::guard('customer')->id())
                     <div class="cart_item">
                         <div class="cart_img">
-                            <a href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}"><img
+                            <a href="{{ route('single_product', ['slug' => $cartItem['product']['slug']]) }}"><img
                                     src="{{ asset($cartItem['product']['images']) }}" alt=""></a>
                         </div>
                         <div class="cart_info">
                             <a
-                                href="{{ route('single_product', ['id' => $cartItem['product']['id']]) }}">{{ $cartItem['product']['name'] }}</a>
+                                href="{{ route('single_product', ['slug' => $cartItem['product']['slug']]) }}">{{ $cartItem['product']['name'] }}</a>
                             <span class="quantity">Qty: {{ $cartItem['quantity'] }}</span>
                             <span class="price_cart">{{ $cartItem['product']['sale_price'] }}</span>
                         </div>

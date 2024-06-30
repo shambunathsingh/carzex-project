@@ -133,7 +133,7 @@
 
 
 
-                                <a href="{{ url($url) }}">
+                                <a target="_blank" href="{{ url($url) }}">
                                     <div class="cateImg">
                                         <img src="{{ asset('uploads/' . $cat_item->image) }}" alt="">
                                     </div>
