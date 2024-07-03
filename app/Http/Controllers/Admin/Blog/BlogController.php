@@ -67,6 +67,7 @@ class BlogController extends Controller
         $post->description = $request->description;
         $post->is_featured = $request->is_featured;
         $post->content = $request->content;
+        $post->slug = Post::generateSlug($request->name);
         $post->time_to_read = $request->time_to_read;
         $post->layout = $request->layout;
         $post->status = $request->status;
@@ -109,6 +110,7 @@ class BlogController extends Controller
         // Create a new category instance
         $post = Post::findOrFail($id);
         $post->name = $request->name;
+        $post->slug = Post::generateSlug($request->name);
         $post->description = $request->description;
         $post->is_featured = $request->is_featured;
         $post->content = $request->content;
@@ -174,6 +176,7 @@ class BlogController extends Controller
         // Create a new category instance
         $pcat = new PostCategory();
         $pcat->name = $request->name;
+        $pcat->slug = Post::generateSlug($request->name);
         $pcat->parent_id = $request->parent_id;
         $pcat->description = $request->description;
         $pcat->is_default = $request->is_default;
@@ -207,6 +210,7 @@ class BlogController extends Controller
         // Create a new category instance
         $pcat = PostCategory::findOrFail($id);
         $pcat->name = $request->name;
+        $pcat->slug = Post::generateSlug($request->name);
         $pcat->parent_id = $request->parent_id;
         $pcat->description = $request->description;
         $pcat->is_default = $request->is_default;

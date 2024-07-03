@@ -4,6 +4,7 @@ namespace App\Models\Carmodel;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Brand\Brands;
 
 class Carmodel extends Model
 {
@@ -19,4 +20,8 @@ class Carmodel extends Model
         'updated_at',
         'created_at'
     ];
+    public function Brands()
+    {
+        return $this->belongsTo(Brands::class);
+    }
 }

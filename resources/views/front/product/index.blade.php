@@ -121,9 +121,11 @@
                                         <div class="chyurcr">
                                             <select class="form-select" aria-label="Default select example" name="brand_id" id="brand">>
                                                 <option selected>choose your Car</option>
-                                                   @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                                    @endforeach
+                                                     @if($carModel)
+                                                        <option value="{{ $carModel->id }}">{{ $carModel->name }}</option>
+                                                        @else
+                                                            <p>No car model available for the first brand.</p>
+                                                        @endif
                                             </select>
                                         </div>
                                     </div>

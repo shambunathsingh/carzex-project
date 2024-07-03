@@ -93,7 +93,8 @@ Route::middleware(['guest:web'])->group(function () {
     Route::get('return-warranty', [HomeController::class, 'return_warranty'])->name('return_warranty');
     Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
     Route::get('blogs', [HomeController::class, 'blog'])->name('blog');
-    Route::get('blogs/{id}', [HomeController::class, 'singleblog'])->name('singleblog');
+    Route::get('blogs/{slug}', [HomeController::class, 'singleblog'])->name('singleblog');
+    Route::get('categories/{slug}', [HomeController::class, 'bologcategory'])->name('bologcategory');
     Route::get('terms-conditions', [HomeController::class, 'terms_condition'])->name('terms_condition');
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('teams', [HomeController::class, 'team'])->name('team');
@@ -329,7 +330,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('brands/edit-brand/{id}', [EcommerceController::class, 'edit_product_brands'])->name('edit_product_brands');
             Route::post('update-brand/{id}', [ProductController::class, 'update_brand'])->name('update_brand');
             Route::get('delete-brand/{id}', [ProductController::class, 'delete_brand'])->name('delete_brand');
-            
+
             // prdouct carmodel
             Route::get('carmodel', [EcommerceController::class, 'carmodel'])->name('carmodel');
 

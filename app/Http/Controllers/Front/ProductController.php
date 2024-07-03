@@ -8,6 +8,7 @@ use App\Models\Product\Product;
 use App\Models\Brand\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\Carmodel\Carmodel;
 
 class ProductController extends Controller
 {
@@ -24,25 +25,6 @@ class ProductController extends Controller
 
         return view('front.product.index', ['title' => $title, 'products' => $allproduct, 'category' => $category, 'brands' => $brands, 'featuredProducts' => $featuredProducts]);
     }
-
-    // public function single_product($id)
-    // {
-    //     $title = "Carzex - Product";
-
-    //     // Get the product detail
-    //     $productDetail = Product::findOrFail($id);
-
-    //     // Get related products by category
-    //     $relatedProducts = Product::where('categories', $productDetail->categories)
-    //         ->where('id', '!=', $id)
-    //         ->get(['id', 'name', 'sale_price', 'images']); // Assuming you have these fields
-
-    //     return view('front.product.single', [
-    //         'title' => $title,
-    //         'product' => $productDetail,
-    //         'relatedProducts' => $relatedProducts
-    //     ]);
-    // }
 
     public function single_product($slug)
     {
@@ -73,7 +55,6 @@ class ProductController extends Controller
         ]);
     }
 
-
     private function addToRecentlyViewed($productId)
     {
         $recentlyViewed = session()->get('recently_viewed', []);
@@ -86,7 +67,6 @@ class ProductController extends Controller
             session()->put('recently_viewed', $recentlyViewed);
         }
     }
-
 
     public function show($categoryName)
     {
@@ -104,14 +84,20 @@ class ProductController extends Controller
         ]);
     }
 
-
     public function showWithParent($parentCategoryslug, $categoryNameslug)
     {
         $category = Category::where('slug', $categoryNameslug)->firstOrFail();
         $parentCategory = Category::where('slug', $parentCategoryslug)->firstOrFail();
-        $brands = brands::all();
         $featuredProducts = Product::where('is_featured', 1)->get();
+        $brands = brands::all();
+        $firstBrand = $brands->first();
 
+        if ($firstBrand) {
+            $carModel = Carmodel::where('brand_id', $firstBrand->id)->firstOrFail();
+        } else {
+            // Handle the case where there are no brands
+            $carModel = null;
+        }
         // Fetch products related to the category
         $products = $category->products;
 
@@ -121,8 +107,10 @@ class ProductController extends Controller
             'products' => $products,
             'brands' => $brands,
             'featuredProducts' => $featuredProducts,
+            'carModel' => $carModel,
         ]);
     }
+
     public function search(Request $req)
     {
         $brands = Brands::all();
@@ -183,11 +171,24 @@ class ProductController extends Controller
         // Redirect back to the previous page with the filtered products
         return redirect()->back();
     }
+
     public function index()
     {
         $brands = Brands::all();
-        return view('products.index', compact('brands'));
+
+        // Assuming you want to get the first brand to find its car models
+        $firstBrand = $brands->first();
+
+        if ($firstBrand) {
+            $carModel = Carmodel::where('brand_id', $firstBrand->id)->firstOrFail();
+        } else {
+            // Handle the case where there are no brands
+            $carModel = null;
+        }
+
+        return view('products.index', compact('brands', 'carModel'));
     }
+
 
     // public function filter(Request $request)
     // {

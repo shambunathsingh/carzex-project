@@ -176,32 +176,36 @@ class HomeController extends Controller
 
         return view('front.privacy.index', ['title' => $title, 'pages' => $page, 'page_info' => $page_info]);
     }
-
     public function blog()
     {
-
-        $allpages = Page::all();
-
-        $post_list = Post::all();
-        $cat_list = PostCategory::all();
-
-        // Retrieve the latest two posts
-        $latest_posts = Post::latest()->take(2)->get();
-
-
         $title = "Carzex - Blogs";
 
-        return view('front.blog.index', ['title' => $title, 'pages' => $allpages, 'posts' => $post_list, 'postCategory' => $cat_list, 'latest_posts' => $latest_posts]);
+        $allpages = Page::all();
+        $post_list = Post::all();
+        $cat_list = PostCategory::all();
+        $latest_posts = Post::latest()->take(2)->get();
+        $categories = PostCategory::with('children')->get();
+        return view('front.blog.index', [
+            'title' => $title,
+            'pages' => $allpages,
+            'posts' => $post_list,
+            'postCategory' => $cat_list,
+            'latest_posts' => $latest_posts,
+            'categories' => $categories,
+        ]);
     }
-    public function singleblog($id)
+    public function singleblog($slug)
     {
         $allpages = Page::all();
 
-        // Retrieve the specific post by id
-        $post = Post::where('id', $id)->firstOrFail();
-
-        // Retrieve all post categories
         $cat_list = PostCategory::all();
+        $post = Post::where('slug', $slug)->firstOrFail(); // Retrieve the post by slug
+
+        $postCategory = PostCategory::findOrFail($post->categories);
+
+        $relatedPosts = Post::where('categories', $post->categories)
+            ->where('slug', '!=', $slug) // Exclude the current post
+            ->get();
 
         // Retrieve the latest two posts
         $latest_posts = Post::latest()->take(2)->get();
@@ -213,7 +217,48 @@ class HomeController extends Controller
             'pages' => $allpages,
             'post' => $post, // Pass the specific post to the view
             'postCategory' => $cat_list,
-            'latest_posts' => $latest_posts
+            'latest_posts' => $latest_posts,
+            'PostCategory' => $postCategory,
+            'relatedPosts' => $relatedPosts,
+        ]);
+    }
+    public function bologcategory($slug)
+    {
+        // Retrieve all pages
+        $allpages = Page::all();
+
+        // Retrieve the post category by slug
+        $postCategory = PostCategory::where('slug', $slug)->firstOrFail();
+        // dd($postCategory);
+        // Retrieve all post categories for the sidebar
+        $postCategories = PostCategory::all();
+
+        // Retrieve posts associated with the category
+        $posts = Post::where('categories', $postCategory->id)->get();
+        // dd($posts);
+        // Retrieve the first post if available
+        $firstPost = $posts->first();
+
+        // Retrieve related posts excluding the current post
+        $relatedPosts = Post::where('categories', $postCategory->id)
+            ->where('slug', '!=', $slug) // Exclude the current post
+            ->get();
+        // dd($relatedPosts);
+        // Retrieve the latest two posts
+        $latestPosts = Post::latest()->take(2)->get();
+
+        // Set the page title
+        $title = "Carzex - Blogs";
+
+        // Return the view with all the necessary data
+        return view('front.blog.bologcategory', [
+            'title' => $title,
+            'pages' => $allpages,
+            'postCategory' => $postCategory,
+            'firstPost' => $firstPost,
+            'latestPosts' => $latestPosts,
+            'relatedPosts' => $relatedPosts,
+            'postCategories' => $postCategories, // Pass post categories to the view
         ]);
     }
 

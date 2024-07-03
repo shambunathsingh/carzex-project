@@ -2,11 +2,11 @@
     /* CSS for dropdown */
     .dropdownsearch {
 
-         position: absolute; 
-         background-color: #f9f9f9; 
-         min-width: 400px; 
-         /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
-         z-index: 3; 
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 400px;
+        /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+        z-index: 3;
     }
 
     .dropdown-item {
@@ -21,23 +21,27 @@
         cursor: pointer;
 
     }
-        .dropdown-menu {
-            min-width: 200px;
-        }
-        .dropdown-item > i {
-            margin-right: 10px;
-        }
-        .header_wishlist .dropdown-toggle::after {
-            display: none;
-        }
-        .header_wishlist {
-            display: inline-block;
-            margin-right: 10px;
-        }
-    </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 
-    <header class="header_area header_padding">
+    .dropdown-menu {
+        min-width: 200px;
+    }
+
+    .dropdown-item>i {
+        margin-right: 10px;
+    }
+
+    .header_wishlist .dropdown-toggle::after {
+        display: none;
+    }
+
+    .header_wishlist {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+
+<header class="header_area header_padding">
     <!--header top start-->
     <div class="header_top">
         <div class="container">
@@ -45,7 +49,8 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="follow_us">
-                            <label><span><a href="#" style="color:#51c5d7;font-weight: bold; cursor: pointer;">Order
+                            <label><span><a href="#"
+                                        style="color:#51c5d7;font-weight: bold; cursor: pointer;">Order
                                         Tracking</a></span></label>
                             <ul class="follow_link">
                                 <li><a href="#"><i class="fa-solid fa-phone"></i> 9711393973</a></li>
@@ -102,27 +107,33 @@
                                     <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                 </div>
                             </form>
-                        <div id="searchSuggestions" class="dropdown dropdownsearch"></div>
+                            <div id="searchSuggestions" class="dropdown dropdownsearch"></div>
 
                         </div>
                         <div class="middel_right_info">
                             {{-- <div class="header_wishlist"> --}}
-                                {{-- <a href="{{ route('myaccount') }}" class="profile-trigger">
+                            {{-- <a href="{{ route('myaccount') }}" class="profile-trigger">
                                     <span class="ion-android-person"></span>
                                 </a> --}}
-                                 <div class="header_wishlist mblehdrr dropdown">
-                                    <a class="btn dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="ion-android-person"></span>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{ route('overview') }}"><i class="bi bi-person"></i> My Account</a>
-                                        <a class="dropdown-item" href="#"><i class="bi bi-geo-alt"></i> Order Tracking</a>
-                                        <a class="dropdown-item" href="{{ route('show_wishlist') }}"><i class="lnr lnr-heart"></i> My Wishlist</a>
-                                        <a class="dropdown-item" href=""{{ route('overview') }}><i class="bi bi-pencil-square"></i> Update Profile</a>
-                                        <a class="dropdown-item" href="{{ route('myaccount_logout') }}"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
-                                    </div>
+                            <div class="header_wishlist mblehdrr dropdown">
+                                <a class="btn dropdown-toggle" href="#" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="ion-android-person"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{ route('overview') }}"><i class="bi bi-person"></i>
+                                        My Account</a>
+                                    <a class="dropdown-item" href="#"><i class="bi bi-geo-alt"></i> Order
+                                        Tracking</a>
+                                    <a class="dropdown-item" href="{{ route('show_wishlist') }}"><i
+                                            class="lnr lnr-heart"></i> My Wishlist</a>
+                                    <a class="dropdown-item" href=""{{ route('overview') }}><i
+                                            class="bi bi-pencil-square"></i> Update Profile</a>
+                                    <a class="dropdown-item" href="{{ route('myaccount_logout') }}"><i
+                                            class="bi bi-box-arrow-right"></i> Sign Out</a>
                                 </div>
-                                {{-- <ul class="profilemenu">
+                            </div>
+                            {{-- <ul class="profilemenu">
                                     <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a></li>
                                     <li><a href="http://localhost:8000/logout"><i class="fa-solid fa-key"></i>Logout</a>
                                     </li>
@@ -156,7 +167,7 @@
                                     <span class="cart_quantity">0</span>
                                 </div>
                             @endif
-{{-- 
+                            {{-- 
                             @if (Auth::guard('customer')->check())
                                 <div class="header_wishlist">
                                     <a href="{{ route('myaccount_logout') }}">
@@ -305,93 +316,129 @@
                 <div class="col-12">
                     <div class="main_menu header_position">
                         <nav>
-<script>
-   <?php
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $baseURL = $protocol . $_SERVER['HTTP_HOST'] . '/';
-        echo "var baseURL = '$baseURL';";
-        ?>
-        
-        // Helper function to create a full URL
-        function createURL(slug) {
-            return baseURL + 'product-category/' + slug;
-        }
-    </script>
-    <ul>
-        <!-- <li><a href="index.html">Home</a></li> -->
+                            <script>
+                                <?php
+                                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+                                $baseURL = $protocol . $_SERVER['HTTP_HOST'] . '/';
+                                echo "var baseURL = '$baseURL';";
+                                ?>
 
-        <li>
-            <a href="#"><span><img src=".//assets/img/icon/INTERIOR.png" alt=""></span>
-                INTERIOR ACCESSORIES <i class="fa fa-angle-down"></i></a>
-            <ul class="sub_menu pages">
-                <li><a href="#" onclick="this.href=createURL('interior-accessories/car-android-screens')">CAR ANDROID TOUCH SCREENS</a></li>
-                <li><a href="#" onclick="this.href=createURL('interior-accessories/car-footmats')">CAR FOOTMATS</a></li>
-                <li><a href="#" onclick="this.href=createURL('interior-accessories/car-perfumes')">CAR PERFUMES</a></li>
-                <li><a href="#" onclick="this.href=createURL('interior-accessories/car-utilities')">CAR UTILITIES</a></li>
-            </ul>
-        </li>
+                                // Helper function to create a full URL
+                                function createURL(slug) {
+                                    return baseURL + 'product-category/' + slug;
+                                }
+                            </script>
+                            <ul>
+                                <!-- <li><a href="index.html">Home</a></li> -->
 
-        <li>
-            <a href="#"><span><img src=".//assets/img/icon/EXTERIOR.png" alt=""></span>
-                EXTERIOR ACCESSORIES <i class="fa fa-angle-down"></i></a>
-            <ul class="sub_menu pages">
-                <li><a href="#" onclick="this.href=createURL('exterior-accessories/car-bumper-protectors')">CAR BUMPER PROTECTORS</a></li>
-                <li><a href="#" onclick="this.href=createURL('exterior-accessories/chrome-beading-rolls')">CHROME BEADING ROLLS</a></li>
-                <li><a href="#" onclick="this.href=createURL('exterior-accessories/car-exhaust-tips')">CAR EXHAUST & TIPS</a></li>
-                <li><a href="#" onclick="this.href=createURL('exterior-accessories/car-fancy-exhaust')">CAR FANCY EXHAUSTS</a></li>
-            </ul>
-        </li>
+                                <li>
+                                    <a href="#"><span><img src=".//assets/img/icon/INTERIOR.png"
+                                                alt=""></span>
+                                        INTERIOR ACCESSORIES <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('interior-accessories/car-android-screens')">CAR
+                                                ANDROID TOUCH SCREENS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('interior-accessories/car-footmats')">CAR
+                                                FOOTMATS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('interior-accessories/car-perfumes')">CAR
+                                                PERFUMES</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('interior-accessories/car-utilities')">CAR
+                                                UTILITIES</a></li>
+                                    </ul>
+                                </li>
 
-        <li>
-            <a href="#"><span><img src=".//assets/img/icon/CAR-COMFORT-SAFETY.png" alt=""></span>
-                CAR COMFORT & SAFETY <i class="fa fa-angle-down"></i></a>
-            <ul class="sub_menu pages">
-                <li class="dropend">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        CAR BODY COVERS
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">2×2 HEAVY CAR BODY COVERS</a></li>
-                        <li><a href="#">RED & BLUE CAR BODY COVERS</a></li>
-                        <li><a href="#">SIMPLE BLUE CAR BODY COVERS</a></li>
-                        <li><a href="#">METALLIC SILVER CAR BODY COVERS</a></li>
-                        <li><a href="#">NAVY BLUE CAR BODY COVERS</a></li>
-                        <li><a href="#">JUNGLE PRINT CAR BODY COVERS</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" onclick="this.href=createURL('car-rear-view-camera-screens')">CAR REAR VIEW CAMERA & SCREENS</a></li>
-                <li><a href="#" onclick="this.href=createURL('car-rear-parking-sensors')">CAR REVERSE PARKING SENSORS</a></li>
-            </ul>
-        </li>
+                                <li>
+                                    <a href="#"><span><img src=".//assets/img/icon/EXTERIOR.png"
+                                                alt=""></span>
+                                        EXTERIOR ACCESSORIES <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('exterior-accessories/car-bumper-protectors')">CAR
+                                                BUMPER PROTECTORS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('exterior-accessories/chrome-beading-rolls')">CHROME
+                                                BEADING ROLLS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('exterior-accessories/car-exhaust-tips')">CAR
+                                                EXHAUST & TIPS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('exterior-accessories/car-fancy-exhaust')">CAR
+                                                FANCY EXHAUSTS</a></li>
+                                    </ul>
+                                </li>
 
-        <li>
-            <a href="#"><span><img src=".//assets/img/icon/CAR-LIGHTS.png" alt=""></span>
-                CAR LIGHTINGS <i class="fa fa-angle-down"></i></a>
-            <ul class="sub_menu pages">
-                <li><a href="#" onclick="this.href=createURL('car-fog-bar-lights')">CAR BAR LIGHTS</a></li>
-                <li><a href="#" onclick="this.href=createURL('car-exterior-decoration-lights')">CAR EXTERIOR DECORATION LIGHTS</a></li>
-                <li><a href="#" onclick="this.href=createURL('car-interior-decoration-lights')">CAR INTERIOR DECORATION LIGHTS</a></li>
-                <li><a href="#" onclick="this.href=createURL('car-led-headlight-bulbs')">CAR LED HEADLIGHT BULBS</a></li>
-            </ul>
-        </li>
+                                <li>
+                                    <a href="#"><span><img src=".//assets/img/icon/CAR-COMFORT-SAFETY.png"
+                                                alt=""></span>
+                                        CAR COMFORT & SAFETY <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li class="dropend">
+                                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                CAR BODY COVERS
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">2×2 HEAVY CAR BODY COVERS</a></li>
+                                                <li><a href="#">RED & BLUE CAR BODY COVERS</a></li>
+                                                <li><a href="#">SIMPLE BLUE CAR BODY COVERS</a></li>
+                                                <li><a href="#">METALLIC SILVER CAR BODY COVERS</a></li>
+                                                <li><a href="#">NAVY BLUE CAR BODY COVERS</a></li>
+                                                <li><a href="#">JUNGLE PRINT CAR BODY COVERS</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('car-rear-view-camera-screens')">CAR REAR
+                                                VIEW CAMERA & SCREENS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('car-rear-parking-sensors')">CAR REVERSE
+                                                PARKING SENSORS</a></li>
+                                    </ul>
+                                </li>
 
-        <li>
-            <a href="#"><span><img src=".//assets/img/icon/BIKE-ACCESSORIES.png" alt=""></span>
-                BIKE ACCESSORIES <i class="fa fa-angle-down"></i></a>
-            <ul class="sub_menu pages">
-                <li><a href="#" onclick="this.href=createURL('bike-body-covers')">BIKE & SCOOTY BODY COVERS</a></li>
-                <li><a href="#" onclick="this.href=createURL('bike-fog-bar-light')">BIKE LED LIGHTS</a></li>
-            </ul>
-        </li>
+                                <li>
+                                    <a href="#"><span><img src=".//assets/img/icon/CAR-LIGHTS.png"
+                                                alt=""></span>
+                                        CAR LIGHTINGS <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li><a href="#" onclick="this.href=createURL('car-fog-bar-lights')">CAR
+                                                BAR LIGHTS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('car-exterior-decoration-lights')">CAR
+                                                EXTERIOR DECORATION LIGHTS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('car-interior-decoration-lights')">CAR
+                                                INTERIOR DECORATION LIGHTS</a></li>
+                                        <li><a href="#"
+                                                onclick="this.href=createURL('car-led-headlight-bulbs')">CAR LED
+                                                HEADLIGHT BULBS</a></li>
+                                    </ul>
+                                </li>
 
-        <li><a href="#">SPECIAL OFFER</a></li>
+                                <li>
+                                    <a href="#"><span><img src=".//assets/img/icon/BIKE-ACCESSORIES.png"
+                                                alt=""></span>
+                                        BIKE ACCESSORIES <i class="fa fa-angle-down"></i></a>
+                                    <ul class="sub_menu pages">
+                                        <li><a href="#" onclick="this.href=createURL('bike-body-covers')">BIKE &
+                                                SCOOTY BODY COVERS</a></li>
+                                        <li><a href="#" onclick="this.href=createURL('bike-fog-bar-light')">BIKE
+                                                LED LIGHTS</a></li>
+                                    </ul>
+                                </li>
 
-        <li class="crthlo" id="crthloid">
-            <a href="{{ route('allproducts') }}">
-                <span onclick="changeColor()" class="lnr lnr-cart" style="font-size: 18px; font-weight: bold;"></span>
-            </a>
-        </li>
-    </ul>
+                                <li><a href="#">SPECIAL OFFER</a></li>
+
+                                <li class="crthlo" id="crthloid">
+                                    <a href="{{ route('allproducts') }}">
+                                        <span onclick="changeColor()" class="lnr lnr-cart"
+                                            style="font-size: 18px; font-weight: bold;"></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </nav>
                     </div>
                 </div>
@@ -681,15 +728,17 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $('#searchInput').on('keyup', function(){
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
             var query = $(this).val();
-            if(query.length >= 2){
+            if (query.length >= 2) {
                 $.ajax({
                     url: '/search/suggestions',
                     method: 'GET',
-                    data: {query: query},
-                    success: function(response){
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
                         $('#searchSuggestions').html(response);
                     },
                     error: function(xhr, status, error) {
