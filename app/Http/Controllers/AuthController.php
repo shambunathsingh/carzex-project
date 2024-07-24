@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,8 +18,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|email',
+            'password' => 'required|min:6'
         ]);
 
         // login code
@@ -29,7 +28,7 @@ class AuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect('admin/login')->withErrors('Invalid details');
+        return redirect()->route('login')->withErrors('Invalid login details');
     }
 
     public function register_view()
@@ -39,30 +38,26 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users|email',
-            'password' => 'required'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:Admins',
+            'password' => 'required|string|min:6|confirmed'
         ]);
 
-        // Save in user table
-
+        // Save in Admin table
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        // login user here
+        // login Admin here
         if (Auth::attempt($request->only('email', 'password'))) {
-            $title = "Carzex - Dashboard";
-
-            // Add your admin dashboard logic here
-            return view('admin.dashboard', ['title' => $title]);
+            // Redirect to the admin dashboard route
+            return redirect()->route('admin.dashboard');
         }
 
-        return redirect('admin/register')->withErrors('Error');
+        return redirect()->route('register')->withErrors('Registration error');
     }
 
     public function home()
@@ -77,7 +72,6 @@ class AuthController extends Controller
     {
         Session::flush();
         Auth::logout();
-        // return redirect('auth.login');
         return redirect()->route('login');
     }
 }

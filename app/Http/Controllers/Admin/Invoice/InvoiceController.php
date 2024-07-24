@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 use Illuminate\Http\Request;
 
+
 class InvoiceController extends Controller
 {
 

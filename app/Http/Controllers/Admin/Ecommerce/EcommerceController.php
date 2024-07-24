@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use App\Models\Contact\ContactReply;
 use PhpParser\Node\Stmt\Label;
 
+
 class EcommerceController extends Controller
 {
     public function product_categories()

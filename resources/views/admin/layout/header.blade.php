@@ -29,7 +29,7 @@
                                 <ul class="submenu">
                                     <li><a href="#"><i class="fa-regular fa-user"></i>Profile</a>
                                     </li>
-                                    <li><a href="{{ route('logout') }}"><i class="fa-solid fa-key"></i>Logout</a>
+                                    <li><a href="{{ route('admin.logout') }}"><i class="fa-solid fa-key"></i>Logout</a>
                                     </li>
                                 </ul>
                             </li>

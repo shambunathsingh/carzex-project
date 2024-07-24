@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Product\Product;
 use Illuminate\Support\Facades\Log; // Import the Log facade
 
+
 class FlashSalesController extends Controller
 {
     public function store_flash_sales(Request $request)

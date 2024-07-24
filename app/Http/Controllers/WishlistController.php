@@ -7,6 +7,7 @@ use App\Models\WishList\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class WishlistController extends Controller
 {
     public function add_to_wishlist(Request $request)

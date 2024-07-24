@@ -86,7 +86,7 @@ Route::get('admin/edit_customer/{id}', [AccountController::class, 'editCustomer'
 Route::post('admin/update_customer/{id}', [AccountController::class, 'updateCustomer'])->name('updateCustomer');
 
 
-Route::middleware(['guest:web'])->group(function () {
+Route::middleware(['guest:customer'])->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('home');
     Route::get('page/{id}', [HomeController::class, 'showPage'])->name('page');
 
@@ -178,10 +178,10 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    // Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dhome');
 
     Route::group(['prefix' => 'admin/', 'as' => 'admin.'], function () {
+        Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+        // Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dhome');
 
         /* ADMIN SECTION */
         Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');

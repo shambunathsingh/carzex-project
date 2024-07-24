@@ -15,6 +15,7 @@ use App\Http\Controllers\Msg91;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 
+
 class CartController extends Controller
 {
     public function add_to_cart($slug)
@@ -78,6 +79,7 @@ class CartController extends Controller
 
         return view('front.cart.index', ['title' => $title, 'products' => $cartList]);
     }
+
 
     public function checkout()
     {

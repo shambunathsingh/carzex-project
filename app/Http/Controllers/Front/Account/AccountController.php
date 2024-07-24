@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+
 class AccountController extends Controller
 {
     public function index()
@@ -160,33 +161,38 @@ class AccountController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'phone', 'password');
+        $request->validate([
+            'email' => 'required_without:phone|email',
+            'phone' => 'required_without:email',
+            'password' => 'required',
+        ]);
 
-        // dd($credentials);
-        // exit;
+        $credentials = $request->only('email', 'password');
 
         if (Auth::guard('customer')->attempt($credentials)) {
             // Authentication was successful
-            return redirect()->intended('/')->with('success', 'You are now logged in.');
+            return redirect()->intended('')->with('success', 'You are now logged in.');
+            // dd($request);
+            // exit;
         } else {
             // Check if it's a guest login attempt
             if ($request->has('guest_login')) {
                 // Create a random guest ID
                 $guestId = Str::random(10);
 
-                // You may want to store the guest ID in the session or somewhere else for further use
+                // Store the guest ID in the session or somewhere else for further use
                 session(['guest_id' => $guestId]);
 
                 // Proceed with guest login
-                Auth::loginUsingId($guestId);
-
-                return redirect()->intended('/');
+                // Note: Here we just store the guest ID in the session, no need to use Auth for guest users
+                return redirect()->intended('/')->with('success', 'You are now logged in as a guest.');
             } else {
                 // Regular login attempt failed
                 return redirect()->route('myaccount')->with('error', 'Invalid credentials. Please try again.');
             }
         }
     }
+
 
     public function guestlogin(Request $request)
     {
